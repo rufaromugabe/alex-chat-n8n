@@ -62,10 +62,10 @@ export default function Sidebar({
       >
         <div className="flex items-center justify-between p-4 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-lg">
+            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 text-white font-bold text-2xl">
               A
             </div>
-            <h1 className="text-lg font-bold text-white">Mutumwa</h1>
+            <h1 className="text-2xl font-bold text-white">Mutumwa</h1>
           </div>
           <Button
             variant="ghost"
