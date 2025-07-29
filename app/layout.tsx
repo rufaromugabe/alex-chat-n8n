@@ -35,7 +35,7 @@ function Header() {
             <Menu className="h-8 w-8 text-white" />
           </button>
         )}
-        <div className="relative h-7 w-7 sm:h-8 sm:w-8 ml-2 ">
+        <div className="relative h-20 w-20 sm:h-16 sm:w-16 ml-2 ">
           <Image 
             src="/logo.png"
             alt="Mutumwa AI Logo"
@@ -43,20 +43,8 @@ function Header() {
             className="object-contain"
           />
         </div>
-        <h2 className="text-base sm:text-lg font-medium text-white/90 truncate">
-          Mutumwa AI
-        </h2>
       </div>      <div className="flex items-center gap-2 flex-shrink-0 ml-2 sm:ml-4">
-        <Button 
-          asChild
-          variant="ghost"
-          size="sm"
-          className="text-slate-300 hover:text-white hover:bg-slate-800/50 backdrop-blur-sm hidden sm:flex"
-        >
-          <a href="https://mutdash.afrainity.com/" target="_blank" rel="noopener noreferrer">
-            Dashboard
-          </a>
-        </Button>
+
         
         <LanguagePicker
           selectedLanguage={selectedLanguage}

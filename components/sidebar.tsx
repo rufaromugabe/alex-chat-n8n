@@ -6,6 +6,7 @@ import { ChatSession } from "@/lib/session-manager"
 import { formatDistanceToNow } from "date-fns"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
 interface SidebarProps {
   onNewChat: () => void
@@ -60,12 +61,16 @@ export default function Sidebar({
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between p-4 border-b border-white/10">
+        <div className="flex items-center justify-between p-2 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-lg">
-              A
+            <div className="relative h-16 w-28">
+              <Image 
+                src="/logo.png"
+                alt="Mutumwa AI Logo"
+                fill
+                className="object-contain"
+              />
             </div>
-            <h1 className="text-lg font-bold text-white">Mutumwa</h1>
           </div>
           <Button
             variant="ghost"

@@ -76,7 +76,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
       <header className="relative z-10 px-4 py-6 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="relative h-10 w-10">
+            <div className="relative h-40 w-40">
               <Image 
                 src="/logo.png"
                 alt="Mutumwa AI Logo"
@@ -84,7 +84,6 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
                 className="object-contain"
               />
             </div>
-            <h1 className="text-2xl font-bold text-white">Mutumwa AI</h1>
           </div>
             <div className="flex items-center gap-4">
             <Button 
@@ -272,7 +271,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
       <footer className="relative z-10 px-4 py-8 sm:px-6 lg:px-8 border-t border-slate-700/50">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center mb-4">
-            <div className="relative h-8 w-8 mr-3">
+            <div className="relative h-40 w-40">
               <Image 
                 src="/logo.png"
                 alt="Mutumwa AI Logo"
@@ -280,7 +279,6 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
                 className="object-contain"
               />
             </div>
-            <span className="text-xl font-bold text-white">Mutumwa AI</span>
           </div>
           <p className="text-slate-400 text-sm">
             © 2025 Mutumwa AI. Empowering African voices through technology.

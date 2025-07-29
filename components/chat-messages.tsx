@@ -6,6 +6,7 @@ import { Loader2, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import MarkdownRenderer from "@/components/markdown-renderer"
 import { useSidebar } from "@/app/contexts/SidebarContext"
+import Image from "next/image"
 
 interface ChatMessagesProps {
   messages: Array<{
@@ -40,10 +41,14 @@ export default function ChatMessages({
   if (messages.length === 0) {
     return (
       <div className="flex-1 overflow-y-auto overscroll-none p-4 flex flex-col items-center justify-center text-center pt-16 px-2 lg:px-8">
-        <div className="w-16 h-16 bg-blue-400 rounded-full flex items-center justify-center mb-4 shadow-[0_0_15px_rgba(96,165,250,0.5)]">
-          <span className="text-white text-3xl font-bold">A</span>
+        <div className="relative w-20 h-20 mb-6 shadow-[0_0_15px_rgba(96,165,250,0.5)] rounded-full overflow-hidden">
+          <Image 
+            src="/mut.png"
+            alt="Mutumwa AI Logo"
+            fill
+            className="object-contain"
+          />
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">Welcome to Mutumwa</h2>
         <p className="text-slate-400 max-w-md lg:max-w-lg">
           Your AI assistant that speaks African languages. Start a conversation and experience the power of multilingual
           communication.
