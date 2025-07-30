@@ -1,0 +1,1706 @@
+[
+  {
+    "value": "",
+    "label": "--Select Procuring Entity--"
+  },
+  {
+    "value": "21",
+    "label": "AFC HOLDINGS"
+  },
+  {
+    "value": "22",
+    "label": "AGRICULTURAL AND RURAL DEVELOPMENT AUTHORITY"
+  },
+  {
+    "value": "315",
+    "label": "AGRICULTURAL MARKETING AUTHORITY"
+  },
+  {
+    "value": "23",
+    "label": "AIR ZIMBABWE PVT LTD"
+  },
+  {
+    "value": "208",
+    "label": "AIRPORTS COMPANY OF ZIMBABWE"
+  },
+  {
+    "value": "422",
+    "label": "ALLIED HEALTH PRACTITIONERS COUNCIL OF ZIMBABWE"
+  },
+  {
+    "value": "423",
+    "label": "ALLIED INSURANCE COMPANY PVT LTD"
+  },
+  {
+    "value": "24",
+    "label": "ALLIED TIMBERS ZIMBABWE"
+  },
+  {
+    "value": "25",
+    "label": "AUREX PVT LTD"
+  },
+  {
+    "value": "316",
+    "label": "BANKET DISTRICT HOSPITAL"
+  },
+  {
+    "value": "317",
+    "label": "BEITBRIDGE DISTRICT HOSPITAL"
+  },
+  {
+    "value": "26",
+    "label": "BEITBRIDGE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "209",
+    "label": "BELVEDERE TECHNICAL TEACHERS COLLEGE"
+  },
+  {
+    "value": "265",
+    "label": "BIKITA DISTRICT HEALTH EXECUTIVE"
+  },
+  {
+    "value": "27",
+    "label": "BIKITA RDC"
+  },
+  {
+    "value": "274",
+    "label": "BINDURA KUBATANA  DISTRICT"
+  },
+  {
+    "value": "266",
+    "label": "BINDURA MUNICIPALITY"
+  },
+  {
+    "value": "28",
+    "label": "BINDURA PROVINCIAL HOSPITAL"
+  },
+  {
+    "value": "29",
+    "label": "BINDURA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "30",
+    "label": "BINDURA UNIVERSITY OF SCIENCE EDUCATION"
+  },
+  {
+    "value": "210",
+    "label": "BINGA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "318",
+    "label": "BINGA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "319",
+    "label": "BIRCHNOUGH BRIDGE DISTRICT HOSPITAL"
+  },
+  {
+    "value": "267",
+    "label": "BONDA MISSION HOSPITAL"
+  },
+  {
+    "value": "314",
+    "label": "BROADCASTING AUTHORITY OF ZIMBABWE"
+  },
+  {
+    "value": "321",
+    "label": "BUBI RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "31",
+    "label": "BUHERA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "32",
+    "label": "BULAWAYO POLYTECHNIC"
+  },
+  {
+    "value": "323",
+    "label": "BULILIMA DISTRICT MEDICAL OFFICE"
+  },
+  {
+    "value": "33",
+    "label": "BULILIMA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "19",
+    "label": "CAPACITY BUILDING DEPARTMENT"
+  },
+  {
+    "value": "34",
+    "label": "CENTENARY DISTRICT HOSPITAL"
+  },
+  {
+    "value": "214",
+    "label": "CENTRAL MECHANICAL AND EQUIPMENT DEPARTMENT"
+  },
+  {
+    "value": "432",
+    "label": "CENTRE FOR EDUCATION INNOVATION RESEARCH AND DEVELOPMENT"
+  },
+  {
+    "value": "35",
+    "label": "CHAMINUKA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "324",
+    "label": "CHEGUTU DISTRICT HOSPITAL"
+  },
+  {
+    "value": "36",
+    "label": "CHEGUTU MUNICIPALITY"
+  },
+  {
+    "value": "37",
+    "label": "CHEGUTU RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "38",
+    "label": "CHEMPLEX AGRO PHARMA"
+  },
+  {
+    "value": "325",
+    "label": "CHEMPLEX CORPORATION"
+  },
+  {
+    "value": "406",
+    "label": "CHIDAMOYO CHRISTIAN HOSPITAL"
+  },
+  {
+    "value": "39",
+    "label": "CHIKOMBA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "40",
+    "label": "CHIMANIMANI RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "41",
+    "label": "CHIMHANDA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "327",
+    "label": "CHINHOYI DISTRICT HOSPITAL"
+  },
+  {
+    "value": "42",
+    "label": "CHINHOYI PROVINCIAL HOSPITAL"
+  },
+  {
+    "value": "268",
+    "label": "CHINHOYI UNIVERSITY OF TECHNOLOGY"
+  },
+  {
+    "value": "303",
+    "label": "CHIPINGE DISTRICT HOSPITAL"
+  },
+  {
+    "value": "43",
+    "label": "CHIPINGE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "269",
+    "label": "CHIPINGE TOWN COUNCIL"
+  },
+  {
+    "value": "44",
+    "label": "CHIREDZI GENERAL HOSPITAL"
+  },
+  {
+    "value": "328",
+    "label": "CHIREDZI RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "45",
+    "label": "CHIREDZI TOWN COUNCIL"
+  },
+  {
+    "value": "46",
+    "label": "CHIRUMANZU RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "47",
+    "label": "CHIRUNDU LOCAL BOARD"
+  },
+  {
+    "value": "211",
+    "label": "CHITUNGWIZA CENTRAL HOSPITAL"
+  },
+  {
+    "value": "48",
+    "label": "CHITUNGWIZA MUNICIPALITY"
+  },
+  {
+    "value": "49",
+    "label": "CHIVHU GENERAL HOSPITAL"
+  },
+  {
+    "value": "50",
+    "label": "CHIVI DISTRICT HOSPITAL"
+  },
+  {
+    "value": "51",
+    "label": "CHIVI RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "52",
+    "label": "CITY OF BULAWAYO"
+  },
+  {
+    "value": "212",
+    "label": "CITY OF GWERU"
+  },
+  {
+    "value": "53",
+    "label": "CITY OF HARARE"
+  },
+  {
+    "value": "213",
+    "label": "CITY OF KADOMA"
+  },
+  {
+    "value": "309",
+    "label": "CITY OF MUTARE"
+  },
+  {
+    "value": "54",
+    "label": "CIVIL AVIATION AUTHORITY OF ZIMBABWE"
+  },
+  {
+    "value": "435",
+    "label": "COLD STORAGE COMAPNY"
+  },
+  {
+    "value": "55",
+    "label": "COMPETITION AND TARRIFS COMMISSION"
+  },
+  {
+    "value": "56",
+    "label": "CONCESSION DISTRICT HOSPITAL"
+  },
+  {
+    "value": "330",
+    "label": "CONSUMER COUNCIL OF ZIMBABWE"
+  },
+  {
+    "value": "395",
+    "label": "CONSUMER PROTECTION COMMISSION"
+  },
+  {
+    "value": "16",
+    "label": "CORPORATE COMMUNICATIONS DEPARTMENT"
+  },
+  {
+    "value": "15",
+    "label": "CORPORATE SERVICES DEPARTMENT"
+  },
+  {
+    "value": "331",
+    "label": "DEFOLD MINE"
+  },
+  {
+    "value": "57",
+    "label": "DEPOSIT PROTECTION CORPORATION"
+  },
+  {
+    "value": "332",
+    "label": "DEVEN ENGINEERING"
+  },
+  {
+    "value": "270",
+    "label": "DISTRICT MEDICAL OFFICER CHIMANIMANI"
+  },
+  {
+    "value": "215",
+    "label": "DOROWA MINERALS LIMITED"
+  },
+  {
+    "value": "413",
+    "label": "DREFONTEIN MISSION HOSPITAL"
+  },
+  {
+    "value": "14",
+    "label": "EGP HELPDESK"
+  },
+  {
+    "value": "58",
+    "label": "EMPOWERBANK"
+  },
+  {
+    "value": "402",
+    "label": "ENVIRONMENTAL HEALTH PRACTITIONERS COUNCIL OF ZIMBABWE"
+  },
+  {
+    "value": "59",
+    "label": "ENVIRONMENTAL MANAGEMENT AGENCY"
+  },
+  {
+    "value": "335",
+    "label": "EPWORTH LOCAL BOARD"
+  },
+  {
+    "value": "336",
+    "label": "ESIGODINI DISTRICT HOSPITAL"
+  },
+  {
+    "value": "60",
+    "label": "EXPORT CREDIT GUARANTEE CORPORATION"
+  },
+  {
+    "value": "61",
+    "label": "FATHER OHEA HOSPITAL"
+  },
+  {
+    "value": "431",
+    "label": "FIDELITY GOLD REFINERY PRIVATE LIMITED"
+  },
+  {
+    "value": "63",
+    "label": "FILABUSI DISTRICT HOSPITAL"
+  },
+  {
+    "value": "12",
+    "label": "FINANCE DEPARTMENT"
+  },
+  {
+    "value": "294",
+    "label": "FINEALT ENGINEERING"
+  },
+  {
+    "value": "271",
+    "label": "FORESTRY COMMISSION"
+  },
+  {
+    "value": "216",
+    "label": "G AND W INDUSTRIAL MINERALS"
+  },
+  {
+    "value": "338",
+    "label": "GOKWE NORTH HOSPITAL"
+  },
+  {
+    "value": "64",
+    "label": "GOKWE NORTH RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "340",
+    "label": "GOKWE SOUTH  DISTRICT HOSPITAL"
+  },
+  {
+    "value": "65",
+    "label": "GOKWE SOUTH RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "66",
+    "label": "GOKWE TOWN COUNCIL"
+  },
+  {
+    "value": "67",
+    "label": "GOROMONZI RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "68",
+    "label": "GRAIN MARKETING BOARD"
+  },
+  {
+    "value": "217",
+    "label": "GREAT ZIMBABWE UNIVERSITY"
+  },
+  {
+    "value": "69",
+    "label": "GURUVE DISTRICT HOSPITAL"
+  },
+  {
+    "value": "70",
+    "label": "GURUVE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "71",
+    "label": "GUTU RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "341",
+    "label": "GUTU RURAL HOSPITAL"
+  },
+  {
+    "value": "295",
+    "label": "GWANDA DISTRICT MEDICAL OFFICE"
+  },
+  {
+    "value": "296",
+    "label": "GWANDA PROVINCIAL HOSPITAL"
+  },
+  {
+    "value": "72",
+    "label": "GWANDA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "272",
+    "label": "GWANDA STATE UNIVESITY"
+  },
+  {
+    "value": "73",
+    "label": "GWERU DISTRICT HEALTH OFFICES"
+  },
+  {
+    "value": "74",
+    "label": "GWERU POLYTECHNIC"
+  },
+  {
+    "value": "75",
+    "label": "GWERU PROVINCIAL HOSPITAL"
+  },
+  {
+    "value": "218",
+    "label": "HARARE INSTITUTE OF TECHNOLOGY"
+  },
+  {
+    "value": "76",
+    "label": "HARARE POLYTECHNIC"
+  },
+  {
+    "value": "219",
+    "label": "HAUNA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "310",
+    "label": "HEALTH PROFESSIONS AUTHORITY"
+  },
+  {
+    "value": "77",
+    "label": "HEALTH SERVICE COMMISSION"
+  },
+  {
+    "value": "306",
+    "label": "HILLSIDE TEACHERS COLLEGE"
+  },
+  {
+    "value": "220",
+    "label": "HOMELINK"
+  },
+  {
+    "value": "20",
+    "label": "HUMAN RESOURCES DEPARTMENT"
+  },
+  {
+    "value": "78",
+    "label": "HURUNGWE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "343",
+    "label": "HWANGE LOCAL BOARD"
+  },
+  {
+    "value": "79",
+    "label": "HWANGE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "80",
+    "label": "HWEDZA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "13",
+    "label": "ICT DEPARTMENT"
+  },
+  {
+    "value": "344",
+    "label": "INDUSTRIAL DEVELOPMENT CORPORATION"
+  },
+  {
+    "value": "81",
+    "label": "INFRASTRUCTURE AND DEVELOPMENT BANK OF ZIMBABWE"
+  },
+  {
+    "value": "82",
+    "label": "INGUTSHENI CENTRAL HOSPITAL"
+  },
+  {
+    "value": "83",
+    "label": "INGWEBU BREWERIES"
+  },
+  {
+    "value": "221",
+    "label": "INSIZA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "84",
+    "label": "INSURANCE AND PENSIONS COMMISSION"
+  },
+  {
+    "value": "18",
+    "label": "INTERNAL AUDIT"
+  },
+  {
+    "value": "85",
+    "label": "INYATHI DISTRICT HOSPITAL"
+  },
+  {
+    "value": "273",
+    "label": "JOSHUA MQABUKO NKMO POLYTECHNIC"
+  },
+  {
+    "value": "86",
+    "label": "JUDICIAL SERVICES COMMISSION"
+  },
+  {
+    "value": "87",
+    "label": "KADOMA GENERAL HOSPITAL"
+  },
+  {
+    "value": "345",
+    "label": "KARIBA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "347",
+    "label": "KAROI DISTRICT HOSPITAL"
+  },
+  {
+    "value": "88",
+    "label": "KAROI TOWN COUNCIL"
+  },
+  {
+    "value": "89",
+    "label": "KOTWA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "90",
+    "label": "KUSHINGA PHIKELELA POLYTECHNIC"
+  },
+  {
+    "value": "91",
+    "label": "KUSILE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "92",
+    "label": "KWEKWE CITY COUNCIL"
+  },
+  {
+    "value": "419",
+    "label": "KWEKWE GENERAL HOSPITAL"
+  },
+  {
+    "value": "93",
+    "label": "KWEKWE POLYTECHNIC"
+  },
+  {
+    "value": "408",
+    "label": "LUISA GUIDOTTI HOSPITAL"
+  },
+  {
+    "value": "411",
+    "label": "LUKOSI RURAL HOSPITAL"
+  },
+  {
+    "value": "396",
+    "label": "LUPANE DISTRICT MEDICAL OFFICE"
+  },
+  {
+    "value": "356",
+    "label": "LUPANE HEALTH SERVICES"
+  },
+  {
+    "value": "94",
+    "label": "LUPANE LOCAL BOARD"
+  },
+  {
+    "value": "320",
+    "label": "LUPANE STATE UNIVERSITY"
+  },
+  {
+    "value": "326",
+    "label": "MADZIWA TEACHERS COLLEGE"
+  },
+  {
+    "value": "95",
+    "label": "MAHUSEKWA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "322",
+    "label": "MAKONDE DISTRICT HOSPITAL"
+  },
+  {
+    "value": "275",
+    "label": "MAKONDE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "329",
+    "label": "MAKONI DISTRICT HOSPITAL"
+  },
+  {
+    "value": "96",
+    "label": "MAKONI RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "333",
+    "label": "MAKUMBE DISTRICT HOSPITAL"
+  },
+  {
+    "value": "400",
+    "label": "MANAGEMENT TRAINING BUREAU"
+  },
+  {
+    "value": "420",
+    "label": "MANAMA MISSION HOSPITAL"
+  },
+  {
+    "value": "97",
+    "label": "MANGWE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "99",
+    "label": "MANICALAND STATE UNIVERSITY OF APPLIED SCIENCES"
+  },
+  {
+    "value": "100",
+    "label": "MANYAME RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "101",
+    "label": "MAPHISA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "334",
+    "label": "MARONDERA PROVINCIAL HOSPITAL"
+  },
+  {
+    "value": "102",
+    "label": "MARONDERA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "222",
+    "label": "MARONDERA UNIVERSITY OF AGRICULTURAL SCIENCES AND TECHNOLOGY"
+  },
+  {
+    "value": "337",
+    "label": "MARY MOUNT TEACHERS COLLEGE"
+  },
+  {
+    "value": "407",
+    "label": "MASASA INDUSTRIAL TRAINING COLLEGE"
+  },
+  {
+    "value": "223",
+    "label": "MASVINGO CITY COUNCIL"
+  },
+  {
+    "value": "103",
+    "label": "MASVINGO DISTRICT HEALTH EXECUTIVE"
+  },
+  {
+    "value": "105",
+    "label": "MASVINGO POLYTECHNIC"
+  },
+  {
+    "value": "297",
+    "label": "MASVINGO PROVINCIAL HOSPITAL"
+  },
+  {
+    "value": "224",
+    "label": "MASVINGO RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "339",
+    "label": "MASVINGO TEACHERS COLLEGE"
+  },
+  {
+    "value": "410",
+    "label": "MATIBI MISSION HOSPITAL"
+  },
+  {
+    "value": "276",
+    "label": "MATOBO RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "106",
+    "label": "MAZOWE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "342",
+    "label": "MBERENGWA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "107",
+    "label": "MBERENGWA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "415",
+    "label": "MBIRE MINISTRY OF HEALTH"
+  },
+  {
+    "value": "108",
+    "label": "MBIRE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "425",
+    "label": "MEDICAL LABORATORY AND CLINICAL SCIENTISTS COUNCIL OF ZIMBABWE"
+  },
+  {
+    "value": "109",
+    "label": "MEDICINES CONTROL AUTHORITY OF ZIMBABWE"
+  },
+  {
+    "value": "6",
+    "label": "mGEPS-MDB"
+  },
+  {
+    "value": "277",
+    "label": "MHONDORO NGEZI DISTRICT COUNCIL"
+  },
+  {
+    "value": "110",
+    "label": "MHONDORO NGEZI RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "225",
+    "label": "MIDLANDS STATE UNIVERSITY"
+  },
+  {
+    "value": "111",
+    "label": "MINERALS MARKETING CORPORATION OF ZIMBABWE"
+  },
+  {
+    "value": "226",
+    "label": "MINING PROMOTION CORPORATION"
+  },
+  {
+    "value": "348",
+    "label": "MINISTRY OF DEFENCE"
+  },
+  {
+    "value": "298",
+    "label": "MINISTRY OF ENERGY AND POWER DEVELOPMENT"
+  },
+  {
+    "value": "312",
+    "label": "MINISTRY OF ENVIRONMENT CLIMATE AND WILDLIFE"
+  },
+  {
+    "value": "113",
+    "label": "MINISTRY OF FINANCE ECONOMIC DEVELOPMENT AND INVESTMENT PROMOTION"
+  },
+  {
+    "value": "227",
+    "label": "MINISTRY OF FOREIGN AFFAIRS AND INTERNATIONAL TRADE"
+  },
+  {
+    "value": "228",
+    "label": "MINISTRY OF HEALTH AND CHILD CARE"
+  },
+  {
+    "value": "351",
+    "label": "MINISTRY OF HIGHER AND TERTIARY EDUCATION INNOVATION SCIENCE AND TECHNOLOGY DEVELOPMENT"
+  },
+  {
+    "value": "352",
+    "label": "MINISTRY OF HOME AFFAIRS AND CULTURAL HERITAGE"
+  },
+  {
+    "value": "353",
+    "label": "MINISTRY OF INDUSTRY AND COMMERCE"
+  },
+  {
+    "value": "112",
+    "label": "MINISTRY OF INFORMATION COMMUNICATION TECHNOLOGY POSTAL AND COURIER SERVICES"
+  },
+  {
+    "value": "229",
+    "label": "MINISTRY OF INFORMATION PUBLICITY AND BROADCASTING SERVICES"
+  },
+  {
+    "value": "114",
+    "label": "MINISTRY OF JUSTICE LEGAL AND PARLIAMENTARY AFFAIRS"
+  },
+  {
+    "value": "354",
+    "label": "MINISTRY OF LANDS AGRICULTURE FISHERIES WATER AND RURAL DEVELOPMENT"
+  },
+  {
+    "value": "115",
+    "label": "MINISTRY OF LOCAL GOVERNMENT AND PUBLIC WORKS"
+  },
+  {
+    "value": "116",
+    "label": "MINISTRY OF MINES AND MINING DEVELOPMENT"
+  },
+  {
+    "value": "278",
+    "label": "MINISTRY OF NATIONAL HOUSING AND SOCIAL AMENITIES"
+  },
+  {
+    "value": "230",
+    "label": "MINISTRY OF PRIMARY AND SECONDARY EDUCATION"
+  },
+  {
+    "value": "231",
+    "label": "MINISTRY OF PUBLIC SERVICE LABOUR AND SOCIAL WELFARE"
+  },
+  {
+    "value": "308",
+    "label": "MINISTRY OF SKILLS AUDIT AND DEVELOPMENT"
+  },
+  {
+    "value": "355",
+    "label": "MINISTRY OF SPORTS RECREATION ARTS AND CULTURE"
+  },
+  {
+    "value": "290",
+    "label": "MINISTRY OF TOURISM"
+  },
+  {
+    "value": "117",
+    "label": "MINISTRY OF TRANSPORT AND INFRASTRUCTURAL DEVELOPMENT"
+  },
+  {
+    "value": "421",
+    "label": "MINISTRY OF VETERANS OF THE LIBERATION STRUGGLE AFFAIRS"
+  },
+  {
+    "value": "118",
+    "label": "MINISTRY OF WOMEN AFFAIRS COMMUNITY SMALL AND MEDIUM ENTERPRISES DEVELOPMENT"
+  },
+  {
+    "value": "392",
+    "label": "MINISTRY OF YOUTH EMPOWERMENT DEVELOPMENT AND VOCATIONAL TRAINING"
+  },
+  {
+    "value": "119",
+    "label": "MKOBA TEACHRES COLLEGE"
+  },
+  {
+    "value": "232",
+    "label": "MNENE MISSION HOSPITAL"
+  },
+  {
+    "value": "17",
+    "label": "MONITORING AND EVALUATION DEPARTMENT"
+  },
+  {
+    "value": "120",
+    "label": "MORGAN ZINTEC COLLEGE"
+  },
+  {
+    "value": "403",
+    "label": "MORGENSTER MISSION HOSPITAL"
+  },
+  {
+    "value": "233",
+    "label": "MOSI OA TUNYA DEVELOPMENT COMPANY"
+  },
+  {
+    "value": "121",
+    "label": "MPILO CENTRAL HOSPITAL"
+  },
+  {
+    "value": "234",
+    "label": "MSASA INDUSTRIAL TRAINING COLLEGE"
+  },
+  {
+    "value": "235",
+    "label": "MT DARWIN DISTRICT HOSPITAL"
+  },
+  {
+    "value": "414",
+    "label": "MTSHABEZI MISSION HOSPITAL"
+  },
+  {
+    "value": "122",
+    "label": "MUDZI RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "236",
+    "label": "MUNICIPALITY OF BEITBRIDGE"
+  },
+  {
+    "value": "279",
+    "label": "MUNICIPALITY OF CHINHOYI"
+  },
+  {
+    "value": "123",
+    "label": "MUNICIPALITY OF GWANDA"
+  },
+  {
+    "value": "124",
+    "label": "MUNICIPALITY OF KARIBA"
+  },
+  {
+    "value": "125",
+    "label": "MUNICIPALITY OF MARONDERA"
+  },
+  {
+    "value": "412",
+    "label": "MURAMBINDA MISSION HOSPITAL"
+  },
+  {
+    "value": "237",
+    "label": "MUREWA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "126",
+    "label": "MUREWA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "238",
+    "label": "MUTARE DISTRICT SAKUBVA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "127",
+    "label": "MUTARE POLYTECHNIC"
+  },
+  {
+    "value": "292",
+    "label": "MUTARE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "280",
+    "label": "MUTARE TEACHERS COLLEGE"
+  },
+  {
+    "value": "128",
+    "label": "MUTASA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "239",
+    "label": "MUTAWATAWA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "129",
+    "label": "MUTOKO DISTRICT HOSPITAL"
+  },
+  {
+    "value": "130",
+    "label": "MUTOKO RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "417",
+    "label": "MUVONDE MISSION HOSPITAL"
+  },
+  {
+    "value": "358",
+    "label": "MUZARABANI RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "360",
+    "label": "MVUMA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "131",
+    "label": "MVURWI DISTRICT HOSPITAL"
+  },
+  {
+    "value": "313",
+    "label": "MVURWI TOWN COUNCIL"
+  },
+  {
+    "value": "132",
+    "label": "MWENEZI RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "363",
+    "label": "NATIONAL AIDS COUNCIL"
+  },
+  {
+    "value": "133",
+    "label": "NATIONAL BIOTECHNOLOGY AUTHORITY"
+  },
+  {
+    "value": "134",
+    "label": "NATIONAL BUILDING SOCIETY"
+  },
+  {
+    "value": "393",
+    "label": "NATIONAL COMPETITIVENESS COMMISSION"
+  },
+  {
+    "value": "365",
+    "label": "NATIONAL GALLERY OF ZIMBABWE"
+  },
+  {
+    "value": "135",
+    "label": "NATIONAL HANDLING SERVICES"
+  },
+  {
+    "value": "240",
+    "label": "NATIONAL MUSEUMS AND MONUMENTS OF ZIMBABWE"
+  },
+  {
+    "value": "136",
+    "label": "NATIONAL OIL INFRASTRUCTURE COMPANY OF ZIMBABWE PRIVATE LIMITED COMPANY"
+  },
+  {
+    "value": "241",
+    "label": "NATIONAL PHARMACEUTICALS"
+  },
+  {
+    "value": "281",
+    "label": "NATIONAL PROSECUTING AUTHORITY OF ZIMBABWE"
+  },
+  {
+    "value": "137",
+    "label": "NATIONAL RAILWAYS OF ZIMBABWE"
+  },
+  {
+    "value": "138",
+    "label": "NATIONAL SOCIAL SECURITY AUTHORITY"
+  },
+  {
+    "value": "369",
+    "label": "NATIONAL UNIVERSITY OF SCIENCE AND TECHNOLOGY"
+  },
+  {
+    "value": "139",
+    "label": "NDANGA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "140",
+    "label": "NESHURO DISTRICT HOSPITAL"
+  },
+  {
+    "value": "141",
+    "label": "NETONE CELLULAR PRIVATE LIMITED"
+  },
+  {
+    "value": "430",
+    "label": "NEW ZIANA"
+  },
+  {
+    "value": "242",
+    "label": "NGOMAHURU PSYCHIATRIC HOSPITAL"
+  },
+  {
+    "value": "399",
+    "label": "NHOWE MISSION HOSPITAL"
+  },
+  {
+    "value": "243",
+    "label": "NKAYI DISTRICT HOSPITAL"
+  },
+  {
+    "value": "142",
+    "label": "NKAYI RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "264",
+    "label": "NORTON TOWN COUNCIL"
+  },
+  {
+    "value": "282",
+    "label": "NURSES COUNCIL OF ZIMBABWE"
+  },
+  {
+    "value": "401",
+    "label": "NYADIRE MISSION HOSPITAL"
+  },
+  {
+    "value": "372",
+    "label": "NYAMANDLOVU HOSPITAL"
+  },
+  {
+    "value": "375",
+    "label": "NYAMINYAMI RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "404",
+    "label": "NYANGA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "143",
+    "label": "NYANGA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "429",
+    "label": "OFFICE OF THE ATTORNEY GENERAL"
+  },
+  {
+    "value": "283",
+    "label": "OFFICE OF THE AUDITOR GENERAL"
+  },
+  {
+    "value": "433",
+    "label": "OFFICE OF THE MASTER OF THE HIGH COURT OF ZIMBABWE"
+  },
+  {
+    "value": "299",
+    "label": "OFFICE OF THE PRESIDENT AND CABINET"
+  },
+  {
+    "value": "11",
+    "label": "OPERATIONS DEPARTMENT"
+  },
+  {
+    "value": "144",
+    "label": "PARIRENYATWA GROUP OF HOSPITALS"
+  },
+  {
+    "value": "262",
+    "label": "PARLIAMENT OF ZIMBABWE"
+  },
+  {
+    "value": "153",
+    "label": "PEOPLES OWN SAVINGS BANK"
+  },
+  {
+    "value": "145",
+    "label": "PETROTRADE"
+  },
+  {
+    "value": "146",
+    "label": "PETROZIM LINE"
+  },
+  {
+    "value": "147",
+    "label": "PFURA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "148",
+    "label": "PHARMACISTS COUNCIL OF ZIMBABWE"
+  },
+  {
+    "value": "149",
+    "label": "PIG INDUSTRY BOARD OF ZIMBABWE"
+  },
+  {
+    "value": "349",
+    "label": "PLUMTREE DISTRICT HOSPITAL"
+  },
+  {
+    "value": "150",
+    "label": "PLUMTREE TOWN COUNCIL"
+  },
+  {
+    "value": "244",
+    "label": "POSTAL AND TELECOMMUNICATION REGULATORY AUTHORITY OF ZIMBABWE"
+  },
+  {
+    "value": "154",
+    "label": "POWERTEL COMMUNICATIONS"
+  },
+  {
+    "value": "1",
+    "label": "PRAZ"
+  },
+  {
+    "value": "4",
+    "label": "PRAZ-Auditor"
+  },
+  {
+    "value": "2",
+    "label": "PRAZ-CSO"
+  },
+  {
+    "value": "3",
+    "label": "PRAZ-DEPOT"
+  },
+  {
+    "value": "245",
+    "label": "PRINTFLOW"
+  },
+  {
+    "value": "62",
+    "label": "PRINTING AND MINTING COMPANY OF ZIMBABWE PVT LTD"
+  },
+  {
+    "value": "155",
+    "label": "PROCUREMENT REGULATORY AUTHORITY OF ZIMBABWE"
+  },
+  {
+    "value": "424",
+    "label": "PROVINCIAL MEDICAL DIRECTOR HARARE METROPOLITAN"
+  },
+  {
+    "value": "151",
+    "label": "PROVINCIAL MEDICAL DIRECTORATE  MASHONALAND WEST"
+  },
+  {
+    "value": "361",
+    "label": "PROVINCIAL MEDICAL DIRECTORATE BULAWAYO"
+  },
+  {
+    "value": "98",
+    "label": "PROVINCIAL MEDICAL DIRECTORATE MANICALAND"
+  },
+  {
+    "value": "364",
+    "label": "PROVINCIAL MEDICAL DIRECTORATE MASHONALAND CENTRAL"
+  },
+  {
+    "value": "247",
+    "label": "PROVINCIAL MEDICAL DIRECTORATE MASHONALAND EAST"
+  },
+  {
+    "value": "104",
+    "label": "PROVINCIAL MEDICAL DIRECTORATE MASVINGO"
+  },
+  {
+    "value": "246",
+    "label": "PROVINCIAL MEDICAL DIRECTORATE MATABELELAND SOUTH"
+  },
+  {
+    "value": "366",
+    "label": "PROVINCIAL MEDICAL DIRECTORATE MATEBELELAND NORTH"
+  },
+  {
+    "value": "152",
+    "label": "PROVINCIAL MEDICAL DIRECTORATE MIDLANDS"
+  },
+  {
+    "value": "7",
+    "label": "PS Depot Bacolod"
+  },
+  {
+    "value": "8",
+    "label": "PS Depot Biliran"
+  },
+  {
+    "value": "9",
+    "label": "PS Depot Bontoc"
+  },
+  {
+    "value": "10",
+    "label": "PS Depot Borongan"
+  },
+  {
+    "value": "156",
+    "label": "PUBLIC SERVICE COMMISSION"
+  },
+  {
+    "value": "157",
+    "label": "RADIATION PROTECTION AUTHORITY OF ZIMBABWE"
+  },
+  {
+    "value": "368",
+    "label": "REDCLIFF MUNICIPALITY"
+  },
+  {
+    "value": "248",
+    "label": "RESEARCH COUNCIL OF ZIMBABWE"
+  },
+  {
+    "value": "249",
+    "label": "RESERVE BANK OF ZIMBABWE"
+  },
+  {
+    "value": "370",
+    "label": "ROAD MOTOR SERVICES"
+  },
+  {
+    "value": "158",
+    "label": "RUNDE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "251",
+    "label": "RURAL ELECTRIFICATION FUND"
+  },
+  {
+    "value": "263",
+    "label": "RURAL INFRASTRUCTURE DEVELOPMENT AGENCY"
+  },
+  {
+    "value": "159",
+    "label": "RUSAPE GENERAL HOSPITAL"
+  },
+  {
+    "value": "160",
+    "label": "RUSAPE TOWN COUNCIL"
+  },
+  {
+    "value": "161",
+    "label": "RUSHINGA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "250",
+    "label": "RUWA LOCAL BOARD"
+  },
+  {
+    "value": "371",
+    "label": "RUWA REHABILITATION"
+  },
+  {
+    "value": "373",
+    "label": "SADZA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "427",
+    "label": "SAKUBVA INDUSTRIAL HUB"
+  },
+  {
+    "value": "162",
+    "label": "SALLY MUGABE CENTRAL HOSPITAL"
+  },
+  {
+    "value": "164",
+    "label": "SANYATI DISTRICT HEALTH"
+  },
+  {
+    "value": "163",
+    "label": "SANYATI RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "168",
+    "label": "SCIENTIFIC AND INDUSTRIAL RESEARCH AND DEVELOPMENT CENTRE"
+  },
+  {
+    "value": "165",
+    "label": "SECURITIES AND EXCHANGE COMMISSION OF ZIMBABWE"
+  },
+  {
+    "value": "284",
+    "label": "SEKE DISTRICT HOSPITAL"
+  },
+  {
+    "value": "374",
+    "label": "SEKE TEACHERS"
+  },
+  {
+    "value": "166",
+    "label": "SHAMVA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "376",
+    "label": "SHURUGWI DISTRICT HOSPITAL"
+  },
+  {
+    "value": "167",
+    "label": "SHURUGWI TOWN COUNCIL"
+  },
+  {
+    "value": "377",
+    "label": "SILO FOOD INDUSTRIES"
+  },
+  {
+    "value": "378",
+    "label": "SILOBELA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "169",
+    "label": "SMALL AND MEDIUM ENTERPRISES DEVELOPMENT CORPORATION"
+  },
+  {
+    "value": "311",
+    "label": "SPORTS AND RECREATION COMMISSION"
+  },
+  {
+    "value": "418",
+    "label": "ST ANNES BRUNAPEG HOSPITAL"
+  },
+  {
+    "value": "379",
+    "label": "ST LUKES MISSION HOSPITAL"
+  },
+  {
+    "value": "398",
+    "label": "ST PATRICKS MISSION HOSPITAL"
+  },
+  {
+    "value": "409",
+    "label": "ST PAULS MUSAMI HOSPITAL"
+  },
+  {
+    "value": "416",
+    "label": "ST THERESA MISSION HOSPITAL"
+  },
+  {
+    "value": "304",
+    "label": "STANDARDS ASSOCIATION OF ZIMBABWE"
+  },
+  {
+    "value": "380",
+    "label": "STATE ENTERPRISE RESTRUCTURING AGENCY"
+  },
+  {
+    "value": "170",
+    "label": "SUNWAY CITY"
+  },
+  {
+    "value": "252",
+    "label": "TELONE"
+  },
+  {
+    "value": "434",
+    "label": "TETIARY EDUCATION SERVICE COUNCIL"
+  },
+  {
+    "value": "381",
+    "label": "TOBACCO INDUSTRY MARKETING BOARD"
+  },
+  {
+    "value": "171",
+    "label": "TOBACCO RESEARCH BOARD"
+  },
+  {
+    "value": "172",
+    "label": "TONGOGARA RDC"
+  },
+  {
+    "value": "173",
+    "label": "TRAFFIC SAFETY COUNCIL OF ZIMBABWE"
+  },
+  {
+    "value": "382",
+    "label": "TRANSMEDIA"
+  },
+  {
+    "value": "405",
+    "label": "TSHELANYEMBA MISSION HOSPITAL"
+  },
+  {
+    "value": "174",
+    "label": "TSHOLOTSHO DISTRICT HOSPITAL"
+  },
+  {
+    "value": "300",
+    "label": "TSHOLOTSHO RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "383",
+    "label": "UMGUZA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "175",
+    "label": "UMP ZVATAIDA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "176",
+    "label": "UMZINGWANE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "177",
+    "label": "UNITED BULAWAYO HOSPITALS"
+  },
+  {
+    "value": "253",
+    "label": "UNITED COLLEGE OF EDUCATION"
+  },
+  {
+    "value": "254",
+    "label": "UNIVERSITY OF ZIMBABWE"
+  },
+  {
+    "value": "285",
+    "label": "UPPER MANYAME SUBCATCHMENT COUNCIL"
+  },
+  {
+    "value": "178",
+    "label": "URBAN DEVELOPMENT CORPORATION"
+  },
+  {
+    "value": "384",
+    "label": "UZUMBA MARAMBAPFUNGWE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "255",
+    "label": "VERIFY ENGINEERING"
+  },
+  {
+    "value": "179",
+    "label": "VICTORIA CHITEPO PROVINCIAL HOSPITAL"
+  },
+  {
+    "value": "180",
+    "label": "VICTORIA FALLS CITY COUNCIL"
+  },
+  {
+    "value": "385",
+    "label": "VICTORIA FALLS DISTRICT HOSPITAL"
+  },
+  {
+    "value": "256",
+    "label": "VUNGU RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "181",
+    "label": "WEDZA DISTRICT HOSPITAL"
+  },
+  {
+    "value": "386",
+    "label": "WESTGATE INDUSTRIAL TRAINING CENTRE"
+  },
+  {
+    "value": "293",
+    "label": "WILLOWVALE MOTOR INDUSTRIES"
+  },
+  {
+    "value": "286",
+    "label": "ZAKA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "182",
+    "label": "ZESA ENTERPRISES"
+  },
+  {
+    "value": "183",
+    "label": "ZESA HOLDINGS"
+  },
+  {
+    "value": "301",
+    "label": "ZIBAGWE RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "397",
+    "label": "ZIMBABWE ACADEMIC AND RESEARCH NETWORK"
+  },
+  {
+    "value": "387",
+    "label": "ZIMBABWE ANTI CORRUPTION COMMISSION"
+  },
+  {
+    "value": "391",
+    "label": "ZIMBABWE BROADCASTING COOPERATION"
+  },
+  {
+    "value": "257",
+    "label": "ZIMBABWE CENTRE FOR HIGH PERFOMANCE COMPUTING"
+  },
+  {
+    "value": "184",
+    "label": "ZIMBABWE CONSOLIDATED DIAMOND COMPANY"
+  },
+  {
+    "value": "261",
+    "label": "ZIMBABWE COUNCIL FOR HIGHER EDUCATION"
+  },
+  {
+    "value": "185",
+    "label": "ZIMBABWE ELECTORAL COMMISSION"
+  },
+  {
+    "value": "289",
+    "label": "ZIMBABWE ELECTRICITY TRANSMISSION AND DISTRIBUTION COMPANY"
+  },
+  {
+    "value": "186",
+    "label": "ZIMBABWE ENERGY REGULATORY AUTHORITY"
+  },
+  {
+    "value": "287",
+    "label": "ZIMBABWE GENDER COMMISSION"
+  },
+  {
+    "value": "187",
+    "label": "ZIMBABWE HUMAN RIGHTS COMMISSION"
+  },
+  {
+    "value": "188",
+    "label": "ZIMBABWE INSTITUTE OF PUBLIC ADMINISTRATION AND MANAGEMENT"
+  },
+  {
+    "value": "205",
+    "label": "ZIMBABWE INTERNATIONAL TRADE FAIR"
+  },
+  {
+    "value": "189",
+    "label": "ZIMBABWE INVESTMENT AND DEVELOPMEMT AGENCY"
+  },
+  {
+    "value": "388",
+    "label": "ZIMBABWE IRON AND STEEL COMPANY"
+  },
+  {
+    "value": "190",
+    "label": "ZIMBABWE LAND COMMISSION"
+  },
+  {
+    "value": "191",
+    "label": "ZIMBABWE MANPOWER DEVELOPMENT FUND"
+  },
+  {
+    "value": "389",
+    "label": "ZIMBABWE MEDIA COMMISSION"
+  },
+  {
+    "value": "192",
+    "label": "ZIMBABWE MINING  DEVELOPMENT CORPORATION"
+  },
+  {
+    "value": "193",
+    "label": "ZIMBABWE NATIONAL FAMILY PLANNING COUNCIL"
+  },
+  {
+    "value": "194",
+    "label": "ZIMBABWE NATIONAL GEOSPATIAL AND SPACE AGENCY"
+  },
+  {
+    "value": "195",
+    "label": "ZIMBABWE NATIONAL ROAD ADMINISTRATION"
+  },
+  {
+    "value": "196",
+    "label": "ZIMBABWE NATIONAL STATISTICS AGENCY"
+  },
+  {
+    "value": "197",
+    "label": "ZIMBABWE NATIONAL WATER AUTHORITY"
+  },
+  {
+    "value": "258",
+    "label": "ZIMBABWE OPEN UNIVERSITY"
+  },
+  {
+    "value": "198",
+    "label": "ZIMBABWE PARKS AND WILDLIFE MANAGEMENT AUTHORITY"
+  },
+  {
+    "value": "259",
+    "label": "ZIMBABWE PHOSPHATE INDUSTRIES"
+  },
+  {
+    "value": "291",
+    "label": "ZIMBABWE POSTS"
+  },
+  {
+    "value": "307",
+    "label": "ZIMBABWE POWER COMPANY"
+  },
+  {
+    "value": "199",
+    "label": "ZIMBABWE PRISONS AND CORRECTIONAL SERVICE"
+  },
+  {
+    "value": "428",
+    "label": "ZIMBABWE REPUBLIC POLICE"
+  },
+  {
+    "value": "200",
+    "label": "ZIMBABWE REVENUE AUTHOURITY"
+  },
+  {
+    "value": "201",
+    "label": "ZIMBABWE SCHOOL EXAMINATIONS COUNCIL"
+  },
+  {
+    "value": "260",
+    "label": "ZIMBABWE SCHOOL OF MINES"
+  },
+  {
+    "value": "202",
+    "label": "ZIMBABWE TOURISM AUTHORITY"
+  },
+  {
+    "value": "203",
+    "label": "ZIMBABWE UNITED PASSENGER COMPANY"
+  },
+  {
+    "value": "302",
+    "label": "ZIMBABWE WOMENS MICROFINANCE BANK"
+  },
+  {
+    "value": "288",
+    "label": "ZIMREF GOLD"
+  },
+  {
+    "value": "204",
+    "label": "ZIMTRADE"
+  },
+  {
+    "value": "206",
+    "label": "ZVIMBA RURAL DISTRICT COUNCIL"
+  },
+  {
+    "value": "390",
+    "label": "ZVISHAVANE DISTRICT HOSPITAL"
+  },
+  {
+    "value": "207",
+    "label": "ZVISHAVANE TOWN COUNCIL"
+  }
+]

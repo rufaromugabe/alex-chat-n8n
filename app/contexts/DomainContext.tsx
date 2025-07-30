@@ -15,8 +15,10 @@ type DomainContextType = {
 const DomainContext = createContext<DomainContextType | undefined>(undefined)
 
 const domains: Domain[] = [
+  { value: "general", label: "GENERAL" },
   { value: "zesa", label: "ZESA" },
-  { value: "praz", label: "PRAZ" }
+  { value: "praz", label: "PRAZ" },
+  
 ]
 
 export function DomainProvider({ children }: { children: ReactNode }) {
