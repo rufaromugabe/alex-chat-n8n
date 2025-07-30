@@ -16,7 +16,7 @@ const DomainContext = createContext<DomainContextType | undefined>(undefined)
 
 const domains: Domain[] = [
   { value: "zesa", label: "ZESA" },
-  { value: "pras", label: "PRAS" }
+  { value: "praz", label: "PRAZ" }
 ]
 
 export function DomainProvider({ children }: { children: ReactNode }) {
