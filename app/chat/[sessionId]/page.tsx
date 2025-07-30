@@ -8,6 +8,7 @@ import ChatInput from "@/components/chat-input"
 import { getLanguageSuggestions } from "@/lib/suggestions"
 import { SessionManager } from "@/lib/session-manager"
 import { useLanguage } from "../../contexts/LanguageContext"
+import { useDomain } from "../../contexts/DomainContext"
 import { useApp } from "../../contexts/AppContext"
 
 export default function ChatPage() {
@@ -22,6 +23,7 @@ export default function ChatPage() {
     setCurrentSessionId 
   } = useApp()
   const { selectedLanguage } = useLanguage()
+  const { selectedDomain } = useDomain()
   const [isLoading, setIsLoading] = useState(false)
   const [isSessionLoaded, setIsSessionLoaded] = useState(false)
   const [loadedSessionId, setLoadedSessionId] = useState<string | null>(null)
@@ -83,6 +85,7 @@ export default function ChatPage() {
       formData.append("text", text)
       formData.append("targetLanguage", selectedLanguage.value)
       formData.append("sessionId", sessionId)
+      formData.append("useCase", selectedDomain.value)
 
       // Send request to the webhook using environment variable
       const response = await fetch(process.env.NEXT_PUBLIC_WEBHOOK_URL || "", {

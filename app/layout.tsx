@@ -1,14 +1,18 @@
 "use client"
 
 import { LanguageProvider } from "./contexts/LanguageContext"
+import { DomainProvider } from "./contexts/DomainContext"
 import { SidebarProvider } from "./contexts/SidebarContext"
 import { AppProvider, useApp } from "./contexts/AppContext"
 import dynamic from "next/dynamic"
 import LanguagePicker from "@/components/language-picker"
+import DomainPicker from "@/components/domain-picker"
 import { Button } from "@/components/ui/button"
 import { africanLanguages } from "@/lib/languages"
+import { domains } from "./contexts/DomainContext"
 import Image from "next/image"
 import { useLanguage } from "./contexts/LanguageContext"
+import { useDomain } from "./contexts/DomainContext"
 import { useSidebar } from "./contexts/SidebarContext"
 import { ReactNode } from "react"
 import { Inter } from "next/font/google"
@@ -21,6 +25,7 @@ const Sidebar = dynamic(() => import("@/components/sidebar"), { ssr: false })
 
 function Header() {
   const { selectedLanguage, setSelectedLanguage } = useLanguage()
+  const { selectedDomain, setSelectedDomain } = useDomain()
   const { isSidebarOpen, setIsSidebarOpen } = useSidebar()
 
   return (
@@ -45,7 +50,11 @@ function Header() {
         </div>
       </div>      <div className="flex items-center gap-2 flex-shrink-0 ml-2 sm:ml-4">
 
-        
+        <DomainPicker
+          selectedDomain={selectedDomain}
+          setSelectedDomain={setSelectedDomain}
+          domains={domains}
+        />
         <LanguagePicker
           selectedLanguage={selectedLanguage}
           setSelectedLanguage={setSelectedLanguage}
@@ -125,7 +134,9 @@ export default function RootLayout({
         <AppProvider>
           <SidebarProvider>
             <LanguageProvider>
-              <AppLayout>{children}</AppLayout>
+              <DomainProvider>
+                <AppLayout>{children}</AppLayout>
+              </DomainProvider>
             </LanguageProvider>
           </SidebarProvider>
         </AppProvider>
