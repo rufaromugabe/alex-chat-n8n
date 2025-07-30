@@ -2,11 +2,13 @@
 
 import { LanguageProvider } from "./contexts/LanguageContext"
 import { DomainProvider } from "./contexts/DomainContext"
+import { AuthProvider, useAuth } from "./contexts/AuthContext"
 import { SidebarProvider } from "./contexts/SidebarContext"
 import { AppProvider, useApp } from "./contexts/AppContext"
 import dynamic from "next/dynamic"
 import LanguagePicker from "@/components/language-picker"
 import DomainPicker from "@/components/domain-picker"
+import LoginPage from "@/components/login-page"
 import { Button } from "@/components/ui/button"
 import { africanLanguages } from "@/lib/languages"
 import { domains } from "./contexts/DomainContext"
@@ -16,7 +18,7 @@ import { useDomain } from "./contexts/DomainContext"
 import { useSidebar } from "./contexts/SidebarContext"
 import { ReactNode } from "react"
 import { Inter } from "next/font/google"
-import { Menu } from "lucide-react"
+import { Menu, LogOut } from "lucide-react"
 import { usePathname } from "next/navigation"
 import "./globals.css"
 
@@ -27,6 +29,11 @@ function Header() {
   const { selectedLanguage, setSelectedLanguage } = useLanguage()
   const { selectedDomain, setSelectedDomain } = useDomain()
   const { isSidebarOpen, setIsSidebarOpen } = useSidebar()
+  const { logout } = useAuth()
+
+  const handleLogout = () => {
+    logout()
+  }
 
   return (
     <div className="flex items-center justify-between border-b border-white/10 px-2 sm:px-4 py-2 sm:py-3">
@@ -60,9 +67,65 @@ function Header() {
           setSelectedLanguage={setSelectedLanguage}
           languages={africanLanguages}
         />
+        <Button
+          onClick={handleLogout}
+          variant="outline"
+          size="sm"
+          className="border-slate-700/50 bg-slate-800/70 hover:bg-slate-700/70 text-white hover:text-white"
+        >
+          <LogOut className="h-4 w-4" />
+        </Button>
       </div>
     </div>
   )
+}
+
+function AuthenticatedApp({ children }: { children: ReactNode }) {
+  const { 
+    isAuthenticated, 
+    login, 
+    isLoading, 
+    attemptCount, 
+    isLockedOut, 
+    lockoutEndTime, 
+    maxAttempts 
+  } = useAuth()
+
+  // Show loading spinner while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-950/95 via-slate-900/90 to-slate-950/95">
+        <div className="text-center">
+          <div className="relative h-16 w-16 mx-auto mb-4">
+            <Image 
+              src="/logo.png"
+              alt="Mutumwa AI Logo"
+              fill
+              className="object-contain animate-pulse"
+            />
+          </div>
+          <div className="h-6 w-6 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>
+          <p className="text-white/60 text-sm mt-2">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Show login page if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <LoginPage 
+        onLogin={login}
+        attemptCount={attemptCount}
+        isLockedOut={isLockedOut}
+        lockoutEndTime={lockoutEndTime}
+        maxAttempts={maxAttempts}
+      />
+    )
+  }
+
+  // Show the main app if authenticated
+  return <AppLayout>{children}</AppLayout>
 }
 
 function AppLayout({ children }: { children: ReactNode }) {
@@ -131,15 +194,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AppProvider>
-          <SidebarProvider>
-            <LanguageProvider>
-              <DomainProvider>
-                <AppLayout>{children}</AppLayout>
-              </DomainProvider>
-            </LanguageProvider>
-          </SidebarProvider>
-        </AppProvider>
+        <AuthProvider>
+          <AppProvider>
+            <SidebarProvider>
+              <LanguageProvider>
+                <DomainProvider>
+                  <AuthenticatedApp>{children}</AuthenticatedApp>
+                </DomainProvider>
+              </LanguageProvider>
+            </SidebarProvider>
+          </AppProvider>
+        </AuthProvider>
       </body>
     </html>
   )
