@@ -90,9 +90,14 @@ function AuthenticatedApp({ children }: { children: ReactNode }) {
     lockoutEndTime, 
     maxAttempts 
   } = useAuth()
+  
+  const pathname = usePathname()
+  
+  // Check if current route requires authentication (only /chat routes)
+  const requiresAuth = pathname.startsWith('/chat')
 
-  // Show loading spinner while checking authentication
-  if (isLoading) {
+  // Show loading spinner while checking authentication (only for protected routes)
+  if (requiresAuth && isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-950/95 via-slate-900/90 to-slate-950/95">
         <div className="text-center">
@@ -111,8 +116,8 @@ function AuthenticatedApp({ children }: { children: ReactNode }) {
     )
   }
 
-  // Show login page if not authenticated
-  if (!isAuthenticated) {
+  // Show login page if not authenticated and route requires auth
+  if (requiresAuth && !isAuthenticated) {
     return (
       <LoginPage 
         onLogin={login}
@@ -124,17 +129,21 @@ function AuthenticatedApp({ children }: { children: ReactNode }) {
     )
   }
 
-  // Show the main app if authenticated
+  // Show the main app (either authenticated or home page)
   return <AppLayout>{children}</AppLayout>
 }
 
 function AppLayout({ children }: { children: ReactNode }) {
   const { isSidebarOpen, setIsSidebarOpen } = useSidebar()
   const { sessions, currentSessionId, loadSession, deleteSession } = useApp()
+  const { isAuthenticated } = useAuth()
   const pathname = usePathname()
 
   // Check if we're on a chat route
   const isChatRoute = pathname.startsWith('/chat')
+  
+  // Show header only if authenticated or on chat routes
+  const showHeader = isAuthenticated || isChatRoute
 
   const handleNewChat = () => {
     // This will be handled by the sidebar's router navigation
@@ -148,7 +157,7 @@ function AppLayout({ children }: { children: ReactNode }) {
     deleteSession(sessionId)
   }
 
-  // If not on a chat route, render children directly (landing page)
+  // If not on a chat route, render children directly (landing page without header)
   if (!isChatRoute) {
     return <>{children}</>
   }
@@ -177,7 +186,7 @@ function AppLayout({ children }: { children: ReactNode }) {
         <div className="flex h-full w-full flex-col p-0 md:p-2 md:px-10 md:py-2">
           {/* Chat container - full screen on mobile */}
           <div className="relative flex h-[100dvh] md:h-[calc(100vh-20px)] w-full flex-col overflow-hidden md:rounded-xl md:border md:border-white/10 bg-white/5 backdrop-blur-lg md:shadow-xl">
-            <Header />
+            {showHeader && <Header />}
             {children}
           </div>
         </div>
