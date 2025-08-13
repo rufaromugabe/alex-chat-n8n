@@ -93,23 +93,115 @@ export default function ChatPage() {
         body: formData,
       })
 
-      const data = await response.json()
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
 
-      // Add assistant's response to the chat
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: uuidv4(),
-          text: data.output,
-          sender: "assistant",
-          timestamp: new Date(),
-        },
-      ])
+      // Create initial assistant message
+      const assistantMessageId = uuidv4()
+      let assistantMessage = {
+        id: assistantMessageId,
+        text: "",
+        sender: "assistant" as const,
+        timestamp: new Date(),
+      }
+
+      // Add initial empty assistant message
+      setMessages((prev) => [...prev, assistantMessage])
+
+      // Set loading to false since we're about to start streaming
+      setIsLoading(false)
+
+      // Read the streaming response
+      const reader = response.body?.getReader()
+      const decoder = new TextDecoder()
+      let accumulatedText = ""
+
+      if (reader) {
+        try {
+          while (true) {
+            const { done, value } = await reader.read()
+            if (done) break
+
+            const chunk = decoder.decode(value, { stream: true })
+            const lines = chunk.split('\n')
+
+            for (const line of lines) {
+              if (line.trim()) {
+                try {
+                  const parsedLine = JSON.parse(line)
+                  console.log('Parsed line:', parsedLine) // Debug log
+                  
+                  // Handle different event types
+                  if (parsedLine.type === 'item' && parsedLine.content) {
+                    // Check if content is a JSON string (final response)
+                    if (parsedLine.content.startsWith('{') && parsedLine.content.endsWith('}')) {
+                      try {
+                        const finalData = JSON.parse(parsedLine.content)
+                        if (finalData.output) {
+                          // This is the final output, replace accumulated text
+                          accumulatedText = finalData.output
+                          console.log('Final output:', accumulatedText) // Debug log
+                          
+                          // Force state update with functional update
+                          setMessages((prevMessages) => {
+                            return prevMessages.map((msg) => 
+                              msg.id === assistantMessageId 
+                                ? { ...msg, text: accumulatedText }
+                                : msg
+                            )
+                          })
+                        }
+                      } catch (e) {
+                        // Not a valid JSON, treat as regular content
+                        accumulatedText += parsedLine.content
+                        console.log('Accumulated text (non-JSON):', accumulatedText) // Debug log
+                        
+                        // Force state update with functional update
+                        setMessages((prevMessages) => {
+                          return prevMessages.map((msg) => 
+                            msg.id === assistantMessageId 
+                              ? { ...msg, text: accumulatedText }
+                              : msg
+                          )
+                        })
+                      }
+                    } else {
+                      // Regular streaming content
+                      accumulatedText += parsedLine.content
+                      console.log('Streaming content:', parsedLine.content, 'Total:', accumulatedText) // Debug log
+                      
+                      // Force state update with functional update for real-time streaming
+                      setMessages((prevMessages) => {
+                        return prevMessages.map((msg) => 
+                          msg.id === assistantMessageId 
+                            ? { ...msg, text: accumulatedText }
+                            : msg
+                        )
+                      })
+                      
+                      // Small delay to make streaming more visible (optional)
+                      await new Promise(resolve => setTimeout(resolve, 10))
+                    }
+                  }
+                } catch (e) {
+                  // Skip invalid JSON lines
+                  console.warn('Failed to parse streaming line:', line)
+                }
+              }
+            }
+          }
+        } finally {
+          reader.releaseLock()
+        }
+      }
 
       // Add assistant message to Zep (async, don't wait for it)
-      SessionManager.addMessageToSession(sessionId, data.output, 'assistant').catch(error => {
-        console.warn('Failed to add assistant message to Zep:', error)
-      })
+      if (accumulatedText) {
+        SessionManager.addMessageToSession(sessionId, accumulatedText, 'assistant').catch(error => {
+          console.warn('Failed to add assistant message to Zep:', error)
+        })
+      }
     } catch (error) {
       console.error("Error sending message:", error)
 
