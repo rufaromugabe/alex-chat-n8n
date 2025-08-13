@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from "react"
 import { v4 as uuidv4 } from "uuid"
-import { SessionManager, ChatSession, ZepMessage } from "@/lib/session-manager"
+import { SessionManager, ChatSession, AppMessage } from "@/lib/session-manager"
 
 type Message = {
   id: string
@@ -21,8 +21,8 @@ type AppContextType = {
   sessions: ChatSession[]
   resetApp: () => void
   startNewChat: () => void
-  loadSession: (sessionId: string) => Promise<void>
-  loadSessionFromUrl: (sessionId: string) => Promise<void>
+  loadSession: (sessionId: string, domain?: string) => Promise<void>
+  loadSessionFromUrl: (sessionId: string, domain?: string) => Promise<void>
   deleteSession: (sessionId: string) => void
   refreshSessions: () => void
 }
@@ -71,21 +71,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
     // Don't reset showLanding when starting a new chat
   }, [])
 
-  const loadSession = useCallback(async (sessionId: string) => {
+  const loadSession = useCallback(async (sessionId: string, domain: string = 'default') => {
     try {
       setCurrentSessionId(sessionId)
       SessionManager.setCurrentSessionId(sessionId)
       setShowLanding(false)
       
-      // Fetch messages from Zep API via our API route
-      const zepMessages = await SessionManager.fetchSessionMessages(sessionId)
+      // Fetch messages from PostgreSQL database via our API route
+      const appMessages = await SessionManager.fetchSessionMessages(sessionId, domain)
       
-      // Convert Zep messages to app messages
-      const convertedMessages: Message[] = zepMessages.map((zepMsg) => ({
-        id: zepMsg.uuid,
-        text: zepMsg.content,
-        sender: zepMsg.role_type,
-        timestamp: new Date(zepMsg.created_at)
+      // Convert app messages to local messages format
+      const convertedMessages: Message[] = appMessages.map((appMsg) => ({
+        id: appMsg.id,
+        text: appMsg.content,
+        sender: appMsg.role_type,
+        timestamp: new Date(appMsg.created_at)
       }))
       
       setMessages(convertedMessages)
@@ -96,30 +96,30 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const loadSessionFromUrl = useCallback(async (sessionId: string) => {
+  const loadSessionFromUrl = useCallback(async (sessionId: string, domain: string = 'general') => {
     try {
-      console.log("Loading session from URL:", sessionId)
+      console.log(`Loading session from URL: ${sessionId} (domain: ${domain})`)
       setCurrentSessionId(sessionId)
       SessionManager.setCurrentSessionId(sessionId)
       setShowLanding(false)
       
-      // Fetch messages from Zep API via our API route
-      const zepMessages = await SessionManager.fetchSessionMessages(sessionId)
+      // Fetch messages from PostgreSQL database via our API route
+      const appMessages = await SessionManager.fetchSessionMessages(sessionId, domain)
       
-      // Convert Zep messages to app messages
-      const convertedMessages: Message[] = zepMessages.map((zepMsg) => ({
-        id: zepMsg.uuid,
-        text: zepMsg.content,
-        sender: zepMsg.role_type,
-        timestamp: new Date(zepMsg.created_at)
+      // Convert app messages to local messages format
+      const convertedMessages: Message[] = appMessages.map((appMsg) => ({
+        id: appMsg.id,
+        text: appMsg.content,
+        sender: appMsg.role_type,
+        timestamp: new Date(appMsg.created_at)
       }))
       
-      setMessages(convertedMessages)
-      
-      // If no messages found but session exists in local storage, it might be a new session
       if (convertedMessages.length === 0) {
         console.log("No messages found for session, starting fresh")
         setMessages([])
+      } else {
+        console.log(`Loaded ${convertedMessages.length} messages for session ${sessionId}`)
+        setMessages(convertedMessages)
       }
     } catch (error) {
       console.error("Error loading session from URL:", error)

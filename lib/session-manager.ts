@@ -1,17 +1,19 @@
-// Session management utilities for Zep API
-export interface ZepMessage {
-  uuid: string
+// Session management utilities for PostgreSQL
+import DatabaseManager, { ChatMessage } from './database'
+
+export interface AppMessage {
+  id: string
   created_at: string
-  updated_at: string
+  updated_at?: string
   role: string
   role_type: "user" | "assistant"
   content: string
-  token_count: number
-  processed: boolean
+  token_count?: number
+  processed?: boolean
 }
 
-export interface ZepSessionResponse {
-  messages: ZepMessage[]
+export interface SessionResponse {
+  messages: AppMessage[]
   total_count: number
   row_count: number
 }
@@ -23,8 +25,6 @@ export interface ChatSession {
   timestamp: Date
   messageCount: number
 }
-
-// Removed direct API constants - now handled by API routes
 
 // Local storage keys
 const SESSIONS_STORAGE_KEY = "mutumwa_chat_sessions"
@@ -89,19 +89,19 @@ export class SessionManager {
     if (typeof window === "undefined") return
     localStorage.setItem(CURRENT_SESSION_KEY, sessionId)
   }
-  // Fetch messages from Zep API via our Next.js API route
-  static async fetchSessionMessages(sessionId: string): Promise<ZepMessage[]> {
+  // Fetch messages from PostgreSQL database via our Next.js API route
+  static async fetchSessionMessages(sessionId: string, domain: string = 'general'): Promise<AppMessage[]> {
     try {
-      const response = await fetch(`/api/sessions/${sessionId}/messages`)
+      console.log(`Fetching messages for session ${sessionId} in domain ${domain}`)
+      const response = await fetch(`/api/sessions/${sessionId}/messages?domain=${domain}`)
 
       if (!response.ok) {
         console.warn(`Failed to fetch messages: ${response.statusText}`)
         return []
       }
 
-      const data: ZepSessionResponse = await response.json()
+      const data: SessionResponse = await response.json()
       console.log("Fetched messages:", data.messages)
-      // Convert Zep messages to our format
       return data.messages || []
     } catch (error) {
       console.error("Error fetching session messages:", error)
@@ -109,33 +109,7 @@ export class SessionManager {
     }
   }
 
-  // Add a message to Zep session via our Next.js API route
-  static async addMessageToSession(sessionId: string, content: string, role: 'user' | 'assistant'): Promise<boolean> {
-    try {
-      const response = await fetch(`/api/sessions/${sessionId}/messages`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          role,
-          content
-        })
-      })
-
-      if (!response.ok) {
-        console.warn(`Failed to add message to Zep: ${response.statusText}`)
-        return false
-      }
-
-      console.log(`Message added to Zep session ${sessionId}`)
-      return true
-    } catch (error) {
-      console.error("Error adding message to Zep session:", error)
-      return false
-    }
-  }
-
+  
   // Create a session title from the first message
   static generateSessionTitle(firstMessage: string): string {
     // Take first 50 characters and add ellipsis if longer

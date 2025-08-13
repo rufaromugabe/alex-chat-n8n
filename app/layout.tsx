@@ -52,6 +52,7 @@ function Header() {
             src="/logo.png"
             alt="Mutumwa AI Logo"
             fill
+            sizes="(max-width: 640px) 80px, 64px"
             className="object-contain"
           />
         </div>

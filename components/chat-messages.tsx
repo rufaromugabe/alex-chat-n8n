@@ -46,6 +46,7 @@ export default function ChatMessages({
             src="/mut.png"
             alt="Mutumwa AI Logo"
             fill
+            sizes="80px"
             className="object-contain"
           />
         </div>

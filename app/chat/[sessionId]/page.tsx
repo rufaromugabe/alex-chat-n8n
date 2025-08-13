@@ -31,7 +31,7 @@ export default function ChatPage() {
   useEffect(() => {
     if (sessionId && sessionId !== "new" && sessionId !== loadedSessionId) {
       setLoadedSessionId(sessionId)
-      loadSessionFromUrl(sessionId).then(() => {
+      loadSessionFromUrl(sessionId, selectedDomain.value).then(() => {
         setIsSessionLoaded(true)
       })
     } else if (sessionId === "new") {
@@ -44,7 +44,7 @@ export default function ChatPage() {
     } else {
       setIsSessionLoaded(true)
     }
-  }, [sessionId, router]) // Removed loadSessionFromUrl from dependencies
+  }, [sessionId, router, selectedDomain.value, loadSessionFromUrl]) // Added dependencies
 
   // Set current session ID
   useEffect(() => {
@@ -72,10 +72,7 @@ export default function ChatPage() {
     SessionManager.updateSessionWithMessage(sessionId, text, true)
     refreshSessions()
 
-    // Add user message to Zep (async, don't wait for it)
-    SessionManager.addMessageToSession(sessionId, text, 'user').catch(error => {
-      console.warn('Failed to add user message to Zep:', error)
-    })
+    // Messages are now handled by the webhook, no need to add them separately
 
     setIsLoading(true)
 
@@ -196,12 +193,7 @@ export default function ChatPage() {
         }
       }
 
-      // Add assistant message to Zep (async, don't wait for it)
-      if (accumulatedText) {
-        SessionManager.addMessageToSession(sessionId, accumulatedText, 'assistant').catch(error => {
-          console.warn('Failed to add assistant message to Zep:', error)
-        })
-      }
+     
     } catch (error) {
       console.error("Error sending message:", error)
 

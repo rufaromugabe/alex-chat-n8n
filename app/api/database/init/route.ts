@@ -17,7 +17,7 @@ export async function GET(
   try {
     const { sessionId } = params
     const { searchParams } = new URL(request.url)
-    const domain = searchParams.get('domain') || 'general'
+    const domain = searchParams.get('domain') || 'default'
 
     if (!sessionId) {
       return NextResponse.json(
@@ -43,33 +43,20 @@ export async function GET(
       ORDER BY created_at ASC
     `
     
-    console.log(`Querying table ${tableName} for session ${sessionId}`)
     const result = await pool.query(query, [sessionId])
     const dbMessages = result.rows
-    console.log(`Found ${dbMessages.length} messages in ${tableName} for session ${sessionId}`)
     
     // Convert database messages to app format (handle both "human"/"ai" and "user"/"ai" types)
-    const messages = dbMessages.map(dbMsg => {
-      // Log the message structure to debug
-      console.log('Processing message:', JSON.stringify(dbMsg.message))
-      
-      // Handle different type formats
-      const messageType = dbMsg.message.type || 'unknown'
-      const isUserMessage = messageType === 'human' || messageType === 'user'
-      
-      return {
-        id: dbMsg.id.toString(),
-        uuid: dbMsg.id.toString(),
-        created_at: dbMsg.created_at?.toISOString() || new Date().toISOString(),
-        role: isUserMessage ? 'user' : 'assistant',
-        role_type: isUserMessage ? 'user' as const : 'assistant' as const,
-        content: dbMsg.message.content,
-        token_count: 0,
-        processed: true
-      }
-    })
-
-    console.log('Returning messages:', messages.length)
+    const messages = dbMessages.map(dbMsg => ({
+      id: dbMsg.id.toString(),
+      uuid: dbMsg.id.toString(),
+      created_at: dbMsg.created_at?.toISOString() || new Date().toISOString(),
+      role: dbMsg.message.type === 'human' || dbMsg.message.type === 'user' ? 'user' : 'assistant',
+      role_type: dbMsg.message.type === 'human' || dbMsg.message.type === 'user' ? 'user' as const : 'assistant' as const,
+      content: dbMsg.message.content,
+      token_count: 0,
+      processed: true
+    }))
 
     return NextResponse.json({
       messages,
@@ -93,4 +80,3 @@ export async function GET(
   }
 }
 
-// POST functionality has been removed as it's handled by a webhook
