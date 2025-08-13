@@ -97,25 +97,12 @@ export default function ChatPage() {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
 
-      // Create initial assistant message
-      const assistantMessageId = uuidv4()
-      let assistantMessage = {
-        id: assistantMessageId,
-        text: "",
-        sender: "assistant" as const,
-        timestamp: new Date(),
-      }
-
-      // Add initial empty assistant message
-      setMessages((prev) => [...prev, assistantMessage])
-
-      // Set loading to false since we're about to start streaming
-      setIsLoading(false)
-
       // Read the streaming response
       const reader = response.body?.getReader()
       const decoder = new TextDecoder()
       let accumulatedText = ""
+      let assistantMessageId = ""
+      let messageCreated = false
 
       if (reader) {
         try {
@@ -134,6 +121,20 @@ export default function ChatPage() {
                   
                   // Handle different event types
                   if (parsedLine.type === 'item' && parsedLine.content) {
+                    // Create assistant message only when we have content to show
+                    if (!messageCreated) {
+                      assistantMessageId = uuidv4()
+                      const assistantMessage = {
+                        id: assistantMessageId,
+                        text: "",
+                        sender: "assistant" as const,
+                        timestamp: new Date(),
+                      }
+                      setMessages((prev) => [...prev, assistantMessage])
+                      setIsLoading(false) // Stop loading indicator
+                      messageCreated = true
+                    }
+
                     // Check if content is a JSON string (final response)
                     if (parsedLine.content.startsWith('{') && parsedLine.content.endsWith('}')) {
                       try {
