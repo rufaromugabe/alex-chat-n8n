@@ -5,6 +5,7 @@ import { createContext, useContext, useState, ReactNode, useEffect } from "react
 type Domain = {
   value: string
   label: string
+  webhookUrl: string
 }
 
 type DomainContextType = {
@@ -15,10 +16,9 @@ type DomainContextType = {
 const DomainContext = createContext<DomainContextType | undefined>(undefined)
 
 const domains: Domain[] = [
-  { value: "general", label: "GENERAL" },
-  { value: "zesa", label: "ZESA" },
-  { value: "praz", label: "PRAZ" },
-  
+  { value: "general", label: "GENERAL", webhookUrl: "https://n8n.afrainity.com/webhook/general" },
+  { value: "zesa", label: "ZESA", webhookUrl: "https://n8n.afrainity.com/webhook/zesa" },
+  { value: "praz", label: "PRAZ", webhookUrl: "https://n8n.afrainity.com/webhook/praz" }
 ]
 
 export function DomainProvider({ children }: { children: ReactNode }) {

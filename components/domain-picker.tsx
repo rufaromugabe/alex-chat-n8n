@@ -6,6 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 interface Domain {
   value: string
   label: string
+  webhookUrl: string
 }
 
 interface DomainPickerProps {

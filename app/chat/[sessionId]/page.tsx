@@ -85,10 +85,9 @@ export default function ChatPage() {
       formData.append("text", text)
       formData.append("targetLanguage", selectedLanguage.value)
       formData.append("sessionId", sessionId)
-      formData.append("useCase", selectedDomain.value)
 
-      // Send request to the webhook using environment variable
-      const response = await fetch(process.env.NEXT_PUBLIC_WEBHOOK_URL || "", {
+      // Send request to the domain-specific webhook
+      const response = await fetch(selectedDomain.webhookUrl, {
         method: "POST",
         body: formData,
       })
