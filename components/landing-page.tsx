@@ -110,11 +110,11 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
 
           {/* Hero Title */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-  Your AI Assistant for{" "}
-  <span className="block bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
-    African Languages
-  </span>
-</h1>
+            Your AI Assistant for{" "}
+           <span className="block bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+            African Languages
+           </span>
+          </h1>
 
 
           {/* Hero Description */}
