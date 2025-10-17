@@ -103,21 +103,21 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
   return (
     <div className="min-h-screen bg-bg-primary relative overflow-x-hidden overflow-y-auto scroll-smooth" data-landing-page>
 
-
       {/* Floating Header */}
       <header className="fixed top-0 left-0 right-0 z-50 px-4 py-3 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-accent-primary/10 backdrop-blur-xl border border-accent-primary/30 rounded-2xl shadow-lg px-4 py-3 flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <div className="relative h-14 w-22 overflow-hidden">
+          <div className="bg-bg-secondary border border-accent-primary/30 rounded-2xl shadow-lg px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <div className="relative h-10 w-16 sm:h-14 sm:w-22 overflow-hidden">
                 <Image 
                   src="/logo.png"
                   alt="Mutumwa AI Logo"
                   fill
                 />
               </div>
+              <h2 className="text-sm sm:text-xl lg:text-2xl font-bold text-foreground whitespace-nowrap">Mutumwa AI</h2>
             </div>
-            
+
             <div className="flex items-center gap-4">
               <nav className="hidden md:flex items-center gap-6">
                 <a href="#features" className="text-foreground hover:text-accent-primary transition-colors font-medium">Features</a>
@@ -149,7 +149,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
           
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden mt-2 bg-accent-primary/10 backdrop-blur-xl border border-accent-primary/30 rounded-2xl shadow-lg p-4">
+            <div className="md:hidden mt-2 bg-bg-secondary border border-accent-primary/30 rounded-2xl shadow-lg p-4">
               <nav className="flex flex-col gap-4">
                 <a 
                   href="#features" 
@@ -189,8 +189,22 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
       </header>
 
       {/* Hero Section */}
-      <section className="relative z-10 px-4 pt-32 pb-20 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
+      <section className="relative z-10 px-4 pt-32 pb-20 sm:px-6 lg:px-8 min-h-screen flex items-center">
+        {/* Background Image for Hero Section Only */}
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/background.jpg"
+            alt="Background"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Overlay with glowing blue tint */}
+          <div className="absolute inset-0 bg-gradient-to-b from-blue-400/20 via-blue-500/15 to-bg-primary/40 dark:from-blue-500/40 dark:via-blue-600/30 dark:to-bg-primary/60" />
+          <div className="absolute inset-0 bg-gradient-radial from-blue-300/10 via-transparent to-transparent dark:from-blue-400/20" />
+        </div>
+
+        <div className="max-w-7xl mx-auto text-center relative z-10">
           {/* Hero Title */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
             Your AI Assistant for{" "}
@@ -199,25 +213,22 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
            </span>
           </h1>
 
-
           {/* Hero Description */}
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg sm:text-xl lg:text-2xl text-white font-medium max-w-3xl mx-auto mb-10 leading-relaxed drop-shadow-lg">
             Communicate naturally in over 23 African languages with cultural context.
           </p>
-
-
 
           {/* Interactive Chat Input Preview */}
           <div className="mt-16 max-w-5xl mx-auto">
             <div className="relative group">
-              <div className="relative bg-bg-secondary/80 backdrop-blur-xl border border-accent-primary/40 rounded-2xl shadow-2xl">
+              <div className="relative bg-slate-100 dark:bg-slate-800 border-[3px] border-blue-900 dark:border-blue-800 shadow-[0_0_20px_rgba(30,58,138,0.8)] rounded-2xl">
                 <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 md:p-4 lg:p-5">
                   <input
                     type="text"
                     value={chatInput}
                     onChange={(e) => setChatInput(e.target.value)}
                     placeholder={placeholderText}
-                    className="flex-1 px-4 py-6 sm:px-6 sm:py-8 md:px-8 md:py-10 lg:py-12 bg-bg-primary/80 border border-border-primary rounded-2xl text-base sm:text-lg md:text-xl text-foreground placeholder:text-accent-primary/70 focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:border-accent-primary/50 transition-all"
+                    className="flex-1 px-4 py-6 sm:px-6 sm:py-8 md:px-8 md:py-10 lg:py-12 bg-white dark:bg-slate-700 border-0 rounded-2xl text-base sm:text-lg md:text-xl text-gray-900 dark:text-white placeholder:text-blue-500 focus:outline-none transition-all"
                     onClick={onGetStarted}
                     readOnly
                   />
@@ -233,21 +244,24 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
             </div>
           </div>
 
-          {/* Language Showcase */}
-          <div className="mt-16">
-            <p className="text-sm text-text-tertiary mb-6">Supporting African Languages:</p>
-            <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-              {languages.map((language, index) => (
-                <div
-                  key={language.value}
-                  className="px-3 py-2 bg-bg-secondary/40 border border-border-primary rounded-lg text-sm text-text-secondary backdrop-blur-sm hover:bg-bg-tertiary/50 transition-colors"
-                >
-                  {language.label.split(' ')[0]}
-                </div>
-              ))}
-              <div className="px-3 py-2 bg-accent-primary/20 border border-accent-primary/30 rounded-lg text-sm text-accent-secondary backdrop-blur-sm">
-                +{africanLanguages.length - languages.length} more
+        </div>
+      </section>
+
+      {/* Language Showcase */}
+      <section className="relative z-10 px-4 py-12 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-sm text-text-tertiary mb-6">Supporting African Languages:</p>
+          <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+            {languages.map((language, index) => (
+              <div
+                key={language.value}
+                className="px-3 py-2 bg-bg-secondary/40 border border-border-primary rounded-lg text-sm text-text-secondary backdrop-blur-sm hover:bg-bg-tertiary/50 transition-colors"
+              >
+                {language.label.split(' ')[0]}
               </div>
+            ))}
+            <div className="px-3 py-2 bg-accent-primary/20 border border-accent-primary/30 rounded-lg text-sm text-accent-secondary backdrop-blur-sm">
+              +{africanLanguages.length - languages.length} more
             </div>
           </div>
         </div>
