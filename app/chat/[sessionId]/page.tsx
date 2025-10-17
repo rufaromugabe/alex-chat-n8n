@@ -304,13 +304,13 @@ export default function ChatPage() {
       
       {/* Suggestion slider - only show when chat hasn't started */}
       {messages.length === 0 && (
-        <div className="py-2.5 px-3 overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent flex-shrink-0">
-          <div className="flex flex-wrap justify-center space-x-3 md:space-x-3 md:flex-row space-y-2 md:space-y-0">
+        <div className="py-2.5 px-3 overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-accent-primary/20 scrollbar-track-transparent flex-shrink-0 dot-pattern">
+          <div className="flex flex-wrap justify-center gap-2 md:gap-3">
             {getLanguageSuggestions(selectedLanguage.value).map((suggestion, index) => (
               <button
                 key={index}
                 onClick={() => handleSendMessage(suggestion)}
-                className="px-3 py-1.5 rounded-full border border-white/20 hover:border-white/40 hover:text-white text-sm text-white/80 transition-all flex-shrink-0 active:scale-95 touch-manipulation md:mx-1"
+                className="px-4 py-2 rounded-full bg-bg-secondary/60 backdrop-blur-sm border border-accent-primary/30 hover:border-accent-primary/50 hover:bg-accent-primary/10 text-sm text-foreground transition-all flex-shrink-0 active:scale-95 touch-manipulation shadow-sm hover:shadow-glow-sm"
               >
                 {suggestion}
               </button>

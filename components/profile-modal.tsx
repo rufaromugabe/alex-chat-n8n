@@ -233,7 +233,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                 {isEditing && (
                   <button
                     onClick={() => handleDeleteField(key)}
-                    className="text-red-400 hover:text-red-300 p-1"
+                    className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 p-1"
                     title="Delete field"
                   >
                     <Trash2 className="h-3 w-3" />
@@ -264,7 +264,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
               />
               <button
                 onClick={() => handleArrayItemDelete(key, index)}
-                className="text-red-400 hover:text-red-300 p-1"
+                className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 p-1"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -375,7 +375,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                 onClick={handleLogout}
                 variant="outline"
                 size="sm"
-                className="border-red-600/50 bg-red-900/20 hover:bg-red-900/40 text-red-400 hover:text-red-300"
+                className="border-red-500/30 bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"
                 title="Sign Out"
               >
                 <LogOut className="h-4 w-4 mr-1" />
@@ -410,7 +410,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
             )}
 
             {error && (
-              <p className="text-red-400 text-sm mb-2">{error}</p>
+              <p className="text-red-600 dark:text-red-400 text-sm mb-2">{error}</p>
             )}
 
             {!isLoading && !error && userMemory && (
