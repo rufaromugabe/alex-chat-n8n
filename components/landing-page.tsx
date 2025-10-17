@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowRight, Globe, MessageCircle, Sparkles, Users, Zap, CheckCircle, Star } from "lucide-react"
+import { ArrowRight, Globe, MessageCircle, Sparkles, Users, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { africanLanguages } from "@/lib/languages"
 import Image from "next/image"
@@ -12,6 +12,9 @@ interface LandingPageProps {
 
 export default function LandingPage({ onGetStarted }: LandingPageProps) {
   const [hoveredFeature, setHoveredFeature] = useState<number | null>(null)
+  const [chatInput, setChatInput] = useState("")
+
+
 
   const features = [
     {
@@ -42,26 +45,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
 
   const languages = africanLanguages.slice(0, 12) // Show first 12 languages
 
-  const testimonials = [
-    {
-      name: "Amara Okafor",
-      location: "Lagos, Nigeria",
-      text: "Finally, an AI that understands my language and culture. Mutumwa speaks Igbo like a native!",
-      rating: 5
-    },
-    {
-      name: "Tendai Mukamuri",
-      location: "Harare, Zimbabwe",
-      text: "The Shona translations are incredibly accurate. This is exactly what Africa needed.",
-      rating: 5
-    },
-    {
-      name: "Fatou Diallo",
-      location: "Dakar, Senegal",
-            text: "Speaking Wolof with Mutumwa feels natural and authentic. Truly impressive technology.",
-      rating: 5
-    }
-  ]
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--gradient-from))] via-[hsl(var(--gradient-via))] to-[hsl(var(--gradient-to))] relative overflow-x-hidden overflow-y-auto scroll-smooth" data-landing-page>
       {/* Background decorative elements */}
@@ -123,25 +107,33 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
             Communicate naturally in over 23 African languages with cultural context and authenticity.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button 
-              onClick={onGetStarted}
-              size="lg"
-              className="bg-accent-primary hover:bg-accent-primary-hover text-text-inverse px-8 py-4 text-lg font-semibold shadow-glow-lg border border-accent-primary/50 backdrop-blur-sm group"
-            >
-              Start Chatting Now
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            
-            <Button 
-              variant="outline"
-              size="lg"
-              className="border-border-primary text-text-secondary hover:text-foreground hover:bg-bg-secondary/50 px-8 py-4 text-lg backdrop-blur-sm"
-            >
-              <Globe className="mr-2 h-5 w-5" />
-              Explore Languages
-            </Button>
+
+
+          {/* Interactive Chat Input Preview */}
+          <div className="mt-16 max-w-5xl mx-auto">
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-accent-primary/50 via-[hsl(var(--blur-indigo))]/50 to-[hsl(var(--blur-purple))]/50 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
+              <div className="relative bg-bg-secondary/60 backdrop-blur-xl border border-border-primary rounded-2xl shadow-2xl">
+                <div className="flex items-center gap-2 p-2 md:p-3 lg:p-4">
+                  <input
+                    type="text"
+                    value={chatInput}
+                    onChange={(e) => setChatInput(e.target.value)}
+                    placeholder="Ask me anything in African languages..."
+                    className="flex-1 px-4 py-6 md:px-6 md:py-8 bg-bg-primary/50 border-0 rounded-2xl text-lg text-foreground placeholder:text-text-tertiary focus:outline-none focus:ring-2 focus:ring-accent-primary/50 transition-all"
+                    onClick={onGetStarted}
+                    readOnly
+                  />
+                  <Button
+                    onClick={onGetStarted}
+                    size="icon"
+                    className="rounded-full bg-accent-primary hover:bg-accent-primary-hover h-9 w-9 md:h-10 md:w-10 shadow-glow-md border border-accent-primary/50 transition-all duration-200 hover:shadow-glow-lg flex-shrink-0"
+                  >
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Language Showcase */}
@@ -203,70 +195,6 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="relative z-10 px-4 py-20 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Loved by Communities Across Africa
-            </h2>
-            <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-              See what people are saying about their experience with Mutumwa
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="p-6 rounded-2xl bg-bg-secondary/40 border border-border-primary backdrop-blur-sm hover:bg-bg-tertiary/50 transition-all duration-300"
-              >
-                <div className="flex items-center mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                <p className="text-text-secondary mb-4 italic">"{testimonial.text}"</p>
-                <div>
-                  <p className="text-foreground font-semibold">{testimonial.name}</p>
-                  <p className="text-text-tertiary text-sm">{testimonial.location}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative z-10 px-4 py-20 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-accent-primary/20 to-[hsl(var(--blur-indigo))]/20 border border-accent-primary/30 backdrop-blur-sm">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Ready to Start Conversing?
-            </h2>
-            <p className="text-xl text-accent-secondary mb-8 max-w-2xl mx-auto">
-              Join thousands of users experiencing AI that truly understands African languages and cultures.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                onClick={onGetStarted}
-                size="lg"
-                className="bg-accent-primary hover:bg-accent-primary-hover text-text-inverse px-8 py-4 text-lg font-semibold shadow-glow-lg border border-accent-primary/50 group"
-              >
-                <Zap className="mr-2 h-5 w-5" />
-                Get Started Free
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </div>
-
-            <div className="flex items-center justify-center mt-6 text-sm text-accent-secondary">
-              <CheckCircle className="mr-2 h-4 w-4" />
-              No account required • Start chatting immediately
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Footer */}
       <footer className="relative z-10 px-4 py-8 sm:px-6 lg:px-8 border-t border-border-primary">
