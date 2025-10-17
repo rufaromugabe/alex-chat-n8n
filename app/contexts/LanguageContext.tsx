@@ -16,7 +16,9 @@ type LanguageContextType = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [selectedLanguage, setSelectedLanguage] = useState(africanLanguages[0])
+  // Set English as default (last item in the array)
+  const englishLanguage = africanLanguages.find(lang => lang.value === 'english') || africanLanguages[0]
+  const [selectedLanguage, setSelectedLanguage] = useState(englishLanguage)
 
   return (
     <LanguageContext.Provider value={{ selectedLanguage, setSelectedLanguage }}>

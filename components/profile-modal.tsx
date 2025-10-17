@@ -4,12 +4,14 @@ import { useEffect, useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { UserManager } from "@/lib/user-manager"
-import { Loader2, Edit2, Save, X, Plus, Trash2, GripVertical } from "lucide-react"
+import { Loader2, Edit2, Save, X, Plus, Trash2, GripVertical, LogOut } from "lucide-react"
+import DomainPicker from "@/components/domain-picker"
+import { domains } from "@/app/contexts/DomainContext"
+import { useAuth } from "@/app/contexts/AuthContext"
 
 interface ProfileModalProps {
   isOpen: boolean
   onClose: () => void
-  domain: string
 }
 
 interface UserMemory {
@@ -19,7 +21,7 @@ interface UserMemory {
   updated_at: string
 }
 
-export default function ProfileModal({ isOpen, onClose, domain }: ProfileModalProps) {
+export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
   const [userMemory, setUserMemory] = useState<UserMemory | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
@@ -30,21 +32,28 @@ export default function ProfileModal({ isOpen, onClose, domain }: ProfileModalPr
   const [newFieldKey, setNewFieldKey] = useState("")
   const [newFieldValue, setNewFieldValue] = useState("")
   const [draggedItem, setDraggedItem] = useState<string | null>(null)
+  const [selectedDomain, setSelectedDomain] = useState(domains[0])
+  const { logout } = useAuth()
   const userId = UserManager.getUserId()
+
+  const handleLogout = () => {
+    logout()
+    onClose()
+  }
 
   useEffect(() => {
     if (isOpen) {
       fetchUserMemory()
       setIsEditing(false)
     }
-  }, [isOpen, domain])
+  }, [isOpen, selectedDomain.value])
 
   const fetchUserMemory = async () => {
     setIsLoading(true)
     setError(null)
     
     try {
-      const response = await fetch(`/api/user-memory?userId=${userId}&domain=${domain}`)
+      const response = await fetch(`/api/user-memory?userId=${userId}&domain=${selectedDomain.value}`)
       
       if (!response.ok) {
         throw new Error('Failed to fetch user memory')
@@ -85,7 +94,7 @@ export default function ProfileModal({ isOpen, onClose, domain }: ProfileModalPr
         },
         body: JSON.stringify({
           userId,
-          domain,
+          domain: selectedDomain.value,
           workingMemory: orderedMemory
         })
       })
@@ -354,14 +363,33 @@ export default function ProfileModal({ isOpen, onClose, domain }: ProfileModalPr
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-5xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">User Profile</DialogTitle>
+          <DialogTitle className="text-xl font-semibold flex items-center justify-between gap-2 pr-8">
+            <span>User Profile</span>
+            <div className="flex items-center gap-2">
+              <DomainPicker
+                selectedDomain={selectedDomain}
+                setSelectedDomain={setSelectedDomain}
+                domains={domains}
+              />
+              <Button
+                onClick={handleLogout}
+                variant="outline"
+                size="sm"
+                className="border-red-600/50 bg-red-900/20 hover:bg-red-900/40 text-red-400 hover:text-red-300"
+                title="Sign Out"
+              >
+                <LogOut className="h-4 w-4 mr-1" />
+                Sign Out
+              </Button>
+            </div>
+          </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4 mt-4">
           {/* Working Memory Section */}
           <div className="bg-slate-800/50 p-4 rounded-lg">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-slate-300">User Information</h3>
+              <h3 className="text-sm font-semibold text-slate-300">Memories</h3>
               {!isLoading && userMemory && !isEditing && (
                 <Button
                   onClick={() => setIsEditing(true)}

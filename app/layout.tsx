@@ -19,7 +19,7 @@ import { useDomain } from "./contexts/DomainContext"
 import { useSidebar } from "./contexts/SidebarContext"
 import { ReactNode, useState } from "react"
 import { Inter } from "next/font/google"
-import { Menu, LogOut, User } from "lucide-react"
+import { Menu, User } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 import "./globals.css"
 
@@ -30,14 +30,9 @@ function Header() {
   const { selectedLanguage, setSelectedLanguage } = useLanguage()
   const { selectedDomain, setSelectedDomain } = useDomain()
   const { isSidebarOpen, setIsSidebarOpen } = useSidebar()
-  const { logout } = useAuth()
   const { refreshSessionsForDomain, startNewChat } = useApp()
   const router = useRouter()
   const [isProfileOpen, setIsProfileOpen] = useState(false)
-
-  const handleLogout = () => {
-    logout()
-  }
 
   const handleDomainChange = (domain: typeof selectedDomain) => {
     setSelectedDomain(domain)
@@ -52,27 +47,28 @@ function Header() {
 
   return (
     <div className="flex items-center justify-between border-b border-white/10 px-2 sm:px-4 py-2 sm:py-3">
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center gap-1 sm:gap-2">
         {/* Mobile menu button - shown only if sidebar is closed */}
         {!isSidebarOpen && (
           <button
             onClick={() => setIsSidebarOpen(true)}
-            className="md:hidden "
+            className="md:hidden p-1"
           >
-            <Menu className="h-8 w-8 text-white" />
+            <Menu className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
           </button>
         )}
-        <div className="relative h-20 w-20 sm:h-16 sm:w-16 ml-2 ">
+        <div className="relative h-12 w-16 sm:h-16 sm:w-20">
           <Image 
             src="/logo.png"
             alt="Mutumwa AI Logo"
             fill
-            sizes="(max-width: 640px) 80px, 64px"
+            sizes="(max-width: 640px) 64px, 80px"
             className="object-contain"
           />
         </div>
-      </div>      <div className="flex items-center gap-2 flex-shrink-0 ml-2 sm:ml-4">
-
+      </div>
+      
+      <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
         <DomainPicker
           selectedDomain={selectedDomain}
           setSelectedDomain={handleDomainChange}
@@ -87,18 +83,10 @@ function Header() {
           onClick={() => setIsProfileOpen(true)}
           variant="outline"
           size="sm"
-          className="border-slate-700/50 bg-slate-800/70 hover:bg-slate-700/70 text-white hover:text-white"
+          className="border-slate-700/50 bg-slate-800/70 hover:bg-slate-700/70 text-white hover:text-white p-2"
           title="View Profile"
         >
-          <User className="h-4 w-4" />
-        </Button>
-        <Button
-          onClick={handleLogout}
-          variant="outline"
-          size="sm"
-          className="border-slate-700/50 bg-slate-800/70 hover:bg-slate-700/70 text-white hover:text-white"
-        >
-          <LogOut className="h-4 w-4" />
+          <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
         </Button>
       </div>
       
@@ -106,7 +94,6 @@ function Header() {
       <ProfileModal 
         isOpen={isProfileOpen} 
         onClose={() => setIsProfileOpen(false)}
-        domain={selectedDomain.value}
       />
     </div>
   )
