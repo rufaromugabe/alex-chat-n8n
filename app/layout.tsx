@@ -8,6 +8,7 @@ import { AppProvider, useApp } from "./contexts/AppContext"
 import dynamic from "next/dynamic"
 import LanguagePicker from "@/components/language-picker"
 import DomainPicker from "@/components/domain-picker"
+import ProfileModal from "@/components/profile-modal"
 import LoginPage from "@/components/login-page"
 import { Button } from "@/components/ui/button"
 import { africanLanguages } from "@/lib/languages"
@@ -16,9 +17,9 @@ import Image from "next/image"
 import { useLanguage } from "./contexts/LanguageContext"
 import { useDomain } from "./contexts/DomainContext"
 import { useSidebar } from "./contexts/SidebarContext"
-import { ReactNode } from "react"
+import { ReactNode, useState } from "react"
 import { Inter } from "next/font/google"
-import { Menu, LogOut } from "lucide-react"
+import { Menu, LogOut, User } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 import "./globals.css"
 
@@ -32,6 +33,7 @@ function Header() {
   const { logout } = useAuth()
   const { refreshSessionsForDomain, startNewChat } = useApp()
   const router = useRouter()
+  const [isProfileOpen, setIsProfileOpen] = useState(false)
 
   const handleLogout = () => {
     logout()
@@ -82,6 +84,15 @@ function Header() {
           languages={africanLanguages}
         />
         <Button
+          onClick={() => setIsProfileOpen(true)}
+          variant="outline"
+          size="sm"
+          className="border-slate-700/50 bg-slate-800/70 hover:bg-slate-700/70 text-white hover:text-white"
+          title="View Profile"
+        >
+          <User className="h-4 w-4" />
+        </Button>
+        <Button
           onClick={handleLogout}
           variant="outline"
           size="sm"
@@ -90,6 +101,13 @@ function Header() {
           <LogOut className="h-4 w-4" />
         </Button>
       </div>
+      
+      {/* Profile Modal */}
+      <ProfileModal 
+        isOpen={isProfileOpen} 
+        onClose={() => setIsProfileOpen(false)}
+        domain={selectedDomain.value}
+      />
     </div>
   )
 }
