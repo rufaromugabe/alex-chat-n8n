@@ -30,3 +30,39 @@ export async function GET(request: NextRequest) {
         )
     }
 }
+
+// POST update user memory
+export async function POST(request: NextRequest) {
+    try {
+        const body = await request.json()
+        const { userId, domain, workingMemory } = body
+
+        if (!userId || !domain || !workingMemory) {
+            return NextResponse.json(
+                { error: 'User ID, domain, and working memory are required' },
+                { status: 400 }
+            )
+        }
+
+        const success = await DatabaseManager.updateUserMemory(domain, userId, workingMemory)
+
+        if (!success) {
+            return NextResponse.json(
+                { error: 'Failed to update user memory' },
+                { status: 500 }
+            )
+        }
+
+        return NextResponse.json({
+            success: true,
+            message: 'User memory updated successfully'
+        })
+
+    } catch (error) {
+        console.error('Error updating user memory:', error)
+        return NextResponse.json(
+            { error: 'Failed to update user memory' },
+            { status: 500 }
+        )
+    }
+}
