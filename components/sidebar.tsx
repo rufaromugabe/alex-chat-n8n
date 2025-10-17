@@ -59,7 +59,7 @@ export default function Sidebar({
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-50 h-full w-64 bg-gradient-to-b from-[hsl(var(--gradient-from))]/90 to-[hsl(var(--gradient-via))]/90 backdrop-blur-lg border-r border-border-primary flex flex-col transition-transform duration-300 md:translate-x-0 ${
+        className={`fixed top-0 left-0 z-50 h-full w-64 bg-background border-r border-border-primary flex flex-col transition-transform duration-300 md:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
