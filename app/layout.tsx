@@ -5,10 +5,12 @@ import { DomainProvider } from "./contexts/DomainContext"
 import { AuthProvider, useAuth } from "./contexts/AuthContext"
 import { SidebarProvider } from "./contexts/SidebarContext"
 import { AppProvider, useApp } from "./contexts/AppContext"
+import { ThemeProvider } from "./contexts/ThemeContext"
 import dynamic from "next/dynamic"
 import LanguagePicker from "@/components/language-picker"
 import DomainPicker from "@/components/domain-picker"
 import ProfileModal from "@/components/profile-modal"
+import ThemeToggle from "@/components/theme-toggle"
 import LoginPage from "@/components/login-page"
 import { Button } from "@/components/ui/button"
 import { africanLanguages } from "@/lib/languages"
@@ -46,7 +48,7 @@ function Header() {
   }
 
   return (
-    <div className="flex items-center justify-between border-b border-white/10 px-2 sm:px-4 py-2 sm:py-3">
+    <div className="flex items-center justify-between border-b border-border-primary px-2 sm:px-4 py-2 sm:py-3">
       <div className="flex items-center gap-1 sm:gap-2">
         {/* Mobile menu button - shown only if sidebar is closed */}
         {!isSidebarOpen && (
@@ -54,7 +56,7 @@ function Header() {
             onClick={() => setIsSidebarOpen(true)}
             className="md:hidden p-1"
           >
-            <Menu className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
+            <Menu className="h-6 w-6 sm:h-8 sm:w-8 text-foreground" />
           </button>
         )}
         <div className="relative h-12 w-16 sm:h-16 sm:w-20">
@@ -79,11 +81,12 @@ function Header() {
           setSelectedLanguage={setSelectedLanguage}
           languages={africanLanguages}
         />
+        <ThemeToggle />
         <Button
           onClick={() => setIsProfileOpen(true)}
           variant="outline"
           size="sm"
-          className="border-slate-700/50 bg-slate-800/70 hover:bg-slate-700/70 text-white hover:text-white p-2"
+          className="border-border bg-bg-secondary/70 hover:bg-bg-tertiary/70 text-foreground p-2"
           title="View Profile"
         >
           <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -118,7 +121,7 @@ function AuthenticatedApp({ children }: { children: ReactNode }) {
   // Show loading spinner while checking authentication (only for protected routes)
   if (requiresAuth && isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-950/95 via-slate-900/90 to-slate-950/95">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[hsl(var(--gradient-from))] via-[hsl(var(--gradient-via))] to-[hsl(var(--gradient-to))]">
         <div className="text-center">
           <div className="relative h-16 w-16 mx-auto mb-4">
             <Image 
@@ -128,8 +131,8 @@ function AuthenticatedApp({ children }: { children: ReactNode }) {
               className="object-contain animate-pulse"
             />
           </div>
-          <div className="h-6 w-6 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>
-          <p className="text-white/60 text-sm mt-2">Loading...</p>
+          <div className="h-6 w-6 border-2 border-border-primary border-t-foreground rounded-full animate-spin mx-auto"></div>
+          <p className="text-text-secondary text-sm mt-2">Loading...</p>
         </div>
       </div>
     )
@@ -181,12 +184,12 @@ function AppLayout({ children }: { children: ReactNode }) {
     return <>{children}</>
   }
   return (
-    <div className="relative flex h-screen w-screen overflow-hidden bg-gradient-to-br from-indigo-950/95 via-slate-900/90 to-slate-950/95" data-chat-layout>
+    <div className="relative flex h-screen w-screen overflow-hidden bg-gradient-to-br from-[hsl(var(--gradient-from))] via-[hsl(var(--gradient-via))] to-[hsl(var(--gradient-to))]" data-chat-layout>
       {/* Background decorative elements */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-blue-800/15 blur-3xl"></div>
-        <div className="absolute right-0 top-1/4 h-60 w-60 rounded-full bg-indigo-700/15 blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/3 h-60 w-60 rounded-full bg-purple-800/15 blur-3xl"></div>
+        <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-[hsl(var(--blur-blue))]/[var(--blur-opacity)] blur-3xl"></div>
+        <div className="absolute right-0 top-1/4 h-60 w-60 rounded-full bg-[hsl(var(--blur-indigo))]/[var(--blur-opacity)] blur-3xl"></div>
+        <div className="absolute bottom-0 left-1/3 h-60 w-60 rounded-full bg-[hsl(var(--blur-purple))]/[var(--blur-opacity)] blur-3xl"></div>
       </div>
       
       <Sidebar 
@@ -205,7 +208,7 @@ function AppLayout({ children }: { children: ReactNode }) {
       >
         <div className="flex h-full w-full flex-col p-0 md:p-2 md:px-10 md:py-2">
           {/* Chat container - full screen on mobile */}
-          <div className="relative flex h-[100dvh] md:h-[calc(100vh-20px)] w-full flex-col overflow-hidden md:rounded-xl md:border md:border-white/10 bg-white/5 backdrop-blur-lg md:shadow-xl">
+          <div className="relative flex h-[100dvh] md:h-[calc(100vh-20px)] w-full flex-col overflow-hidden md:rounded-xl md:border md:border-border-primary bg-bg-primary/95 backdrop-blur-lg md:shadow-xl">
             {showHeader && <Header />}
             {children}
           </div>
@@ -221,19 +224,36 @@ export default function RootLayout({
   children: ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const theme = localStorage.getItem('mutumwa-theme') || 
+                                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                  document.documentElement.classList.add(theme);
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={inter.className}>
-        <AuthProvider>
-          <AppProvider>
-            <SidebarProvider>
-              <LanguageProvider>
-                <DomainProvider>
-                  <AuthenticatedApp>{children}</AuthenticatedApp>
-                </DomainProvider>
-              </LanguageProvider>
-            </SidebarProvider>
-          </AppProvider>
-        </AuthProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <AppProvider>
+              <SidebarProvider>
+                <LanguageProvider>
+                  <DomainProvider>
+                    <AuthenticatedApp>{children}</AuthenticatedApp>
+                  </DomainProvider>
+                </LanguageProvider>
+              </SidebarProvider>
+            </AppProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

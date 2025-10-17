@@ -198,7 +198,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
 
   const renderWorkingMemory = (memory: any) => {
     if (!memory || Object.keys(memory).length === 0) {
-      return <p className="text-slate-400 text-sm">No information available</p>
+      return <p className="text-text-tertiary text-sm">No information available</p>
     }
 
     // Use fieldOrder to maintain the order
@@ -217,16 +217,16 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
               onDragStart={() => handleDragStart(key)}
               onDragOver={(e) => handleDragOver(e, key)}
               onDragEnd={handleDragEnd}
-              className={`border border-slate-700/50 rounded-lg p-3 bg-slate-800/30 transition-all ${
-                isEditing ? 'cursor-move hover:border-slate-600' : ''
+              className={`border border-border-primary rounded-lg p-3 bg-bg-tertiary/30 transition-all ${
+                isEditing ? 'cursor-move hover:border-border-focus' : ''
               } ${draggedItem === key ? 'opacity-50' : ''}`}
             >
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   {isEditing && (
-                    <GripVertical className="h-4 w-4 text-slate-500" />
+                    <GripVertical className="h-4 w-4 text-text-tertiary" />
                   )}
-                  <h4 className="text-sm font-semibold text-slate-300 capitalize">
+                  <h4 className="text-sm font-semibold text-text-secondary capitalize">
                     {key.replace(/_/g, ' ')}
                   </h4>
                 </div>
@@ -240,7 +240,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                   </button>
                 )}
               </div>
-              <div className="text-sm text-slate-400">
+              <div className="text-sm text-text-tertiary">
                 {isEditing ? renderEditableValue(key, value) : renderValue(value)}
               </div>
             </div>
@@ -260,7 +260,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                 type="text"
                 value={typeof item === 'object' ? JSON.stringify(item) : String(item)}
                 onChange={(e) => handleArrayItemChange(key, index, e.target.value)}
-                className="flex-1 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-sm text-white"
+                className="flex-1 bg-bg-input border border-border rounded px-2 py-1 text-sm text-foreground"
               />
               <button
                 onClick={() => handleArrayItemDelete(key, index)}
@@ -272,7 +272,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
           ))}
           <button
             onClick={() => handleArrayItemAdd(key)}
-            className="flex items-center gap-1 text-blue-400 hover:text-blue-300 text-xs"
+            className="flex items-center gap-1 text-accent-primary hover:text-accent-primary-hover text-xs"
           >
             <Plus className="h-3 w-3" />
             Add item
@@ -293,7 +293,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
               // Invalid JSON, keep as string
             }
           }}
-          className="w-full bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white font-mono"
+          className="w-full bg-bg-input border border-border rounded px-2 py-1 text-xs text-foreground font-mono"
           rows={4}
         />
       )
@@ -304,7 +304,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
         <select
           value={value ? 'true' : 'false'}
           onChange={(e) => handleFieldChange(key, e.target.value === 'true')}
-          className="bg-slate-800 border border-slate-600 rounded px-2 py-1 text-sm text-white"
+          className="bg-bg-input border border-border rounded px-2 py-1 text-sm text-foreground"
         >
           <option value="true">Yes</option>
           <option value="false">No</option>
@@ -317,19 +317,19 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
         type="text"
         value={String(value)}
         onChange={(e) => handleFieldChange(key, e.target.value)}
-        className="w-full bg-slate-800 border border-slate-600 rounded px-2 py-1 text-sm text-white"
+        className="w-full bg-bg-input border border-border rounded px-2 py-1 text-sm text-foreground"
       />
     )
   }
 
   const renderValue = (value: any): React.ReactNode => {
     if (value === null || value === undefined) {
-      return <span className="text-slate-500 italic">Not set</span>
+      return <span className="text-text-tertiary italic">Not set</span>
     }
 
     if (Array.isArray(value)) {
       if (value.length === 0) {
-        return <span className="text-slate-500 italic">None</span>
+        return <span className="text-text-tertiary italic">None</span>
       }
       return (
         <ul className="list-disc list-inside space-y-1">
@@ -342,7 +342,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
 
     if (typeof value === 'object') {
       return (
-        <pre className="bg-slate-800/50 p-2 rounded text-xs overflow-x-auto">
+        <pre className="bg-bg-tertiary/50 p-2 rounded text-xs overflow-x-auto">
           {JSON.stringify(value, null, 2)}
         </pre>
       )
@@ -353,7 +353,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
     }
 
     if (value === '') {
-      return <span className="text-slate-500 italic">Not set</span>
+      return <span className="text-text-tertiary italic">Not set</span>
     }
 
     return <span>{String(value)}</span>
@@ -387,15 +387,15 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
 
         <div className="space-y-4 mt-4">
           {/* Working Memory Section */}
-          <div className="bg-slate-800/50 p-4 rounded-lg">
+          <div className="bg-bg-secondary/50 p-4 rounded-lg">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-slate-300">Memories</h3>
+              <h3 className="text-sm font-semibold text-text-secondary">Memories</h3>
               {!isLoading && userMemory && !isEditing && (
                 <Button
                   onClick={() => setIsEditing(true)}
                   variant="outline"
                   size="sm"
-                  className="border-slate-600 bg-slate-800 hover:bg-slate-700 text-white"
+                  className="border-border bg-bg-tertiary hover:bg-bg-secondary text-foreground"
                 >
                   <Edit2 className="h-4 w-4 mr-1" />
                   Edit
@@ -405,7 +405,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
             
             {isLoading && (
               <div className="flex items-center justify-center py-8">
-                <Loader2 className="h-6 w-6 animate-spin text-blue-400" />
+                <Loader2 className="h-6 w-6 animate-spin text-accent-primary" />
               </div>
             )}
 
@@ -416,9 +416,9 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
             {!isLoading && !error && userMemory && (
               <div>
                 {/* User ID at top */}
-                <div className="mb-4 pb-3 border-b border-slate-700/50">
-                  <h4 className="text-xs font-semibold text-slate-400 mb-1">User ID</h4>
-                  <p className="text-sm text-slate-300 font-mono break-all">{userId}</p>
+                <div className="mb-4 pb-3 border-b border-border-primary">
+                  <h4 className="text-xs font-semibold text-text-tertiary mb-1">User ID</h4>
+                  <p className="text-sm text-text-secondary font-mono break-all">{userId}</p>
                 </div>
 
                 {/* Working Memory Grid */}
@@ -426,27 +426,27 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                 
                 {/* Add New Field */}
                 {isEditing && (
-                  <div className="mt-4 pt-3 border-t border-slate-700/50">
-                    <h4 className="text-sm font-semibold text-slate-300 mb-2">Add New Field</h4>
+                  <div className="mt-4 pt-3 border-t border-border-primary">
+                    <h4 className="text-sm font-semibold text-text-secondary mb-2">Add New Field</h4>
                     <div className="flex gap-2">
                       <input
                         type="text"
                         placeholder="Field name"
                         value={newFieldKey}
                         onChange={(e) => setNewFieldKey(e.target.value)}
-                        className="flex-1 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-sm text-white"
+                        className="flex-1 bg-bg-input border border-border rounded px-2 py-1 text-sm text-foreground"
                       />
                       <input
                         type="text"
                         placeholder="Value"
                         value={newFieldValue}
                         onChange={(e) => setNewFieldValue(e.target.value)}
-                        className="flex-1 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-sm text-white"
+                        className="flex-1 bg-bg-input border border-border rounded px-2 py-1 text-sm text-foreground"
                       />
                       <Button
                         onClick={handleAddNewField}
                         size="sm"
-                        className="bg-blue-600 hover:bg-blue-700"
+                        className="bg-accent-primary hover:bg-accent-primary-hover"
                         disabled={!newFieldKey.trim()}
                       >
                         <Plus className="h-4 w-4" />
@@ -456,7 +456,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                 )}
                 
                 {!isEditing && (
-                  <div className="mt-4 pt-3 border-t border-slate-700/50 text-xs text-slate-500 flex justify-between items-center">
+                  <div className="mt-4 pt-3 border-t border-border-primary text-xs text-text-tertiary flex justify-between items-center">
                     <p>Last updated: {new Date(userMemory.updated_at).toLocaleString()}</p>
                   </div>
                 )}
@@ -464,7 +464,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
             )}
 
             {!isLoading && !error && !userMemory && (
-              <p className="text-slate-400 text-sm">No user information found for this domain</p>
+              <p className="text-text-tertiary text-sm">No user information found for this domain</p>
             )}
           </div>
 
@@ -474,7 +474,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
               <Button
                 onClick={handleCancel}
                 variant="outline"
-                className="border-slate-600 bg-slate-800 hover:bg-slate-700 text-white"
+                className="border-border bg-bg-tertiary hover:bg-bg-secondary text-foreground"
                 disabled={isSaving}
               >
                 <X className="h-4 w-4 mr-1" />
@@ -482,7 +482,7 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
               </Button>
               <Button
                 onClick={handleSave}
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-accent-primary hover:bg-accent-primary-hover"
                 disabled={isSaving}
               >
                 {isSaving ? (

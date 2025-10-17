@@ -24,7 +24,7 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-2 md:p-3 lg:p-4 border-t border-white/5"
+      className="p-2 md:p-3 lg:p-4 border-t border-border-secondary"
     >
       <div className="flex items-center gap-2 max-w-3xl mx-auto">
         <input
@@ -32,16 +32,16 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type a message..."
-          className="flex-1 bg-slate-900 text-white rounded-full px-3 py-2 md:px-4 md:py-2.5 focus:outline-none focus:ring-1 focus:ring-blue-400/70 border border-slate-700/30 shadow-[0_0_8px_rgba(96,165,250,0.2)] focus:shadow-[0_0_10px_rgba(96,165,250,0.5)]"
+          className="flex-1 bg-bg-input text-foreground rounded-full px-3 py-2 md:px-4 md:py-2.5 focus:outline-none focus:ring-1 focus:ring-border-focus border border-border-primary shadow-glow-sm focus:shadow-glow-md"
           disabled={isLoading}
         />
         <Button
           type="submit"
           size="icon"
-          className={`rounded-full bg-blue-500 hover:bg-blue-400 h-9 w-9 md:h-10 md:w-10 
-            shadow-[0_0_15px_rgba(96,165,250,0.7)] border border-blue-400/50
+          className={`rounded-full bg-accent-primary hover:bg-accent-primary-hover h-9 w-9 md:h-10 md:w-10 
+            shadow-glow-md border border-accent-primary/50
             transition-all duration-200
-            hover:shadow-[0_0_25px_rgba(96,165,250,0.9)]
+            hover:shadow-glow-lg
             ${!isLoading && message.trim() ? 'animate-pulse-subtle' : ''}`}
           disabled={isLoading || !message.trim()}
         >

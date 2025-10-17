@@ -63,13 +63,13 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
     }
   ]
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-950/95 via-slate-900/90 to-slate-950/95 relative overflow-x-hidden overflow-y-auto scroll-smooth" data-landing-page>
+    <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--gradient-from))] via-[hsl(var(--gradient-via))] to-[hsl(var(--gradient-to))] relative overflow-x-hidden overflow-y-auto scroll-smooth" data-landing-page>
       {/* Background decorative elements */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-blue-800/15 blur-3xl"></div>
-        <div className="absolute right-0 top-1/4 h-60 w-60 rounded-full bg-indigo-700/15 blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/3 h-60 w-60 rounded-full bg-purple-800/15 blur-3xl"></div>
-        <div className="absolute top-1/2 right-1/4 h-40 w-40 rounded-full bg-blue-600/10 blur-2xl"></div>
+        <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-[hsl(var(--blur-blue))]/[var(--blur-opacity)] blur-3xl"></div>
+        <div className="absolute right-0 top-1/4 h-60 w-60 rounded-full bg-[hsl(var(--blur-indigo))]/[var(--blur-opacity)] blur-3xl"></div>
+        <div className="absolute bottom-0 left-1/3 h-60 w-60 rounded-full bg-[hsl(var(--blur-purple))]/[var(--blur-opacity)] blur-3xl"></div>
+        <div className="absolute top-1/2 right-1/4 h-40 w-40 rounded-full bg-[hsl(var(--blur-blue))]/[calc(var(--blur-opacity)*0.7)] blur-2xl"></div>
       </div>
 
       {/* Header */}
@@ -88,7 +88,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
             <div className="flex items-center gap-4">
             <Button 
               onClick={onGetStarted}
-              className="bg-blue-600/80 hover:bg-blue-500 text-white border border-blue-400/50 shadow-[0_0_15px_rgba(96,165,250,0.5)] backdrop-blur-sm"
+              className="bg-accent-primary/80 hover:bg-accent-primary-hover text-text-inverse border border-accent-primary/50 shadow-glow-md backdrop-blur-sm"
             >
               Launch App
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -103,22 +103,22 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
       <section className="relative z-10 px-4 py-20 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           {/* Hero Badge */}
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-600/20 border border-blue-400/30 text-blue-300 text-sm font-medium mb-8 backdrop-blur-sm">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-accent-primary/20 border border-accent-primary/30 text-accent-secondary text-sm font-medium mb-8 backdrop-blur-sm">
             <Sparkles className="mr-2 h-4 w-4" />
             Powered by Advanced AI Technology
           </div>
 
           {/* Hero Title */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
             Your AI Assistant for{" "}
-           <span className="block bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+           <span className="block bg-gradient-to-r from-[hsl(var(--accent-primary))] via-[hsl(var(--blur-indigo))] to-[hsl(var(--blur-purple))] bg-clip-text text-transparent">
             African Languages
            </span>
           </h1>
 
 
           {/* Hero Description */}
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed">
+          <p className="text-xl text-text-secondary max-w-3xl mx-auto mb-10 leading-relaxed">
             Experience the power of AI that truly understands African cultures and languages. 
             Communicate naturally in over 23 African languages with cultural context and authenticity.
           </p>
@@ -128,7 +128,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
             <Button 
               onClick={onGetStarted}
               size="lg"
-              className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 text-lg font-semibold shadow-[0_0_20px_rgba(96,165,250,0.6)] border border-blue-400/50 backdrop-blur-sm group"
+              className="bg-accent-primary hover:bg-accent-primary-hover text-text-inverse px-8 py-4 text-lg font-semibold shadow-glow-lg border border-accent-primary/50 backdrop-blur-sm group"
             >
               Start Chatting Now
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -137,7 +137,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
             <Button 
               variant="outline"
               size="lg"
-              className="border-slate-600 text-slate-300 hover:text-white hover:bg-slate-800/50 px-8 py-4 text-lg backdrop-blur-sm"
+              className="border-border-primary text-text-secondary hover:text-foreground hover:bg-bg-secondary/50 px-8 py-4 text-lg backdrop-blur-sm"
             >
               <Globe className="mr-2 h-5 w-5" />
               Explore Languages
@@ -146,17 +146,17 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
 
           {/* Language Showcase */}
           <div className="mt-16">
-            <p className="text-sm text-slate-400 mb-6">Supporting African Languages:</p>
+            <p className="text-sm text-text-tertiary mb-6">Supporting African Languages:</p>
             <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
               {languages.map((language, index) => (
                 <div
                   key={language.value}
-                  className="px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-sm text-slate-300 backdrop-blur-sm hover:bg-slate-700/50 transition-colors"
+                  className="px-3 py-2 bg-bg-secondary/40 border border-border-primary rounded-lg text-sm text-text-secondary backdrop-blur-sm hover:bg-bg-tertiary/50 transition-colors"
                 >
                   {language.label.split(' ')[0]}
                 </div>
               ))}
-              <div className="px-3 py-2 bg-blue-600/20 border border-blue-400/30 rounded-lg text-sm text-blue-300 backdrop-blur-sm">
+              <div className="px-3 py-2 bg-accent-primary/20 border border-accent-primary/30 rounded-lg text-sm text-accent-secondary backdrop-blur-sm">
                 +{africanLanguages.length - languages.length} more
               </div>
             </div>
@@ -168,10 +168,10 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
       <section className="relative z-10 px-4 py-20 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
               Why Choose Mutumwa?
             </h2>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            <p className="text-xl text-text-secondary max-w-2xl mx-auto">
               Built specifically for African languages with deep cultural understanding
             </p>
           </div>
@@ -184,18 +184,18 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
                 onMouseEnter={() => setHoveredFeature(index)}
                 onMouseLeave={() => setHoveredFeature(null)}
               >
-                <div className={`p-6 rounded-2xl bg-slate-800/40 border border-slate-700/50 backdrop-blur-sm transition-all duration-300 h-full ${
-                  hoveredFeature === index ? 'bg-slate-700/60 border-blue-400/50 shadow-[0_0_20px_rgba(96,165,250,0.3)]' : ''
+                <div className={`p-6 rounded-2xl bg-bg-secondary/40 border border-border-primary backdrop-blur-sm transition-all duration-300 h-full ${
+                  hoveredFeature === index ? 'bg-bg-tertiary/60 border-accent-primary/50 shadow-glow-lg' : ''
                 }`}>
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors ${
-                    feature.color === 'blue' ? 'bg-blue-600/20 text-blue-400' :
-                    feature.color === 'indigo' ? 'bg-indigo-600/20 text-indigo-400' :
-                    'bg-purple-600/20 text-purple-400'
+                    feature.color === 'blue' ? 'bg-accent-primary/20 text-accent-primary' :
+                    feature.color === 'indigo' ? 'bg-[hsl(var(--blur-indigo))]/20 text-[hsl(var(--blur-indigo))]' :
+                    'bg-[hsl(var(--blur-purple))]/20 text-[hsl(var(--blur-purple))]'
                   }`}>
                     {feature.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">{feature.description}</p>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">{feature.title}</h3>
+                  <p className="text-text-secondary text-sm leading-relaxed">{feature.description}</p>
                 </div>
               </div>
             ))}
@@ -207,10 +207,10 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
       <section className="relative z-10 px-4 py-20 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
               Loved by Communities Across Africa
             </h2>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            <p className="text-xl text-text-secondary max-w-2xl mx-auto">
               See what people are saying about their experience with Mutumwa
             </p>
           </div>
@@ -219,17 +219,17 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="p-6 rounded-2xl bg-slate-800/40 border border-slate-700/50 backdrop-blur-sm hover:bg-slate-700/50 transition-all duration-300"
+                className="p-6 rounded-2xl bg-bg-secondary/40 border border-border-primary backdrop-blur-sm hover:bg-bg-tertiary/50 transition-all duration-300"
               >
                 <div className="flex items-center mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
                   ))}
                 </div>
-                <p className="text-slate-300 mb-4 italic">"{testimonial.text}"</p>
+                <p className="text-text-secondary mb-4 italic">"{testimonial.text}"</p>
                 <div>
-                  <p className="text-white font-semibold">{testimonial.name}</p>
-                  <p className="text-slate-400 text-sm">{testimonial.location}</p>
+                  <p className="text-foreground font-semibold">{testimonial.name}</p>
+                  <p className="text-text-tertiary text-sm">{testimonial.location}</p>
                 </div>
               </div>
             ))}
@@ -240,11 +240,11 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
       {/* CTA Section */}
       <section className="relative z-10 px-4 py-20 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-blue-600/20 to-indigo-600/20 border border-blue-400/30 backdrop-blur-sm">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+          <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-accent-primary/20 to-[hsl(var(--blur-indigo))]/20 border border-accent-primary/30 backdrop-blur-sm">
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
               Ready to Start Conversing?
             </h2>
-            <p className="text-xl text-blue-200 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-accent-secondary mb-8 max-w-2xl mx-auto">
               Join thousands of users experiencing AI that truly understands African languages and cultures.
             </p>
             
@@ -252,7 +252,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
               <Button 
                 onClick={onGetStarted}
                 size="lg"
-                className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 text-lg font-semibold shadow-[0_0_25px_rgba(96,165,250,0.8)] border border-blue-400/50 group"
+                className="bg-accent-primary hover:bg-accent-primary-hover text-text-inverse px-8 py-4 text-lg font-semibold shadow-glow-lg border border-accent-primary/50 group"
               >
                 <Zap className="mr-2 h-5 w-5" />
                 Get Started Free
@@ -260,7 +260,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
               </Button>
             </div>
 
-            <div className="flex items-center justify-center mt-6 text-sm text-blue-300">
+            <div className="flex items-center justify-center mt-6 text-sm text-accent-secondary">
               <CheckCircle className="mr-2 h-4 w-4" />
               No account required • Start chatting immediately
             </div>
@@ -269,7 +269,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 px-4 py-8 sm:px-6 lg:px-8 border-t border-slate-700/50">
+      <footer className="relative z-10 px-4 py-8 sm:px-6 lg:px-8 border-t border-border-primary">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center mb-4">
             <div className="relative h-40 w-40">
@@ -281,7 +281,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
               />
             </div>
           </div>
-          <p className="text-slate-400 text-sm">
+          <p className="text-text-tertiary text-sm">
             © 2025 Mutumwa AI. Empowering African voices through technology.
           </p>
         </div>

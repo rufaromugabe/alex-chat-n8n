@@ -84,16 +84,16 @@ export default function LoginPage({
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-950/95 via-slate-900/90 to-slate-950/95 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[hsl(var(--gradient-from))] via-[hsl(var(--gradient-via))] to-[hsl(var(--gradient-to))] p-4">
       {/* Background decorative elements */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-blue-800/15 blur-3xl"></div>
-        <div className="absolute right-0 top-1/4 h-60 w-60 rounded-full bg-indigo-700/15 blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/3 h-60 w-60 rounded-full bg-purple-800/15 blur-3xl"></div>
+        <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-[hsl(var(--blur-blue))]/[var(--blur-opacity)] blur-3xl"></div>
+        <div className="absolute right-0 top-1/4 h-60 w-60 rounded-full bg-[hsl(var(--blur-indigo))]/[var(--blur-opacity)] blur-3xl"></div>
+        <div className="absolute bottom-0 left-1/3 h-60 w-60 rounded-full bg-[hsl(var(--blur-purple))]/[var(--blur-opacity)] blur-3xl"></div>
       </div>
 
       <div className="relative w-full max-w-md">
-        <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-8 shadow-2xl">
+        <div className="bg-bg-primary/5 backdrop-blur-lg border border-border-primary rounded-2xl p-8 shadow-2xl">
           {/* Logo and Header */}
           <div className="text-center mb-8">
             <div className="relative h-16 w-16 mx-auto mb-4">
@@ -104,14 +104,14 @@ export default function LoginPage({
                 className="object-contain"
               />
             </div>
-            <h1 className="text-2xl font-bold text-white mb-2">Access Protected</h1>
-            <p className="text-slate-300 text-sm">Enter your passcode to continue to Mutumwa AI</p>
+            <h1 className="text-2xl font-bold text-foreground mb-2">Access Protected</h1>
+            <p className="text-text-secondary text-sm">Enter your passcode to continue to Mutumwa AI</p>
           </div>
 
           {/* Security Badge */}
-          <div className="flex items-center justify-center gap-2 mb-6 p-3 bg-blue-500/10 border border-blue-400/20 rounded-lg">
-            <Shield className="h-5 w-5 text-blue-400" />
-            <span className="text-blue-300 text-sm font-medium">Secure Access Required</span>
+          <div className="flex items-center justify-center gap-2 mb-6 p-3 bg-accent-primary/10 border border-accent-primary/20 rounded-lg">
+            <Shield className="h-5 w-5 text-accent-primary" />
+            <span className="text-accent-secondary text-sm font-medium">Secure Access Required</span>
           </div>
 
           {/* Lockout Warning */}
@@ -136,12 +136,12 @@ export default function LoginPage({
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label htmlFor="passcode" className="text-sm font-medium text-slate-300">
+              <label htmlFor="passcode" className="text-sm font-medium text-text-secondary">
                 Passcode
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-slate-400" />
+                  <Lock className="h-5 w-5 text-text-tertiary" />
                 </div>
                 <input
                   id="passcode"
@@ -152,13 +152,13 @@ export default function LoginPage({
                     setError("")
                   }}
                   placeholder="Enter your passcode"
-                  className="w-full pl-10 pr-12 py-3 bg-slate-900/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-400/50 transition-colors"
+                  className="w-full pl-10 pr-12 py-3 bg-bg-input/50 border border-border-primary rounded-lg text-foreground placeholder-text-tertiary focus:outline-none focus:ring-2 focus:ring-border-focus focus:border-border-focus transition-colors"
                   disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPasscode(!showPasscode)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-300 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-text-tertiary hover:text-text-secondary transition-colors"
                   disabled={isLoading}
                 >
                   {showPasscode ? (
@@ -178,12 +178,12 @@ export default function LoginPage({
 
             <Button
               type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-400 text-white py-3 rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-accent-primary hover:bg-accent-primary-hover text-text-inverse py-3 rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isLoading || !passcode.trim() || isLockedOut}
             >
               {isLoading ? (
                 <div className="flex items-center justify-center gap-2">
-                  <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  <div className="h-4 w-4 border-2 border-border-primary border-t-foreground rounded-full animate-spin"></div>
                   Verifying...
                 </div>
               ) : isLockedOut ? (
@@ -196,7 +196,7 @@ export default function LoginPage({
 
           {/* Footer */}
           <div className="mt-8 text-center">
-            <p className="text-slate-400 text-xs">
+            <p className="text-text-tertiary text-xs">
               Protected by Mutumwa Security • Contact admin for access
             </p>
           </div>
