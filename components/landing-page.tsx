@@ -47,14 +47,8 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--gradient-from))] via-[hsl(var(--gradient-via))] to-[hsl(var(--gradient-to))] relative overflow-x-hidden overflow-y-auto scroll-smooth" data-landing-page>
-      {/* Background decorative elements */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-[hsl(var(--blur-blue))]/[var(--blur-opacity)] blur-3xl"></div>
-        <div className="absolute right-0 top-1/4 h-60 w-60 rounded-full bg-[hsl(var(--blur-indigo))]/[var(--blur-opacity)] blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/3 h-60 w-60 rounded-full bg-[hsl(var(--blur-purple))]/[var(--blur-opacity)] blur-3xl"></div>
-        <div className="absolute top-1/2 right-1/4 h-40 w-40 rounded-full bg-[hsl(var(--blur-blue))]/[calc(var(--blur-opacity)*0.7)] blur-2xl"></div>
-      </div>
+    <div className="min-h-screen bg-bg-primary relative overflow-x-hidden overflow-y-auto scroll-smooth" data-landing-page>
+
 
       {/* Header */}
       <header className="relative z-10 px-4 py-6 sm:px-6 lg:px-8">
@@ -95,7 +89,7 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
           {/* Hero Title */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
             Your AI Assistant for{" "}
-           <span className="block bg-gradient-to-r from-[hsl(var(--accent-primary))] via-[hsl(var(--blur-indigo))] to-[hsl(var(--blur-purple))] bg-clip-text text-transparent">
+           <span className="block text-accent-primary">
             African Languages
            </span>
           </h1>
@@ -112,7 +106,6 @@ export default function LandingPage({ onGetStarted }: LandingPageProps) {
           {/* Interactive Chat Input Preview */}
           <div className="mt-16 max-w-5xl mx-auto">
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-accent-primary/50 via-[hsl(var(--blur-indigo))]/50 to-[hsl(var(--blur-purple))]/50 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
               <div className="relative bg-bg-secondary/60 backdrop-blur-xl border border-border-primary rounded-2xl shadow-2xl">
                 <div className="flex items-center gap-2 p-2 md:p-3 lg:p-4">
                   <input
