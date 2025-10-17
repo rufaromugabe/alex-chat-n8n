@@ -1,5 +1,4 @@
 // Session management utilities for PostgreSQL
-import DatabaseManager, { ChatMessage } from './database'
 
 export interface AppMessage {
   id: string
@@ -26,65 +25,44 @@ export interface ChatSession {
   messageCount: number
 }
 
-// Local storage keys
-const SESSIONS_STORAGE_KEY = "mutumwa_chat_sessions"
+// Local storage keys (only for current session tracking)
 const CURRENT_SESSION_KEY = "mutumwa_current_session"
 
 export class SessionManager {
-  // Get all stored sessions from local storage
-  static getAllSessions(): ChatSession[] {
-    if (typeof window === "undefined") return []
-    
+  // Get all threads for a user from database
+  static async getAllSessions(userId: string, domain: string = 'general'): Promise<ChatSession[]> {
     try {
-      const stored = localStorage.getItem(SESSIONS_STORAGE_KEY)
-      if (!stored) return []
-      
-      const sessions = JSON.parse(stored)
-      return sessions.map((session: any) => ({
-        ...session,
-        timestamp: new Date(session.timestamp)
+      const response = await fetch(`/api/threads?userId=${userId}&domain=${domain}`)
+
+      if (!response.ok) {
+        console.warn(`Failed to fetch threads: ${response.statusText}`)
+        return []
+      }
+
+      const data = await response.json()
+      const threads = data.threads || []
+
+      // Convert threads to ChatSession format
+      return threads.map((thread: any) => ({
+        id: thread.id,
+        title: thread.title,
+        lastMessage: thread.last_message,
+        timestamp: new Date(thread.updated_at),
+        messageCount: thread.message_count
       }))
     } catch (error) {
-      console.error("Error reading sessions from localStorage:", error)
+      console.error("Error fetching threads from database:", error)
       return []
     }
   }
 
-  // Save sessions to local storage
-  static saveSessions(sessions: ChatSession[]): void {
-    if (typeof window === "undefined") return
-    
-    try {
-      localStorage.setItem(SESSIONS_STORAGE_KEY, JSON.stringify(sessions))
-    } catch (error) {
-      console.error("Error saving sessions to localStorage:", error)
-    }
-  }
-
-  // Add or update a session
-  static saveSession(session: ChatSession): void {
-    console.log("Saving session:", session)
-    const sessions = this.getAllSessions()
-    const existingIndex = sessions.findIndex(s => s.id === session.id)
-    
-    if (existingIndex >= 0) {
-      sessions[existingIndex] = session
-    } else {
-      sessions.unshift(session) // Add to beginning
-    }
-    
-    // Keep only the latest 50 sessions
-    const limitedSessions = sessions.slice(0, 50)
-    this.saveSessions(limitedSessions)
-  }
-
-  // Get current session ID
+  // Get current session ID (still use localStorage for UI state)
   static getCurrentSessionId(): string | null {
     if (typeof window === "undefined") return null
     return localStorage.getItem(CURRENT_SESSION_KEY)
   }
 
-  // Set current session ID
+  // Set current session ID (still use localStorage for UI state)
   static setCurrentSessionId(sessionId: string): void {
     if (typeof window === "undefined") return
     localStorage.setItem(CURRENT_SESSION_KEY, sessionId)
@@ -109,50 +87,24 @@ export class SessionManager {
     }
   }
 
-  
-  // Create a session title from the first message
-  static generateSessionTitle(firstMessage: string): string {
-    // Take first 50 characters and add ellipsis if longer
-    const title = firstMessage.trim().slice(0, 50)
-    return title.length < firstMessage.trim().length ? `${title}...` : title
-  }
-  // Update session with new message info
-  static updateSessionWithMessage(sessionId: string, message: string, isUser: boolean): void {
-    if (isUser) {
-      const sessions = this.getAllSessions()
-      const existingIndex = sessions.findIndex(s => s.id === sessionId)
-      
-      if (existingIndex >= 0) {
-        // Update existing session
-        sessions[existingIndex].lastMessage = message
-        sessions[existingIndex].timestamp = new Date()
-        sessions[existingIndex].messageCount += 1
-        this.saveSessions(sessions)
-      } else {
-        // Create new session
-        const newSession: ChatSession = {
-          id: sessionId,
-          title: this.generateSessionTitle(message),
-          lastMessage: message,
-          timestamp: new Date(),
-          messageCount: 1
-        }
-        this.saveSession(newSession)
-      }
+
+  // Delete a thread from database
+  static async deleteSession(sessionId: string, domain: string = 'general'): Promise<boolean> {
+    try {
+      const response = await fetch(`/api/threads/${sessionId}?domain=${domain}`, {
+        method: 'DELETE'
+      })
+
+      return response.ok
+    } catch (error) {
+      console.error("Error deleting thread:", error)
+      return false
     }
   }
 
-  // Delete a session
-  static deleteSession(sessionId: string): void {
-    const sessions = this.getAllSessions()
-    const filteredSessions = sessions.filter(s => s.id !== sessionId)
-    this.saveSessions(filteredSessions)
-  }
-
-  // Clear all sessions
-  static clearAllSessions(): void {
+  // Clear current session from localStorage only
+  static clearCurrentSession(): void {
     if (typeof window === "undefined") return
-    localStorage.removeItem(SESSIONS_STORAGE_KEY)
     localStorage.removeItem(CURRENT_SESSION_KEY)
   }
 

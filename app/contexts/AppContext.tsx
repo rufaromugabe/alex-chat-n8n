@@ -25,6 +25,7 @@ type AppContextType = {
   loadSessionFromUrl: (sessionId: string, domain?: string) => Promise<void>
   deleteSession: (sessionId: string) => void
   refreshSessions: () => void
+  updateActiveThreadInSidebar: (sessionId: string, title: string, lastMessage: string) => void
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
@@ -34,14 +35,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [messages, setMessages] = useState<Message[]>([])
   const [currentSessionId, setCurrentSessionId] = useState("")
   const [sessions, setSessions] = useState<ChatSession[]>([])
-  // Load sessions from localStorage on mount
+  // Load sessions from database on mount
   useEffect(() => {
-    const storedSessions = SessionManager.getAllSessions()
-    console.log("Loading sessions from localStorage:", storedSessions)
-    setSessions(storedSessions)
+    const loadSessions = async () => {
+      // Get user ID from UserManager
+      const { UserManager } = await import("@/lib/user-manager")
+      const userId = UserManager.getUserId()
+      
+      // Fetch sessions from database
+      const dbSessions = await SessionManager.getAllSessions(userId, 'general')
+      console.log("Loading sessions from database:", dbSessions)
+      setSessions(dbSessions)
+    }
     
-    // Create test sessions if none exist (for debugging)
-   
+    loadSessions()
     
     // Generate initial session ID
     const existingSessionId = SessionManager.getCurrentSessionId()
@@ -127,9 +134,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setMessages([])
     }
   }, [])
-  const deleteSession = useCallback((sessionId: string) => {
-    SessionManager.deleteSession(sessionId)
-    const updatedSessions = SessionManager.getAllSessions()
+  const deleteSession = useCallback(async (sessionId: string) => {
+    const { UserManager } = await import("@/lib/user-manager")
+    const userId = UserManager.getUserId()
+    
+    await SessionManager.deleteSession(sessionId, 'general')
+    const updatedSessions = await SessionManager.getAllSessions(userId, 'general')
     setSessions(updatedSessions)
     
     // If deleting current session, start a new one
@@ -138,11 +148,45 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   }, [currentSessionId, startNewChat])
 
-  const refreshSessions = useCallback(() => {
-    const storedSessions = SessionManager.getAllSessions()
-    console.log("Refreshing sessions:", storedSessions)
-    setSessions(storedSessions)
+  const refreshSessions = useCallback(async () => {
+    const { UserManager } = await import("@/lib/user-manager")
+    const userId = UserManager.getUserId()
+    
+    const dbSessions = await SessionManager.getAllSessions(userId, 'general')
+    console.log("Refreshing sessions from database:", dbSessions)
+    setSessions(dbSessions)
   }, [])
+
+  // Update active thread in sidebar without fetching from database
+  const updateActiveThreadInSidebar = useCallback((sessionId: string, title: string, lastMessage: string) => {
+    setSessions(prevSessions => {
+      const existingIndex = prevSessions.findIndex(s => s.id === sessionId)
+      
+      if (existingIndex >= 0) {
+        // Update existing session
+        const updated = [...prevSessions]
+        updated[existingIndex] = {
+          ...updated[existingIndex],
+          title: title || updated[existingIndex].title, // Keep existing title if not provided
+          lastMessage,
+          timestamp: new Date(),
+          messageCount: updated[existingIndex].messageCount + 1
+        }
+        return updated
+      } else {
+        // Add new session at the top
+        const newSession: ChatSession = {
+          id: sessionId,
+          title: title || lastMessage.slice(0, 50) + (lastMessage.length > 50 ? '...' : ''),
+          lastMessage,
+          timestamp: new Date(),
+          messageCount: 1
+        }
+        return [newSession, ...prevSessions]
+      }
+    })
+  }, [])
+
   return (
     <AppContext.Provider value={{ 
       showLanding, 
@@ -157,7 +201,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       loadSession,
       loadSessionFromUrl,
       deleteSession,
-      refreshSessions
+      refreshSessions,
+      updateActiveThreadInSidebar
     }}>
       {children}
     </AppContext.Provider>

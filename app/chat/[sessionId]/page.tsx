@@ -7,6 +7,7 @@ import ChatMessages from "@/components/chat-messages"
 import ChatInput from "@/components/chat-input"
 import { getLanguageSuggestions } from "@/lib/suggestions"
 import { SessionManager } from "@/lib/session-manager"
+import { UserManager } from "@/lib/user-manager"
 import { useLanguage } from "../../contexts/LanguageContext"
 import { useDomain } from "../../contexts/DomainContext"
 import { useApp } from "../../contexts/AppContext"
@@ -19,8 +20,8 @@ export default function ChatPage() {
     messages, 
     setMessages, 
     loadSessionFromUrl, 
-    refreshSessions,
-    setCurrentSessionId 
+    setCurrentSessionId,
+    updateActiveThreadInSidebar
   } = useApp()
   const { selectedLanguage } = useLanguage()
   const { selectedDomain } = useDomain()
@@ -56,6 +57,9 @@ export default function ChatPage() {
   const handleSendMessage = async (text: string) => {
     if (!text.trim() || !sessionId || sessionId === "new") return
 
+    // Get or create user ID
+    const userId = UserManager.getUserId()
+
     // Add user message to the chat
     const userMessageId = uuidv4()
     setMessages((prev) => [
@@ -68,11 +72,12 @@ export default function ChatPage() {
       },
     ])
 
-    // Update session storage with the new message
-    SessionManager.updateSessionWithMessage(sessionId, text, true)
-    refreshSessions()
-
-    // Messages are now handled by the webhook, no need to add them separately
+    // Update sidebar immediately with user message (for new chats or updates)
+    const isFirstMessage = messages.length === 0
+    const title = isFirstMessage ? text.trim().slice(0, 50) + (text.length > 50 ? '...' : '') : ''
+    if (isFirstMessage) {
+      updateActiveThreadInSidebar(sessionId, title, text)
+    }
 
     setIsLoading(true)
 
@@ -82,6 +87,7 @@ export default function ChatPage() {
       formData.append("text", text)
       formData.append("targetLanguage", selectedLanguage.value)
       formData.append("sessionId", sessionId)
+      formData.append("userId", userId) // Pass user ID to webhook
 
       // Send request to the domain-specific webhook
       const response = await fetch(selectedDomain.webhookUrl, {
@@ -193,6 +199,10 @@ export default function ChatPage() {
         }
       }
 
+      // Update sidebar with assistant's response (last message)
+      if (accumulatedText) {
+        updateActiveThreadInSidebar(sessionId, '', accumulatedText)
+      }
      
     } catch (error) {
       console.error("Error sending message:", error)

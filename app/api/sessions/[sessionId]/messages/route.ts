@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import DatabaseManager from '@/lib/database'
 import { Pool } from 'pg'
 
 // Create a PostgreSQL connection pool
@@ -26,41 +25,30 @@ export async function GET(
       )
     }
 
-    // Determine the table name based on domain
-    let tableName = 'general_chat_histories' // default table
-    
-    if (domain === 'zesa') {
-      tableName = 'zesa_chat_histories'
-    } else if (domain === 'praz') {
-      tableName = 'praz_chat_histories'
-    }
-    
-    // Fetch messages directly from the specific table
+    // Fetch messages from domain-specific chats table (e.g., zesa.chats, general.chats)
     const query = `
-      SELECT id, session_id, message, created_at 
-      FROM ${tableName} 
+      SELECT id, session_id, message 
+      FROM ${domain}.chats 
       WHERE session_id = $1 
-      ORDER BY created_at ASC
+      ORDER BY id ASC
     `
-    
-    console.log(`Querying table ${tableName} for session ${sessionId}`)
+
+    console.log(`Querying ${domain}.chats for session ${sessionId}`)
     const result = await pool.query(query, [sessionId])
     const dbMessages = result.rows
-    console.log(`Found ${dbMessages.length} messages in ${tableName} for session ${sessionId}`)
-    
-    // Convert database messages to app format (handle both "human"/"ai" and "user"/"ai" types)
+    console.log(`Found ${dbMessages.length} messages for session ${sessionId}`)
+
+    // Convert database messages to app format
     const messages = dbMessages.map(dbMsg => {
-      // Log the message structure to debug
       console.log('Processing message:', JSON.stringify(dbMsg.message))
-      
-      // Handle different type formats
+
       const messageType = dbMsg.message.type || 'unknown'
       const isUserMessage = messageType === 'human' || messageType === 'user'
-      
+
       return {
         id: dbMsg.id.toString(),
         uuid: dbMsg.id.toString(),
-        created_at: dbMsg.created_at?.toISOString() || new Date().toISOString(),
+        created_at: new Date().toISOString(),
         role: isUserMessage ? 'user' : 'assistant',
         role_type: isUserMessage ? 'user' as const : 'assistant' as const,
         content: dbMsg.message.content,
@@ -70,12 +58,6 @@ export async function GET(
     })
 
     console.log('Returning messages:', messages.length)
-
-    return NextResponse.json({
-      messages,
-      total_count: messages.length,
-      row_count: messages.length
-    })
 
     return NextResponse.json({
       messages,
@@ -93,4 +75,4 @@ export async function GET(
   }
 }
 
-// POST functionality has been removed as it's handled by a webhook
+// POST functionality has been removed - messages are auto-saved by the webhook

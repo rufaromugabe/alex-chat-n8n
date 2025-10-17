@@ -30,9 +30,9 @@ export default function Sidebar({
   const [deletingSessionId, setDeletingSessionId] = useState<string | null>(null)
   const router = useRouter()
 
-  const handleDeleteSession = (sessionId: string, e: React.MouseEvent) => {
+  const handleDeleteSession = async (sessionId: string, e: React.MouseEvent) => {
     e.stopPropagation()
-    onDeleteSession(sessionId)
+    await onDeleteSession(sessionId)
     setDeletingSessionId(null)
   }
   const handleNewChat = () => {
