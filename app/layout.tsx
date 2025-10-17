@@ -184,9 +184,9 @@ function AppLayout({ children }: { children: ReactNode }) {
     return <>{children}</>
   }
   return (
-    <div className="relative flex h-screen w-screen overflow-hidden bg-gradient-to-br from-[hsl(var(--gradient-from))] via-[hsl(var(--gradient-via))] to-[hsl(var(--gradient-to))]" data-chat-layout>
-      {/* Background decorative elements */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div className="relative flex h-screen w-screen overflow-hidden bg-bg-secondary" data-chat-layout>
+      {/* Background decorative elements - only visible in dark mode */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden dark:block hidden">
         <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-[hsl(var(--blur-blue))]/[var(--blur-opacity)] blur-3xl"></div>
         <div className="absolute right-0 top-1/4 h-60 w-60 rounded-full bg-[hsl(var(--blur-indigo))]/[var(--blur-opacity)] blur-3xl"></div>
         <div className="absolute bottom-0 left-1/3 h-60 w-60 rounded-full bg-[hsl(var(--blur-purple))]/[var(--blur-opacity)] blur-3xl"></div>
@@ -208,7 +208,7 @@ function AppLayout({ children }: { children: ReactNode }) {
       >
         <div className="flex h-full w-full flex-col p-0 md:p-2 md:px-10 md:py-2">
           {/* Chat container - full screen on mobile */}
-          <div className="relative flex h-[100dvh] md:h-[calc(100vh-20px)] w-full flex-col overflow-hidden md:rounded-xl md:border md:border-border-primary bg-bg-primary/95 backdrop-blur-lg md:shadow-xl">
+          <div className="relative flex h-[100dvh] md:h-[calc(100vh-20px)] w-full flex-col overflow-hidden md:rounded-xl md:border md:border-border-primary bg-background md:shadow-xl">
             {showHeader && <Header />}
             {children}
           </div>

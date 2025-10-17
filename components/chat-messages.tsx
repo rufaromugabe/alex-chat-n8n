@@ -71,7 +71,7 @@ export default function ChatMessages({
               className={`max-w-[85%] md:max-w-[80%] lg:max-w-[70%] rounded-2xl px-3 py-2 md:px-4 md:py-3 ${
                 message.sender === "user"
                   ? "bg-accent-primary text-text-inverse border border-accent-primary/50 shadow-glow-sm"
-                  : "bg-bg-elevated text-foreground border border-border-primary shadow-sm"
+                  : "bg-accent-primary/5 text-foreground border border-accent-primary/20 shadow-sm"
               }`}
             >
               {message.sender === "user" ? message.text : <MarkdownRenderer content={message.text} />}
@@ -81,7 +81,7 @@ export default function ChatMessages({
 
         {isLoading && (
           <div className="flex justify-start mb-4">
-            <div className="max-w-[85%] md:max-w-[80%] lg:max-w-[70%] rounded-2xl px-3 py-2 md:px-4 md:py-3 bg-bg-elevated text-foreground border border-border-primary shadow-sm">
+            <div className="max-w-[85%] md:max-w-[80%] lg:max-w-[70%] rounded-2xl px-3 py-2 md:px-4 md:py-3 bg-accent-primary/5 text-foreground border border-accent-primary/20 shadow-sm">
               <div className="flex items-center">
                 <span className="text-sm text-text-secondary">Mutumwa is thinking</span>
                 <div className="flex ml-2">

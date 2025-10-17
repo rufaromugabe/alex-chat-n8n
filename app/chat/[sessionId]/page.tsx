@@ -236,15 +236,17 @@ export default function ChatPage() {
             <div
               className={`${message.size} lg:max-w-[70%] rounded-2xl px-3 py-2 md:px-4 md:py-3 ${
                 index % 2 === 0
-                  ? "bg-blue-500/20 border border-blue-400/20"
-                  : "bg-slate-800/30 border border-slate-700/20"
+                  ? "bg-accent-primary border border-accent-primary/50 shadow-glow-sm"
+                  : "bg-accent-primary/5 border border-accent-primary/20 shadow-sm"
               }`}
             >
               <div className="animate-pulse">
                 {message.lines.map((line, lineIndex) => (
                   <div 
                     key={lineIndex} 
-                    className={`h-4 bg-white/10 rounded ${line.width} ${lineIndex < message.lines.length - 1 ? 'mb-2' : ''}`}
+                    className={`h-4 rounded ${line.width} ${lineIndex < message.lines.length - 1 ? 'mb-2' : ''} ${
+                      index % 2 === 0 ? 'bg-white/30' : 'bg-text-tertiary/20'
+                    }`}
                   ></div>
                 ))}
               </div>
@@ -254,13 +256,13 @@ export default function ChatPage() {
 
         {/* Typing indicator skeleton */}
         <div className="flex justify-start mb-4">
-          <div className="max-w-[85%] md:max-w-[80%] lg:max-w-[70%] rounded-2xl px-3 py-2 md:px-4 md:py-3 bg-slate-800/30 border border-slate-700/20">
+          <div className="max-w-[85%] md:max-w-[80%] lg:max-w-[70%] rounded-2xl px-3 py-2 md:px-4 md:py-3 bg-accent-primary/5 border border-accent-primary/20 shadow-sm">
             <div className="flex items-center">
-              <span className="text-sm text-slate-400/60">Loading conversation...</span>
+              <span className="text-sm text-text-secondary">Loading conversation...</span>
               <div className="flex ml-2">
-                <span className="h-2 w-2 bg-blue-300/40 rounded-full mr-1 animate-bounce" style={{ animationDelay: "0ms" }}></span>
-                <span className="h-2 w-2 bg-blue-300/40 rounded-full mr-1 animate-bounce" style={{ animationDelay: "150ms" }}></span>
-                <span className="h-2 w-2 bg-blue-300/40 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
+                <span className="h-2 w-2 bg-accent-primary rounded-full mr-1 animate-bounce shadow-glow-sm" style={{ animationDelay: "0ms" }}></span>
+                <span className="h-2 w-2 bg-accent-primary rounded-full mr-1 animate-bounce shadow-glow-sm" style={{ animationDelay: "150ms" }}></span>
+                <span className="h-2 w-2 bg-accent-primary rounded-full animate-bounce shadow-glow-sm" style={{ animationDelay: "300ms" }}></span>
               </div>
             </div>
           </div>
@@ -273,7 +275,7 @@ export default function ChatPage() {
     return (
       <>
         {/* Chat skeleton area */}
-        <div className="flex-1 overflow-y-auto overscroll-none -webkit-overflow-scrolling: touch touch-pan-y scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent bg-gradient-to-b from-slate-900/20 to-transparent h-full max-h-full">
+        <div className="flex-1 overflow-y-auto overscroll-none h-full max-h-full">
           <ChatSkeleton />
         </div>
         
@@ -290,7 +292,8 @@ export default function ChatPage() {
   return (
     <>
       {/* Chat messages area */}
-      <div className="flex-1 overflow-y-auto overscroll-none -webkit-overflow-scrolling: touch touch-pan-y scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent bg-gradient-to-b from-slate-900/20 to-transparent h-full max-h-full">        <ChatMessages
+      <div className="flex-1 overflow-y-auto overscroll-none h-full max-h-full">
+        <ChatMessages
           messages={messages}
           isLoading={isLoading}
           selectedLanguage={selectedLanguage}
