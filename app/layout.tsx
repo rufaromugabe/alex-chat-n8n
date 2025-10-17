@@ -167,7 +167,7 @@ function AuthenticatedApp({ children }: { children: ReactNode }) {
 
 function AppLayout({ children }: { children: ReactNode }) {
   const { isSidebarOpen, setIsSidebarOpen } = useSidebar()
-  const { sessions, currentSessionId, loadSession, deleteSession } = useApp()
+  const { sessions, currentSessionId, loadSession, deleteSession, isLoadingSessions } = useApp()
   const { isAuthenticated } = useAuth()
   const pathname = usePathname()
 
@@ -210,6 +210,7 @@ function AppLayout({ children }: { children: ReactNode }) {
         currentSessionId={currentSessionId}
         onLoadSession={handleLoadSession}
         onDeleteSession={handleDeleteSession}
+        isLoading={isLoadingSessions}
       />
 
       <div

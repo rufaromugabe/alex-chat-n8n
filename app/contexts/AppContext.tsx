@@ -19,6 +19,7 @@ type AppContextType = {
   currentSessionId: string
   setCurrentSessionId: (sessionId: string) => void
   sessions: ChatSession[]
+  isLoadingSessions: boolean
   resetApp: () => void
   startNewChat: () => void
   loadSession: (sessionId: string, domain?: string) => Promise<void>
@@ -36,17 +37,25 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [messages, setMessages] = useState<Message[]>([])
   const [currentSessionId, setCurrentSessionId] = useState("")
   const [sessions, setSessions] = useState<ChatSession[]>([])
+  const [isLoadingSessions, setIsLoadingSessions] = useState(false)
   // Load sessions from database on mount
   useEffect(() => {
     const loadSessions = async () => {
-      // Get user ID from UserManager
-      const { UserManager } = await import("@/lib/user-manager")
-      const userId = UserManager.getUserId()
-      
-      // Fetch sessions from database
-      const dbSessions = await SessionManager.getAllSessions(userId, 'general')
-      console.log("Loading sessions from database:", dbSessions)
-      setSessions(dbSessions)
+      setIsLoadingSessions(true)
+      try {
+        // Get user ID from UserManager
+        const { UserManager } = await import("@/lib/user-manager")
+        const userId = UserManager.getUserId()
+        
+        // Fetch sessions from database
+        const dbSessions = await SessionManager.getAllSessions(userId, 'general')
+        console.log("Loading sessions from database:", dbSessions)
+        setSessions(dbSessions)
+      } catch (error) {
+        console.error("Error loading sessions:", error)
+      } finally {
+        setIsLoadingSessions(false)
+      }
     }
     
     loadSessions()
@@ -136,26 +145,40 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   }, [])
   const deleteSession = useCallback(async (sessionId: string) => {
-    const { UserManager } = await import("@/lib/user-manager")
-    const userId = UserManager.getUserId()
-    
-    await SessionManager.deleteSession(sessionId, 'general')
-    const updatedSessions = await SessionManager.getAllSessions(userId, 'general')
-    setSessions(updatedSessions)
-    
-    // If deleting current session, start a new one
-    if (sessionId === currentSessionId) {
-      startNewChat()
+    setIsLoadingSessions(true)
+    try {
+      const { UserManager } = await import("@/lib/user-manager")
+      const userId = UserManager.getUserId()
+      
+      await SessionManager.deleteSession(sessionId, 'general')
+      const updatedSessions = await SessionManager.getAllSessions(userId, 'general')
+      setSessions(updatedSessions)
+      
+      // If deleting current session, start a new one
+      if (sessionId === currentSessionId) {
+        startNewChat()
+      }
+    } catch (error) {
+      console.error("Error deleting session:", error)
+    } finally {
+      setIsLoadingSessions(false)
     }
   }, [currentSessionId, startNewChat])
 
   const refreshSessions = useCallback(async (domain: string = 'general') => {
-    const { UserManager } = await import("@/lib/user-manager")
-    const userId = UserManager.getUserId()
-    
-    const dbSessions = await SessionManager.getAllSessions(userId, domain)
-    console.log(`Refreshing sessions from database for domain: ${domain}`, dbSessions)
-    setSessions(dbSessions)
+    setIsLoadingSessions(true)
+    try {
+      const { UserManager } = await import("@/lib/user-manager")
+      const userId = UserManager.getUserId()
+      
+      const dbSessions = await SessionManager.getAllSessions(userId, domain)
+      console.log(`Refreshing sessions from database for domain: ${domain}`, dbSessions)
+      setSessions(dbSessions)
+    } catch (error) {
+      console.error("Error refreshing sessions:", error)
+    } finally {
+      setIsLoadingSessions(false)
+    }
   }, [])
 
   // Refresh sessions for a specific domain (called when domain changes)
@@ -210,7 +233,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       deleteSession,
       refreshSessions,
       updateActiveThreadInSidebar,
-      refreshSessionsForDomain
+      refreshSessionsForDomain,
+      isLoadingSessions
     }}>
       {children}
     </AppContext.Provider>

@@ -16,6 +16,7 @@ interface SidebarProps {
   currentSessionId: string
   onLoadSession: (sessionId: string) => void
   onDeleteSession: (sessionId: string) => void
+  isLoading?: boolean
 }
 
 export default function Sidebar({ 
@@ -25,7 +26,8 @@ export default function Sidebar({
   sessions, 
   currentSessionId, 
   onLoadSession, 
-  onDeleteSession 
+  onDeleteSession,
+  isLoading = false
 }: SidebarProps) {
   const [deletingSessionId, setDeletingSessionId] = useState<string | null>(null)
   const router = useRouter()
@@ -93,7 +95,23 @@ export default function Sidebar({
         <div className="flex-1 overflow-y-auto px-3">
           <div className="text-xs text-slate-400 mb-2 px-2">Recent Chats</div>
           <div className="space-y-1">
-            {sessions.length === 0 ? (
+            {isLoading ? (
+              // Skeleton loading state
+              <>
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div key={i} className="p-2 rounded-lg bg-slate-800/30 animate-pulse">
+                    <div className="flex items-start gap-2">
+                      <div className="h-4 w-4 bg-slate-700/50 rounded mt-0.5 flex-shrink-0"></div>
+                      <div className="flex-1 min-w-0 space-y-2">
+                        <div className="h-4 bg-slate-700/50 rounded w-3/4"></div>
+                        <div className="h-3 bg-slate-700/50 rounded w-full"></div>
+                        <div className="h-3 bg-slate-700/50 rounded w-1/2"></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </>
+            ) : sessions.length === 0 ? (
               <div className="text-xs text-slate-500 text-center py-4 px-2">
                 No previous chats
               </div>
