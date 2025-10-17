@@ -275,7 +275,7 @@ export default function ChatPage() {
     return (
       <>
         {/* Chat skeleton area */}
-        <div className="flex-1 overflow-y-auto overscroll-none h-full max-h-full">
+        <div className="flex-1 overflow-y-auto overscroll-none h-full max-h-full dot-pattern">
           <ChatSkeleton />
         </div>
         
@@ -292,7 +292,7 @@ export default function ChatPage() {
   return (
     <>
       {/* Chat messages area */}
-      <div className="flex-1 overflow-y-auto overscroll-none h-full max-h-full">
+      <div className="flex-1 overflow-y-auto overscroll-none h-full max-h-full dot-pattern">
         <ChatMessages
           messages={messages}
           isLoading={isLoading}

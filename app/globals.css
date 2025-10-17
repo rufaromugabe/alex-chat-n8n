@@ -80,7 +80,7 @@
   /* Dark Theme Colors */
   /* Background Colors */
   --bg-primary: 222 84% 5%;
-  --bg-secondary: 217 33% 17%;
+  --bg-secondary: 220 70% 15%;
   --bg-tertiary: 217 33% 12%;
   --bg-elevated: 217 33% 20%;
   --bg-input: 217 33% 12%;
@@ -239,5 +239,16 @@ html {
   [data-landing-page] {
     transform: translate3d(0, 0, 0);
   }
+}
+
+/* Dotted grid pattern (n8n-style canvas) */
+.dot-pattern {
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.dark .dot-pattern {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
 
