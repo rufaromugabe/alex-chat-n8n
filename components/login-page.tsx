@@ -84,16 +84,9 @@ export default function LoginPage({
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[hsl(var(--gradient-from))] via-[hsl(var(--gradient-via))] to-[hsl(var(--gradient-to))] p-4">
-      {/* Background decorative elements */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-40 -top-40 h-80 w-80 rounded-full bg-[hsl(var(--blur-blue))]/[var(--blur-opacity)] blur-3xl"></div>
-        <div className="absolute right-0 top-1/4 h-60 w-60 rounded-full bg-[hsl(var(--blur-indigo))]/[var(--blur-opacity)] blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/3 h-60 w-60 rounded-full bg-[hsl(var(--blur-purple))]/[var(--blur-opacity)] blur-3xl"></div>
-      </div>
-
+    <div className="min-h-screen flex items-center justify-center bg-bg-primary p-4">
       <div className="relative w-full max-w-md">
-        <div className="bg-bg-primary/5 backdrop-blur-lg border border-border-primary rounded-2xl p-8 shadow-2xl">
+        <div className="bg-bg-secondary border border-border-primary rounded-2xl p-8 shadow-2xl">
           {/* Logo and Header */}
           <div className="text-center mb-8">
             <div className="relative h-16 w-16 mx-auto mb-4">
