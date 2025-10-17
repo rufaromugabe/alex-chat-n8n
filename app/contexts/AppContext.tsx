@@ -24,8 +24,9 @@ type AppContextType = {
   loadSession: (sessionId: string, domain?: string) => Promise<void>
   loadSessionFromUrl: (sessionId: string, domain?: string) => Promise<void>
   deleteSession: (sessionId: string) => void
-  refreshSessions: () => void
+  refreshSessions: (domain?: string) => void
   updateActiveThreadInSidebar: (sessionId: string, title: string, lastMessage: string) => void
+  refreshSessionsForDomain: (domain: string) => void
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
@@ -148,14 +149,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   }, [currentSessionId, startNewChat])
 
-  const refreshSessions = useCallback(async () => {
+  const refreshSessions = useCallback(async (domain: string = 'general') => {
     const { UserManager } = await import("@/lib/user-manager")
     const userId = UserManager.getUserId()
     
-    const dbSessions = await SessionManager.getAllSessions(userId, 'general')
-    console.log("Refreshing sessions from database:", dbSessions)
+    const dbSessions = await SessionManager.getAllSessions(userId, domain)
+    console.log(`Refreshing sessions from database for domain: ${domain}`, dbSessions)
     setSessions(dbSessions)
   }, [])
+
+  // Refresh sessions for a specific domain (called when domain changes)
+  const refreshSessionsForDomain = useCallback(async (domain: string) => {
+    console.log(`Domain changed to: ${domain}, refreshing threads...`)
+    await refreshSessions(domain)
+  }, [refreshSessions])
 
   // Update active thread in sidebar without fetching from database
   const updateActiveThreadInSidebar = useCallback((sessionId: string, title: string, lastMessage: string) => {
@@ -202,7 +209,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       loadSessionFromUrl,
       deleteSession,
       refreshSessions,
-      updateActiveThreadInSidebar
+      updateActiveThreadInSidebar,
+      refreshSessionsForDomain
     }}>
       {children}
     </AppContext.Provider>

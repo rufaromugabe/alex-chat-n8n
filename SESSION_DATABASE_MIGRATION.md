@@ -24,9 +24,10 @@ Frontend now **only reads and deletes** threads. The webhook handles all thread 
 ### 2. **app/contexts/AppContext.tsx**
 
 - **Updated**: `useEffect` on mount fetches sessions from database using `UserManager.getUserId()`
-- **Updated**: `refreshSessions()` is async and fetches from database
+- **Updated**: `refreshSessions(domain)` is async and fetches from database for specific domain
 - **Updated**: `deleteSession()` is async and deletes from database
 - **Added**: `updateActiveThreadInSidebar()` - updates sidebar in real-time without database fetch
+- **Added**: `refreshSessionsForDomain(domain)` - refreshes threads when domain changes
 
 ### 3. **app/chat/[sessionId]/page.tsx**
 
@@ -48,6 +49,12 @@ Frontend now **only reads and deletes** threads. The webhook handles all thread 
 
 - **Added**: `deleteThread()` method to delete threads from `{domain}.threads` table
 
+### 7. **app/layout.tsx**
+
+- **Added**: `handleDomainChange()` - refreshes threads when user changes domain in dropdown
+- Threads are reloaded from database for the selected domain
+- **Starts new chat** when domain changes (smooth navigation to `/chat/new` using router)
+
 ## How It Works Now
 
 ### Frontend Responsibilities:
@@ -62,6 +69,10 @@ Frontend now **only reads and deletes** threads. The webhook handles all thread 
 - When user sends **first message** in a new chat → thread appears in sidebar immediately with title
 - When **assistant responds** → sidebar updates with last message in real-time
 - No database fetch needed - updates happen from the active chat's webhook response
+- Database is fetched when:
+  - App mount/reload
+  - After deleting a thread
+  - **When domain changes in dropdown** (loads threads for new domain + starts new chat)
 - Database is only fetched on app mount and after deletion
 
 ### Webhook Responsibilities:

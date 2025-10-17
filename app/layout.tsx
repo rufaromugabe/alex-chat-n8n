@@ -19,7 +19,7 @@ import { useSidebar } from "./contexts/SidebarContext"
 import { ReactNode } from "react"
 import { Inter } from "next/font/google"
 import { Menu, LogOut } from "lucide-react"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -30,9 +30,22 @@ function Header() {
   const { selectedDomain, setSelectedDomain } = useDomain()
   const { isSidebarOpen, setIsSidebarOpen } = useSidebar()
   const { logout } = useAuth()
+  const { refreshSessionsForDomain, startNewChat } = useApp()
+  const router = useRouter()
 
   const handleLogout = () => {
     logout()
+  }
+
+  const handleDomainChange = (domain: typeof selectedDomain) => {
+    setSelectedDomain(domain)
+    refreshSessionsForDomain(domain.value)
+    
+    // Start a new chat when domain changes (like clicking "New Chat")
+    startNewChat()
+    
+    // Navigate to new chat smoothly
+    router.push('/chat/new')
   }
 
   return (
@@ -60,7 +73,7 @@ function Header() {
 
         <DomainPicker
           selectedDomain={selectedDomain}
-          setSelectedDomain={setSelectedDomain}
+          setSelectedDomain={handleDomainChange}
           domains={domains}
         />
         <LanguagePicker
