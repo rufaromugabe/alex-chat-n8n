@@ -2,11 +2,17 @@
 
 import { useRef, useEffect } from "react"
 import type { Language } from "@/lib/languages"
-import { Loader2, Menu } from "lucide-react"
+import { Loader2, Menu, Image as ImageIcon, FileText, File, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import MarkdownRenderer from "@/components/markdown-renderer"
 import { useSidebar } from "@/app/contexts/SidebarContext"
 import Image from "next/image"
+
+interface AttachedFile {
+  file: File
+  preview?: string
+  type: 'image' | 'document' | 'other'
+}
 
 interface ChatMessagesProps {
   messages: Array<{
@@ -14,6 +20,7 @@ interface ChatMessagesProps {
     text: string
     sender: "user" | "assistant"
     timestamp: Date
+    files?: AttachedFile[]
   }>
   isLoading: boolean
   selectedLanguage: Language
@@ -74,7 +81,75 @@ export default function ChatMessages({
                   : "bg-accent-primary/5 text-foreground border border-accent-primary/20 shadow-sm"
               }`}
             >
-              {message.sender === "user" ? message.text : <MarkdownRenderer content={message.text} />}
+              {/* Files Display */}
+              {message.files && message.files.length > 0 && (
+                <div className="mb-3 space-y-2">
+                  {message.files.map((attachedFile, index) => (
+                    <div
+                      key={index}
+                      className={`flex items-center gap-2 p-2 rounded-lg ${
+                        message.sender === "user"
+                          ? "bg-white/10 border border-white/20"
+                          : "bg-accent-primary/10 border border-accent-primary/20"
+                      }`}
+                    >
+                      {attachedFile.preview ? (
+                        <Image
+                          src={attachedFile.preview}
+                          alt={attachedFile.file.name}
+                          width={32}
+                          height={32}
+                          className="rounded object-cover"
+                        />
+                      ) : (
+                        <div className={`h-8 w-8 rounded flex items-center justify-center ${
+                          message.sender === "user" ? "bg-white/20" : "bg-accent-primary/20"
+                        }`}>
+                          {attachedFile.type === 'image' && <ImageIcon className="h-4 w-4" />}
+                          {attachedFile.type === 'document' && <FileText className="h-4 w-4" />}
+                          {attachedFile.type === 'other' && <File className="h-4 w-4" />}
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <p className={`text-sm font-medium truncate ${
+                          message.sender === "user" ? "text-white" : "text-foreground"
+                        }`}>
+                          {attachedFile.file.name}
+                        </p>
+                        <p className={`text-xs ${
+                          message.sender === "user" ? "text-white/70" : "text-text-secondary"
+                        }`}>
+                          {(attachedFile.file.size / 1024 / 1024).toFixed(1)} MB
+                        </p>
+                      </div>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className={`h-6 w-6 ${
+                          message.sender === "user" 
+                            ? "hover:bg-white/10 text-white/70 hover:text-white" 
+                            : "hover:bg-accent-primary/10 text-text-secondary hover:text-foreground"
+                        }`}
+                        onClick={() => {
+                          const url = URL.createObjectURL(attachedFile.file)
+                          const a = document.createElement('a')
+                          a.href = url
+                          a.download = attachedFile.file.name
+                          a.click()
+                          URL.revokeObjectURL(url)
+                        }}
+                      >
+                        <Download className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {/* Message Text */}
+              {message.text && (
+                message.sender === "user" ? message.text : <MarkdownRenderer content={message.text} />
+              )}
             </div>
           </div>
         ))}

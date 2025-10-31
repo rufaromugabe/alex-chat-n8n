@@ -54,23 +54,22 @@ export default function ChatPage() {
       SessionManager.setCurrentSessionId(sessionId)
     }
   }, [sessionId, setCurrentSessionId])
-  const handleSendMessage = async (text: string) => {
-    if (!text.trim() || !sessionId || sessionId === "new") return
+  const handleSendMessage = async (text: string, files?: any[]) => {
+    if ((!text.trim() && (!files || files.length === 0)) || !sessionId || sessionId === "new") return
 
     // Get or create user ID
     const userId = UserManager.getUserId()
 
     // Add user message to the chat
     const userMessageId = uuidv4()
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: userMessageId,
-        text,
-        sender: "user",
-        timestamp: new Date(),
-      },
-    ])
+    const userMessage = {
+      id: userMessageId,
+      text,
+      sender: "user" as const,
+      timestamp: new Date(),
+      files: files || [],
+    }
+    setMessages((prev) => [...prev, userMessage])
 
     // Update sidebar immediately with user message (for new chats or updates)
     const isFirstMessage = messages.length === 0
@@ -88,6 +87,14 @@ export default function ChatPage() {
       formData.append("targetLanguage", selectedLanguage.value)
       formData.append("sessionId", sessionId)
       formData.append("userId", userId) // Pass user ID to webhook
+      
+      // Add files to form data
+      if (files && files.length > 0) {
+        files.forEach((attachedFile, index) => {
+          formData.append(`file_${index}`, attachedFile.file)
+        })
+        formData.append("fileCount", files.length.toString())
+      }
 
       // Send request to the domain-specific webhook
       const response = await fetch(selectedDomain.webhookUrl, {

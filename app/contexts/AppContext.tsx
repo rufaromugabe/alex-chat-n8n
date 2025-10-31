@@ -4,11 +4,18 @@ import { createContext, useContext, useState, ReactNode, useEffect, useCallback 
 import { v4 as uuidv4 } from "uuid"
 import { SessionManager, ChatSession, AppMessage } from "@/lib/session-manager"
 
+type AttachedFile = {
+  file: File
+  preview?: string
+  type: 'image' | 'document' | 'other'
+}
+
 type Message = {
   id: string
   text: string
   sender: "user" | "assistant"
   timestamp: Date
+  files?: AttachedFile[]
 }
 
 type AppContextType = {
