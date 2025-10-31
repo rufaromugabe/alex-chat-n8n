@@ -112,28 +112,27 @@ export default function VoiceInput({ onTranscript, disabled }: VoiceInputProps) 
 
     return (
         <div className="relative">
-            <Button
+            <button
                 type="button"
-                size="icon"
                 onClick={handleToggleRecording}
                 disabled={disabled || isProcessing}
-                className={`rounded-full h-9 w-9 md:h-10 md:w-10 transition-all duration-200 ${
+                className={`p-2 transition-all duration-200 cursor-pointer ${
                     isRecording
-                        ? "bg-red-500 hover:bg-red-600 animate-pulse shadow-glow-lg border border-red-400"
+                        ? "text-red-500 animate-pulse"
                         : isProcessing
-                        ? "bg-accent-primary/20 border border-accent-primary/50 text-foreground"
-                        : "bg-accent-primary/10 hover:bg-accent-primary/20 border border-accent-primary/50 text-foreground hover:text-accent-primary"
+                        ? "text-accent-primary"
+                        : "text-text-secondary hover:text-accent-primary"
                 }`}
                 title={isRecording ? "Stop recording" : "Start voice input"}
             >
                 {isProcessing ? (
-                    <Loader2 className="h-4 w-4 md:h-5 md:w-5 animate-spin text-accent-primary" />
+                    <Loader2 className="h-5 w-5 md:h-6 md:w-6 animate-spin" />
                 ) : isRecording ? (
-                    <MicOff className="h-4 w-4 md:h-5 md:w-5 text-white" />
+                    <MicOff className="h-5 w-5 md:h-6 md:w-6" />
                 ) : (
-                    <Mic className="h-4 w-4 md:h-5 md:w-5" />
+                    <Mic className="h-5 w-5 md:h-6 md:w-6" />
                 )}
-            </Button>
+            </button>
 
             {(isRecording || isProcessing) && (
                 <div className="absolute bottom-full mb-2 right-0 bg-bg-elevated border border-border-primary rounded-lg px-3 py-2 shadow-lg whitespace-nowrap">

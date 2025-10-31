@@ -25,7 +25,7 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
 
   const resetTextareaHeight = () => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = '40px'
+      textareaRef.current.style.height = '56px'
       textareaRef.current.style.overflowY = 'hidden'
     }
   }
@@ -171,76 +171,79 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
         )}
 
         {/* Input Area */}
-        <div className="flex items-end gap-2">
-          <div className="relative flex-1">
-            <textarea
-              ref={textareaRef}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Type a message, attach files, or use voice... (Shift+Enter for new line)"
-              className="w-full bg-bg-input text-foreground rounded-2xl px-3 py-2 md:px-4 md:py-2.5 pr-12 focus:outline-none focus:ring-1 focus:ring-border-focus border border-border-primary shadow-glow-sm focus:shadow-glow-md resize-none min-h-[40px] max-h-32 overflow-y-hidden"
+        <div className="relative">
+          {/* File Attachment Button - Inside input on the left, settled at bottom */}
+          <Button
+            type="button"
+            size="icon"
+            variant="ghost"
+            className="absolute left-3 md:left-4 bottom-4 md:bottom-4.5 h-9 w-9 md:h-10 md:w-10 rounded-full hover:bg-accent-primary/10 z-10"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isLoading}
+            title="Attach files"
+          >
+            <Paperclip className="h-5 w-5 md:h-6 md:w-6" />
+          </Button>
+          
+          {/* Voice Input Button - Inside input on the right, settled at bottom */}
+          <div className="absolute right-14 md:right-16 bottom-4 md:bottom-4.5 z-10">
+            <VoiceInput 
+              onTranscript={handleVoiceTranscript}
               disabled={isLoading}
-              rows={1}
-              style={{
-                height: 'auto',
-                minHeight: '40px',
-              }}
-              onInput={(e) => {
-                const target = e.target as HTMLTextAreaElement
-                target.style.height = 'auto'
-                const newHeight = Math.min(target.scrollHeight, 128)
-                target.style.height = newHeight + 'px'
-                
-                // Show scrollbar only when content exceeds max height
-                if (target.scrollHeight > 128) {
-                  target.style.overflowY = 'auto'
-                } else {
-                  target.style.overflowY = 'hidden'
-                }
-              }}
-            />
-            
-            {/* File Attachment Button */}
-            <Button
-              type="button"
-              size="icon"
-              variant="ghost"
-              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full hover:bg-accent-primary/10"
-              onClick={() => fileInputRef.current?.click()}
-              disabled={isLoading}
-            >
-              <Paperclip className="h-4 w-4" />
-            </Button>
-            
-            {/* Hidden File Input */}
-            <input
-              ref={fileInputRef}
-              type="file"
-              multiple
-              accept="image/*,.pdf,.doc,.docx,.txt,.json,.csv"
-              onChange={handleFileSelect}
-              className="hidden"
             />
           </div>
           
-          <VoiceInput 
-            onTranscript={handleVoiceTranscript}
-            disabled={isLoading}
-          />
-          
+          {/* Send Button - Inside input on the far right, settled at bottom */}
           <Button
             type="submit"
             size="icon"
-            className={`rounded-full bg-accent-primary hover:bg-accent-primary-hover h-9 w-9 md:h-10 md:w-10 
+            className={`absolute right-3 md:right-4 bottom-4 md:bottom-4.5 rounded-full bg-accent-primary hover:bg-accent-primary-hover h-9 w-9 md:h-10 md:w-10 
               shadow-glow-md border border-accent-primary/50
               transition-all duration-200
-              hover:shadow-glow-lg
+              hover:shadow-glow-lg z-10
               ${!isLoading && (message.trim() || attachedFiles.length > 0) ? 'animate-pulse-subtle' : ''}`}
             disabled={isLoading || (!message.trim() && attachedFiles.length === 0)}
           >
             <Send className="h-4 w-4" />
           </Button>
+          
+          {/* Hidden File Input */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            multiple
+            accept="image/*,.pdf,.doc,.docx,.txt,.json,.csv"
+            onChange={handleFileSelect}
+            className="hidden"
+          />
+
+          <textarea
+            ref={textareaRef}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Type a message, attach files, or use voice... (Shift+Enter for new line)"
+            className="w-full bg-bg-input text-foreground rounded-2xl pl-14 md:pl-16 pr-24 md:pr-28 py-4 md:py-4.5 focus:outline-none focus:ring-1 focus:ring-border-focus border border-border-primary shadow-glow-sm focus:shadow-glow-md resize-none min-h-[56px] max-h-32 overflow-y-hidden"
+            disabled={isLoading}
+            rows={1}
+            style={{
+              height: 'auto',
+              minHeight: '56px',
+            }}
+            onInput={(e) => {
+              const target = e.target as HTMLTextAreaElement
+              target.style.height = 'auto'
+              const newHeight = Math.min(target.scrollHeight, 128)
+              target.style.height = newHeight + 'px'
+              
+              // Show scrollbar only when content exceeds max height
+              if (target.scrollHeight > 128) {
+                target.style.overflowY = 'auto'
+              } else {
+                target.style.overflowY = 'hidden'
+              }
+            }}
+          />
         </div>
       </div>
     </form>
