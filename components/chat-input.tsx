@@ -4,6 +4,7 @@ import type React from "react"
 import { useState } from "react"
 import { Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import VoiceInput from "@/components/voice-input"
 
 interface ChatInputProps {
   onSendMessage: (text: string) => void
@@ -21,6 +22,13 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
     }
   }
 
+  const handleVoiceTranscript = (text: string) => {
+    // Set the transcribed text in the input field
+    setMessage(text)
+  }
+
+
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -31,8 +39,12 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type a message..."
+          placeholder="Type a message or use voice..."
           className="flex-1 bg-bg-input text-foreground rounded-full px-3 py-2 md:px-4 md:py-2.5 focus:outline-none focus:ring-1 focus:ring-border-focus border border-border-primary shadow-glow-sm focus:shadow-glow-md"
+          disabled={isLoading}
+        />
+        <VoiceInput 
+          onTranscript={handleVoiceTranscript}
           disabled={isLoading}
         />
         <Button

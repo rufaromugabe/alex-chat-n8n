@@ -1,0 +1,148 @@
+"use client"
+
+import { useState, useRef } from "react"
+import { Mic, MicOff, Loader2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+
+interface VoiceInputProps {
+    onTranscript: (text: string) => void
+    onStreaming?: (partialText: string) => void
+    disabled?: boolean
+}
+
+export default function VoiceInput({ onTranscript, disabled }: VoiceInputProps) {
+    const [isRecording, setIsRecording] = useState(false)
+    const [isProcessing, setIsProcessing] = useState(false)
+    
+    const mediaRecorderRef = useRef<MediaRecorder | null>(null)
+    const streamRef = useRef<MediaStream | null>(null)
+    const chunksRef = useRef<Blob[]>([])
+
+    const startRecording = async () => {
+        try {
+            setIsRecording(true)
+            chunksRef.current = []
+
+            // Get microphone access
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: {
+                    channelCount: 1,
+                    sampleRate: 16000,
+                },
+            })
+            streamRef.current = stream
+
+            // Create MediaRecorder
+            const mediaRecorder = new MediaRecorder(stream, {
+                mimeType: 'audio/webm;codecs=opus'
+            })
+            mediaRecorderRef.current = mediaRecorder
+
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    chunksRef.current.push(event.data)
+                }
+            }
+
+            mediaRecorder.onstop = async () => {
+                setIsRecording(false)
+                setIsProcessing(true)
+
+                try {
+                    // Create audio blob
+                    const audioBlob = new Blob(chunksRef.current, { type: 'audio/webm' })
+                    
+                    // Send to transcription API
+                    const formData = new FormData()
+                    formData.append('audio', audioBlob, 'recording.webm')
+
+                    const response = await fetch('/api/transcribe', {
+                        method: 'POST',
+                        body: formData,
+                    })
+
+                    if (!response.ok) {
+                        throw new Error('Transcription failed')
+                    }
+
+                    const { text } = await response.json()
+                    if (text.trim()) {
+                        onTranscript(text.trim())
+                    }
+                } catch (error) {
+                    console.error('Transcription error:', error)
+                    alert('Failed to transcribe audio. Please try again.')
+                } finally {
+                    setIsProcessing(false)
+                    cleanup()
+                }
+            }
+
+            // Start recording
+            mediaRecorder.start()
+        } catch (error) {
+            console.error('Recording error:', error)
+            setIsRecording(false)
+            alert('Failed to access microphone. Please check permissions.')
+        }
+    }
+
+    const stopRecording = () => {
+        if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+            mediaRecorderRef.current.stop()
+        }
+    }
+
+    const cleanup = () => {
+        if (streamRef.current) {
+            streamRef.current.getTracks().forEach(track => track.stop())
+            streamRef.current = null
+        }
+        mediaRecorderRef.current = null
+        chunksRef.current = []
+    }
+
+    const handleToggleRecording = () => {
+        if (isRecording) {
+            stopRecording()
+        } else {
+            startRecording()
+        }
+    }
+
+    return (
+        <div className="relative">
+            <Button
+                type="button"
+                size="icon"
+                onClick={handleToggleRecording}
+                disabled={disabled || isProcessing}
+                className={`rounded-full h-9 w-9 md:h-10 md:w-10 transition-all duration-200 ${
+                    isRecording
+                        ? "bg-red-500 hover:bg-red-600 animate-pulse shadow-glow-lg border border-red-400"
+                        : isProcessing
+                        ? "bg-accent-primary/20 border border-accent-primary/50 text-foreground"
+                        : "bg-accent-primary/10 hover:bg-accent-primary/20 border border-accent-primary/50 text-foreground hover:text-accent-primary"
+                }`}
+                title={isRecording ? "Stop recording" : "Start voice input"}
+            >
+                {isProcessing ? (
+                    <Loader2 className="h-4 w-4 md:h-5 md:w-5 animate-spin text-accent-primary" />
+                ) : isRecording ? (
+                    <MicOff className="h-4 w-4 md:h-5 md:w-5 text-white" />
+                ) : (
+                    <Mic className="h-4 w-4 md:h-5 md:w-5" />
+                )}
+            </Button>
+
+            {(isRecording || isProcessing) && (
+                <div className="absolute bottom-full mb-2 right-0 bg-bg-elevated border border-border-primary rounded-lg px-3 py-2 shadow-lg whitespace-nowrap">
+                    <p className="text-sm text-text-secondary flex items-center gap-2">
+                        <span className="h-2 w-2 bg-red-500 rounded-full animate-pulse"></span>
+                        {isProcessing ? "Processing..." : "Recording..."}
+                    </p>
+                </div>
+            )}
+        </div>
+    )
+}
