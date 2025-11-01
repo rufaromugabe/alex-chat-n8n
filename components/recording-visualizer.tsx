@@ -158,18 +158,28 @@ export default function RecordingVisualizer({
       const rect = canvas.getBoundingClientRect()
       const dpr = window.devicePixelRatio || 1
       
-      canvas.width = rect.width * dpr
-      canvas.height = rect.height * dpr
+      // Ensure minimum width and proper scaling
+      const width = Math.max(rect.width, 100) // Minimum 100px width
+      const height = Math.max(rect.height, 24) // Minimum 24px height
+      
+      canvas.width = width * dpr
+      canvas.height = height * dpr
       
       const ctx = canvas.getContext('2d')
       if (ctx) {
         ctx.scale(dpr, dpr)
+        // Set canvas display size
+        canvas.style.width = width + 'px'
+        canvas.style.height = height + 'px'
       }
     }
 
-    updateCanvasSize()
+    // Initial size update
+    setTimeout(updateCanvasSize, 0)
     
-    const resizeObserver = new ResizeObserver(updateCanvasSize)
+    const resizeObserver = new ResizeObserver(() => {
+      setTimeout(updateCanvasSize, 0)
+    })
     resizeObserver.observe(canvas)
     
     return () => resizeObserver.disconnect()
@@ -180,19 +190,19 @@ export default function RecordingVisualizer({
   }
 
   return (
-    <div className="flex items-center justify-between w-full h-full">
+    <div className="flex items-center justify-between w-full h-full min-w-0">
       {/* Cancel Button */}
       <button
         type="button"
         onClick={onCancel}
-        className="flex-shrink-0 p-2 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors"
+        className="flex-shrink-0 p-1 md:p-2 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors"
         title="Cancel recording"
       >
-        <X className="h-5 w-5" />
+        <X className="h-4 w-4 md:h-5 md:w-5" />
       </button>
 
       {/* Recording Visualization */}
-      <div className="flex-1 mx-4 flex items-center justify-center">
+      <div className="flex-1 mx-2 md:mx-4 flex items-center justify-center min-w-0">
         {isProcessing ? (
           <div className="flex items-center gap-2 text-text-secondary">
             <div className="flex gap-1">
@@ -200,13 +210,13 @@ export default function RecordingVisualizer({
               <div className="w-2 h-2 bg-accent-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
               <div className="w-2 h-2 bg-accent-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
             </div>
-            <span className="text-sm">Processing...</span>
+            <span className="text-xs md:text-sm">Processing...</span>
           </div>
         ) : (
           <canvas 
             ref={canvasRef}
-            className="w-full h-8"
-            style={{ display: 'block' }}
+            className="w-full h-6 md:h-8 max-w-full"
+            style={{ display: 'block', maxWidth: '100%' }}
           />
         )}
       </div>
@@ -216,10 +226,10 @@ export default function RecordingVisualizer({
         type="button"
         onClick={onConfirm}
         disabled={isProcessing}
-        className="flex-shrink-0 p-2 text-green-500 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex-shrink-0 p-1 md:p-2 text-green-500 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         title="Stop and transcribe"
       >
-        <Check className="h-5 w-5" />
+        <Check className="h-4 w-4 md:h-5 md:w-5" />
       </button>
     </div>
   )

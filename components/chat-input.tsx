@@ -308,7 +308,7 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
           />
 
           {(isRecording || isProcessing) ? (
-            <div className="w-full bg-bg-input text-foreground rounded-2xl border border-border-primary shadow-glow-sm min-h-[56px] px-4 py-4 flex items-center">
+            <div className="w-full bg-bg-input text-foreground rounded-2xl border border-border-primary shadow-glow-sm min-h-[56px] px-2 py-3 md:px-4 md:py-4 flex items-center">
               <RecordingVisualizer 
                 isRecording={isRecording}
                 isProcessing={isProcessing}
