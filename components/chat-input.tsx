@@ -199,16 +199,6 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
         {/* File Attachments Preview */}
         {attachedFiles.length > 0 && (
           <div className="mb-3">
-            <div className="flex items-center justify-between mb-2">
-              <p className="text-xs text-text-secondary">
-                Attached files ({attachedFiles.length}/3)
-              </p>
-              {attachedFiles.length >= 3 && (
-                <p className="text-xs text-amber-600">
-                  Maximum files reached
-                </p>
-              )}
-            </div>
             <div className="flex flex-wrap gap-2">
               {attachedFiles.map((attachedFile, index) => (
               <div
