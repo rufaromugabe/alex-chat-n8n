@@ -174,14 +174,7 @@ export default function VoiceInput({ onTranscript, onRecordingStateChange, disab
                 )}
             </button>
 
-            {(isRecording || isProcessing) && (
-                <div className="absolute bottom-full mb-2 right-0 bg-bg-elevated border border-border-primary rounded-lg px-3 py-2 shadow-lg whitespace-nowrap">
-                    <p className="text-sm text-text-secondary flex items-center gap-2">
-                        <span className="h-2 w-2 bg-red-500 rounded-full animate-pulse"></span>
-                        {isProcessing ? "Processing..." : "Recording..."}
-                    </p>
-                </div>
-            )}
+
         </div>
     )
 }

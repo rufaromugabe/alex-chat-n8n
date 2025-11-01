@@ -9,7 +9,6 @@ interface RecordingVisualizerProps {
   audioStream?: MediaStream | null
   onCancel?: () => void
   onConfirm?: () => void
-  className?: string
 }
 
 export default function RecordingVisualizer({ 
@@ -17,8 +16,7 @@ export default function RecordingVisualizer({
   isProcessing = false,
   audioStream, 
   onCancel,
-  onConfirm,
-  className = "h-14 w-full" 
+  onConfirm
 }: RecordingVisualizerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number>()
@@ -70,32 +68,30 @@ export default function RecordingVisualizer({
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       
       // Calculate bar dimensions
-      const barCount = 32
-      const barWidth = canvas.width / barCount
-      const maxBarHeight = canvas.height * 0.8
+      const barCount = 80
+      const barSpacing = 2
+      const barWidth = Math.max(1.5, (canvas.width - (barCount - 1) * barSpacing) / barCount)
+      const maxBarHeight = canvas.height * 0.5
       
       // Draw bars
       for (let i = 0; i < barCount; i++) {
-        // Sample frequency data (use every 4th value for better distribution)
+        // Sample frequency data
         const dataIndex = Math.floor(i * (dataArray.length / barCount))
         const amplitude = dataArray[dataIndex] / 255
         
-        // Add some randomness for more dynamic feel when quiet
+        // Add some baseline activity for visual appeal
         const minHeight = 0.1
-        const height = Math.max(minHeight, amplitude) * maxBarHeight
+        const normalizedHeight = Math.max(minHeight, amplitude)
+        const height = normalizedHeight * maxBarHeight
         
-        const x = i * barWidth + barWidth * 0.1
+        const x = i * (barWidth + barSpacing)
         const y = (canvas.height - height) / 2
-        const width = barWidth * 0.8
         
-        // Create gradient
-        const gradient = ctx.createLinearGradient(0, y, 0, y + height)
-        gradient.addColorStop(0, '#3b82f6') // Blue
-        gradient.addColorStop(0.5, '#06b6d4') // Cyan
-        gradient.addColorStop(1, '#10b981') // Green
+        // Use a subtle blue-gray color that works in both themes
+        const opacity = 0.4 + (normalizedHeight * 0.4) // Dynamic opacity based on amplitude
+        ctx.fillStyle = `rgba(99, 102, 241, ${opacity})` // Indigo with dynamic opacity
         
-        ctx.fillStyle = gradient
-        ctx.fillRect(x, y, width, height)
+        ctx.fillRect(x, y, barWidth, height)
       }
       
       animationRef.current = requestAnimationFrame(animate)
