@@ -6,21 +6,24 @@ import { Mic, MicOff, Loader2 } from "lucide-react"
 interface VoiceInputProps {
     onTranscript: (text: string) => void
     onStreaming?: (partialText: string) => void
+    onRecordingStateChange?: (isRecording: boolean, isProcessing: boolean, audioStream?: MediaStream | null, cancelFn?: () => void, confirmFn?: () => void) => void
     disabled?: boolean
 }
 
-export default function VoiceInput({ onTranscript, disabled }: VoiceInputProps) {
+export default function VoiceInput({ onTranscript, onRecordingStateChange, disabled }: VoiceInputProps) {
     const [isRecording, setIsRecording] = useState(false)
     const [isProcessing, setIsProcessing] = useState(false)
     
     const mediaRecorderRef = useRef<MediaRecorder | null>(null)
     const streamRef = useRef<MediaStream | null>(null)
     const chunksRef = useRef<Blob[]>([])
+    const isCancelledRef = useRef(false)
 
     const startRecording = async () => {
         try {
             setIsRecording(true)
             chunksRef.current = []
+            isCancelledRef.current = false
 
             // Get microphone access
             const stream = await navigator.mediaDevices.getUserMedia({
@@ -30,6 +33,9 @@ export default function VoiceInput({ onTranscript, disabled }: VoiceInputProps) 
                 },
             })
             streamRef.current = stream
+            
+            // Notify parent about recording state change
+            onRecordingStateChange?.(true, false, stream, cancelRecording, confirmRecording)
 
             // Create MediaRecorder
             const mediaRecorder = new MediaRecorder(stream, {
@@ -45,7 +51,19 @@ export default function VoiceInput({ onTranscript, disabled }: VoiceInputProps) 
 
             mediaRecorder.onstop = async () => {
                 setIsRecording(false)
+                
+                // If recording was cancelled, don't process
+                if (isCancelledRef.current) {
+                    isCancelledRef.current = false
+                    onRecordingStateChange?.(false, false, null)
+                    cleanup()
+                    return
+                }
+                
                 setIsProcessing(true)
+                
+                // Notify parent about processing state
+                onRecordingStateChange?.(false, true, null, cancelRecording, undefined)
 
                 try {
                     // Create audio blob
@@ -73,6 +91,7 @@ export default function VoiceInput({ onTranscript, disabled }: VoiceInputProps) 
                     alert('Failed to transcribe audio. Please try again.')
                 } finally {
                     setIsProcessing(false)
+                    onRecordingStateChange?.(false, false, null)
                     cleanup()
                 }
             }
@@ -82,6 +101,7 @@ export default function VoiceInput({ onTranscript, disabled }: VoiceInputProps) 
         } catch (error) {
             console.error('Recording error:', error)
             setIsRecording(false)
+            onRecordingStateChange?.(false, false, null)
             alert('Failed to access microphone. Please check permissions.')
         }
     }
@@ -99,6 +119,27 @@ export default function VoiceInput({ onTranscript, disabled }: VoiceInputProps) 
         }
         mediaRecorderRef.current = null
         chunksRef.current = []
+        isCancelledRef.current = false
+    }
+
+    const cancelRecording = () => {
+        isCancelledRef.current = true
+        
+        if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+            mediaRecorderRef.current.stop()
+        } else {
+            // If not recording (e.g., during processing), immediately cancel
+            setIsRecording(false)
+            setIsProcessing(false)
+            onRecordingStateChange?.(false, false, null)
+            cleanup()
+        }
+    }
+
+    const confirmRecording = () => {
+        if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+            mediaRecorderRef.current.stop()
+        }
     }
 
     const handleToggleRecording = () => {

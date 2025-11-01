@@ -5,6 +5,7 @@ import { useState, useRef } from "react"
 import { Send, Paperclip, X, Image, FileText, File } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import VoiceInput from "@/components/voice-input"
+import RecordingVisualizer from "@/components/recording-visualizer"
 
 interface AttachedFile {
   file: File
@@ -20,6 +21,11 @@ interface ChatInputProps {
 export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) {
   const [message, setMessage] = useState("")
   const [attachedFiles, setAttachedFiles] = useState<AttachedFile[]>([])
+  const [isRecording, setIsRecording] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [audioStream, setAudioStream] = useState<MediaStream | null>(null)
+  const [cancelRecording, setCancelRecording] = useState<(() => void) | null>(null)
+  const [confirmRecording, setConfirmRecording] = useState<(() => void) | null>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -168,6 +174,20 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
     }, 0)
   }
 
+  const handleRecordingStateChange = (
+    recording: boolean, 
+    processing: boolean, 
+    stream?: MediaStream | null,
+    cancelFn?: () => void,
+    confirmFn?: () => void
+  ) => {
+    setIsRecording(recording)
+    setIsProcessing(processing)
+    setAudioStream(stream || null)
+    setCancelRecording(cancelFn ? () => cancelFn : null)
+    setConfirmRecording(confirmFn ? () => confirmFn : null)
+  }
+
 
 
   return (
@@ -232,46 +252,51 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
 
         {/* Input Area */}
         <div className="relative">
-          {/* File Attachment Button - Inside input on the left, settled at bottom */}
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            disabled={isLoading || attachedFiles.length >= 3}
-            className={`absolute left-3 md:left-4 bottom-4 md:bottom-4.5 p-2 transition-all duration-200 z-10 ${
-              isLoading || attachedFiles.length >= 3
-                ? 'cursor-not-allowed text-text-tertiary'
-                : 'cursor-pointer text-text-secondary hover:text-accent-primary'
-            }`}
-            title={
-              attachedFiles.length >= 3 
-                ? "Maximum 3 files allowed" 
-                : `Attach files (${attachedFiles.length}/3)`
-            }
-          >
-            <Paperclip className="h-5 w-5 md:h-6 md:w-6" />
-          </button>
-          
-          {/* Voice Input Button - Inside input on the right, settled at bottom */}
-          <div className="absolute right-14 md:right-16 bottom-4 md:bottom-4.5 z-10">
-            <VoiceInput 
-              onTranscript={handleVoiceTranscript}
-              disabled={isLoading}
-            />
-          </div>
-          
-          {/* Send Button - Inside input on the far right, settled at bottom */}
-          <Button
-            type="submit"
-            size="icon"
-            className={`absolute right-3 md:right-4 bottom-4 md:bottom-4.5 rounded-full bg-accent-primary hover:bg-accent-primary-hover h-9 w-9 md:h-10 md:w-10 
-              shadow-glow-md border border-accent-primary/50
-              transition-all duration-200
-              hover:shadow-glow-lg z-10
-              ${!isLoading && (message.trim() || attachedFiles.length > 0) ? 'animate-pulse-subtle' : ''}`}
-            disabled={isLoading || (!message.trim() && attachedFiles.length === 0)}
-          >
-            <Send className="h-5 w-5 md:h-6 md:w-6" />
-          </Button>
+          {!isRecording && !isProcessing && (
+            <>
+              {/* File Attachment Button - Inside input on the left, settled at bottom */}
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isLoading || attachedFiles.length >= 3}
+                className={`absolute left-3 md:left-4 bottom-4 md:bottom-4.5 p-2 transition-all duration-200 z-10 ${
+                  isLoading || attachedFiles.length >= 3
+                    ? 'cursor-not-allowed text-text-tertiary'
+                    : 'cursor-pointer text-text-secondary hover:text-accent-primary'
+                }`}
+                title={
+                  attachedFiles.length >= 3 
+                    ? "Maximum 3 files allowed" 
+                    : `Attach files (${attachedFiles.length}/3)`
+                }
+              >
+                <Paperclip className="h-5 w-5 md:h-6 md:w-6" />
+              </button>
+              
+              {/* Voice Input Button - Inside input on the right, settled at bottom */}
+              <div className="absolute right-14 md:right-16 bottom-4 md:bottom-4.5 z-10">
+                <VoiceInput 
+                  onTranscript={handleVoiceTranscript}
+                  onRecordingStateChange={handleRecordingStateChange}
+                  disabled={isLoading}
+                />
+              </div>
+              
+              {/* Send Button - Inside input on the far right, settled at bottom */}
+              <Button
+                type="submit"
+                size="icon"
+                className={`absolute right-3 md:right-4 bottom-4 md:bottom-4.5 rounded-full bg-accent-primary hover:bg-accent-primary-hover h-9 w-9 md:h-10 md:w-10 
+                  shadow-glow-md border border-accent-primary/50
+                  transition-all duration-200
+                  hover:shadow-glow-lg z-10
+                  ${!isLoading && (message.trim() || attachedFiles.length > 0) ? 'animate-pulse-subtle' : ''}`}
+                disabled={isLoading || (!message.trim() && attachedFiles.length === 0)}
+              >
+                <Send className="h-5 w-5 md:h-6 md:w-6" />
+              </Button>
+            </>
+          )}
           
           {/* Hidden File Input */}
           <input
@@ -283,33 +308,45 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
             className="hidden"
           />
 
-          <textarea
-            ref={textareaRef}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Type a message.."
-            className="w-full bg-bg-input text-foreground rounded-2xl pl-14 md:pl-16 pr-24 md:pr-28 py-4 md:py-4.5 focus:outline-none focus:ring-1 focus:ring-border-focus border border-border-primary shadow-glow-sm focus:shadow-glow-md resize-none min-h-[56px] max-h-32 overflow-y-hidden"
-            disabled={isLoading}
-            rows={1}
-            style={{
-              height: 'auto',
-              minHeight: '56px',
-            }}
-            onInput={(e) => {
-              const target = e.target as HTMLTextAreaElement
-              target.style.height = 'auto'
-              const newHeight = Math.min(target.scrollHeight, 128)
-              target.style.height = newHeight + 'px'
-              
-              // Show scrollbar only when content exceeds max height
-              if (target.scrollHeight > 128) {
-                target.style.overflowY = 'auto'
-              } else {
-                target.style.overflowY = 'hidden'
-              }
-            }}
-          />
+          {(isRecording || isProcessing) ? (
+            <div className="w-full bg-bg-input text-foreground rounded-2xl border border-border-primary shadow-glow-sm min-h-[56px] px-4 py-4 flex items-center">
+              <RecordingVisualizer 
+                isRecording={isRecording}
+                isProcessing={isProcessing}
+                audioStream={audioStream}
+                onCancel={cancelRecording || undefined}
+                onConfirm={confirmRecording || undefined}
+              />
+            </div>
+          ) : (
+            <textarea
+              ref={textareaRef}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Type a message.."
+              className="w-full bg-bg-input text-foreground rounded-2xl pl-14 md:pl-16 pr-24 md:pr-28 py-4 md:py-4.5 focus:outline-none focus:ring-1 focus:ring-border-focus border border-border-primary shadow-glow-sm focus:shadow-glow-md resize-none min-h-[56px] max-h-32 overflow-y-hidden"
+              disabled={isLoading}
+              rows={1}
+              style={{
+                height: 'auto',
+                minHeight: '56px',
+              }}
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement
+                target.style.height = 'auto'
+                const newHeight = Math.min(target.scrollHeight, 128)
+                target.style.height = newHeight + 'px'
+                
+                // Show scrollbar only when content exceeds max height
+                if (target.scrollHeight > 128) {
+                  target.style.overflowY = 'auto'
+                } else {
+                  target.style.overflowY = 'hidden'
+                }
+              }}
+            />
+          )}
         </div>
       </div>
     </form>
