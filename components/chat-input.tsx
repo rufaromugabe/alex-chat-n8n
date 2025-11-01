@@ -54,8 +54,28 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || [])
+    const maxFiles = 3
     
-    for (const file of files) {
+    // Check if adding these files would exceed the limit
+    const currentCount = attachedFiles.length
+    const availableSlots = maxFiles - currentCount
+    
+    if (availableSlots <= 0) {
+      alert(`Maximum ${maxFiles} files allowed. Please remove some files first.`)
+      return
+    }
+    
+    // Take only the files that fit within the limit
+    const filesToAdd = files.slice(0, availableSlots)
+    
+    // Show warning if some files were not added
+    if (files.length > availableSlots) {
+      alert(`Only ${availableSlots} file(s) can be added. Maximum ${maxFiles} files allowed.`)
+    }
+    
+    const newAttachedFiles: AttachedFile[] = []
+    
+    for (const file of filesToAdd) {
       const attachedFile: AttachedFile = {
         file,
         type: getFileType(file),
@@ -66,8 +86,10 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
         attachedFile.preview = URL.createObjectURL(file)
       }
 
-      setAttachedFiles(prev => [...prev, attachedFile])
+      newAttachedFiles.push(attachedFile)
     }
+
+    setAttachedFiles(prev => [...prev, ...newAttachedFiles])
 
     // Reset file input
     if (fileInputRef.current) {
@@ -101,6 +123,31 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
     }
   }
 
+  const truncateFileName = (fileName: string, maxLength: number = 25) => {
+    if (fileName.length <= maxLength) return fileName
+    
+    // Find the last dot to preserve file extension
+    const lastDotIndex = fileName.lastIndexOf('.')
+    
+    if (lastDotIndex === -1) {
+      // No extension, just truncate
+      return fileName.substring(0, maxLength - 3) + '...'
+    }
+    
+    const extension = fileName.substring(lastDotIndex)
+    const nameWithoutExt = fileName.substring(0, lastDotIndex)
+    
+    // Calculate available space for name (total - extension - ellipsis)
+    const availableSpace = maxLength - extension.length - 3
+    
+    if (availableSpace <= 0) {
+      // Extension is too long, just show part of it
+      return fileName.substring(0, maxLength - 3) + '...'
+    }
+    
+    return nameWithoutExt.substring(0, availableSpace) + '...' + extension
+  }
+
   const handleVoiceTranscript = (text: string) => {
     // Set the transcribed text in the input field
     setMessage(text)
@@ -131,26 +178,38 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
       <div className="max-w-3xl mx-auto">
         {/* File Attachments Preview */}
         {attachedFiles.length > 0 && (
-          <div className="mb-3 flex flex-wrap gap-2">
-            {attachedFiles.map((attachedFile, index) => (
+          <div className="mb-3">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-xs text-text-secondary">
+                Attached files ({attachedFiles.length}/3)
+              </p>
+              {attachedFiles.length >= 3 && (
+                <p className="text-xs text-amber-600">
+                  Maximum files reached
+                </p>
+              )}
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {attachedFiles.map((attachedFile, index) => (
               <div
                 key={index}
-                className="relative bg-bg-elevated border border-border-primary rounded-lg p-2 flex items-center gap-2 max-w-xs"
+                className="relative bg-bg-elevated border border-border-primary rounded-lg p-2 flex items-center gap-2 w-fit max-w-[200px] md:max-w-[250px]"
+                title={attachedFile.file.name} // Show full name on hover
               >
                 {attachedFile.preview ? (
                   <img
                     src={attachedFile.preview}
                     alt={attachedFile.file.name}
-                    className="h-8 w-8 object-cover rounded"
+                    className="h-8 w-8 object-cover rounded flex-shrink-0"
                   />
                 ) : (
-                  <div className="h-8 w-8 bg-accent-primary/10 rounded flex items-center justify-center">
+                  <div className="h-8 w-8 bg-accent-primary/10 rounded flex items-center justify-center flex-shrink-0">
                     {getFileIcon(attachedFile.type)}
                   </div>
                 )}
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-foreground truncate">
-                    {attachedFile.file.name}
+                <div className="flex-1 min-w-0 overflow-hidden">
+                  <p className="text-sm font-medium text-foreground">
+                    {truncateFileName(attachedFile.file.name, 20)}
                   </p>
                   <p className="text-xs text-text-secondary">
                     {(attachedFile.file.size / 1024 / 1024).toFixed(1)} MB
@@ -160,30 +219,37 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
                   type="button"
                   size="icon"
                   variant="ghost"
-                  className="h-6 w-6 rounded-full hover:bg-red-500/10"
+                  className="h-6 w-6 rounded-full hover:bg-red-500/10 flex-shrink-0"
                   onClick={() => removeFile(index)}
                 >
                   <X className="h-3 w-3" />
                 </Button>
               </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
 
         {/* Input Area */}
         <div className="relative">
           {/* File Attachment Button - Inside input on the left, settled at bottom */}
-          <Button
+          <button
             type="button"
-            size="icon"
-            variant="ghost"
-            className="absolute left-3 md:left-4 bottom-4 md:bottom-4.5 h-9 w-9 md:h-10 md:w-10 rounded-full hover:bg-accent-primary/10 z-10"
             onClick={() => fileInputRef.current?.click()}
-            disabled={isLoading}
-            title="Attach files"
+            disabled={isLoading || attachedFiles.length >= 3}
+            className={`absolute left-3 md:left-4 bottom-4 md:bottom-4.5 p-2 transition-all duration-200 z-10 ${
+              isLoading || attachedFiles.length >= 3
+                ? 'cursor-not-allowed text-text-tertiary'
+                : 'cursor-pointer text-text-secondary hover:text-accent-primary'
+            }`}
+            title={
+              attachedFiles.length >= 3 
+                ? "Maximum 3 files allowed" 
+                : `Attach files (${attachedFiles.length}/3)`
+            }
           >
             <Paperclip className="h-5 w-5 md:h-6 md:w-6" />
-          </Button>
+          </button>
           
           {/* Voice Input Button - Inside input on the right, settled at bottom */}
           <div className="absolute right-14 md:right-16 bottom-4 md:bottom-4.5 z-10">
@@ -204,7 +270,7 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
               ${!isLoading && (message.trim() || attachedFiles.length > 0) ? 'animate-pulse-subtle' : ''}`}
             disabled={isLoading || (!message.trim() && attachedFiles.length === 0)}
           >
-            <Send className="h-4 w-4" />
+            <Send className="h-5 w-5 md:h-6 md:w-6" />
           </Button>
           
           {/* Hidden File Input */}
@@ -222,7 +288,7 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type a message, attach files, or use voice... (Shift+Enter for new line)"
+            placeholder="Type a message,  or use voice... (Shift+Enter for new line)"
             className="w-full bg-bg-input text-foreground rounded-2xl pl-14 md:pl-16 pr-24 md:pr-28 py-4 md:py-4.5 focus:outline-none focus:ring-1 focus:ring-border-focus border border-border-primary shadow-glow-sm focus:shadow-glow-md resize-none min-h-[56px] max-h-32 overflow-y-hidden"
             disabled={isLoading}
             rows={1}

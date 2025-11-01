@@ -37,6 +37,31 @@ export default function ChatMessages({
 }: ChatMessagesProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const { isSidebarOpen, setIsSidebarOpen } = useSidebar()
+
+  const truncateFileName = (fileName: string, maxLength: number = 25) => {
+    if (fileName.length <= maxLength) return fileName
+    
+    // Find the last dot to preserve file extension
+    const lastDotIndex = fileName.lastIndexOf('.')
+    
+    if (lastDotIndex === -1) {
+      // No extension, just truncate
+      return fileName.substring(0, maxLength - 3) + '...'
+    }
+    
+    const extension = fileName.substring(lastDotIndex)
+    const nameWithoutExt = fileName.substring(0, lastDotIndex)
+    
+    // Calculate available space for name (total - extension - ellipsis)
+    const availableSpace = maxLength - extension.length - 3
+    
+    if (availableSpace <= 0) {
+      // Extension is too long, just show part of it
+      return fileName.substring(0, maxLength - 3) + '...'
+    }
+    
+    return nameWithoutExt.substring(0, availableSpace) + '...' + extension
+  }
   
   // Improved scrolling behavior for mobile
   useEffect(() => {
@@ -92,6 +117,7 @@ export default function ChatMessages({
                           ? "bg-white/10 border border-white/20"
                           : "bg-accent-primary/10 border border-accent-primary/20"
                       }`}
+                      title={attachedFile.file.name} // Show full name on hover
                     >
                       {attachedFile.preview ? (
                         <Image
@@ -99,10 +125,10 @@ export default function ChatMessages({
                           alt={attachedFile.file.name}
                           width={32}
                           height={32}
-                          className="rounded object-cover"
+                          className="rounded object-cover flex-shrink-0"
                         />
                       ) : (
-                        <div className={`h-8 w-8 rounded flex items-center justify-center ${
+                        <div className={`h-8 w-8 rounded flex items-center justify-center flex-shrink-0 ${
                           message.sender === "user" ? "bg-white/20" : "bg-accent-primary/20"
                         }`}>
                           {attachedFile.type === 'image' && <ImageIcon className="h-4 w-4" />}
@@ -110,11 +136,11 @@ export default function ChatMessages({
                           {attachedFile.type === 'other' && <File className="h-4 w-4" />}
                         </div>
                       )}
-                      <div className="flex-1 min-w-0">
-                        <p className={`text-sm font-medium truncate ${
+                      <div className="flex-1 min-w-0 overflow-hidden">
+                        <p className={`text-sm font-medium ${
                           message.sender === "user" ? "text-white" : "text-foreground"
                         }`}>
-                          {attachedFile.file.name}
+                          {truncateFileName(attachedFile.file.name, 18)}
                         </p>
                         <p className={`text-xs ${
                           message.sender === "user" ? "text-white/70" : "text-text-secondary"
@@ -125,7 +151,7 @@ export default function ChatMessages({
                       <Button
                         size="icon"
                         variant="ghost"
-                        className={`h-6 w-6 ${
+                        className={`h-6 w-6 flex-shrink-0 ${
                           message.sender === "user" 
                             ? "hover:bg-white/10 text-white/70 hover:text-white" 
                             : "hover:bg-accent-primary/10 text-text-secondary hover:text-foreground"
