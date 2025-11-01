@@ -155,23 +155,32 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
   }
 
   const handleVoiceTranscript = (text: string) => {
-    // Set the transcribed text in the input field
-    setMessage(text)
-    // Auto-resize textarea for voice input
+    // Append the transcribed text to existing input
+    setMessage(prev => {
+      const separator = prev.trim() ? ' ' : ''
+      return prev + separator + text
+    })
+    
+    // Auto-resize textarea for voice input - use longer timeout to ensure DOM update
     setTimeout(() => {
       if (textareaRef.current) {
+        // Force recalculation by resetting height first
         textareaRef.current.style.height = 'auto'
-        const newHeight = Math.min(textareaRef.current.scrollHeight, 128)
+        textareaRef.current.style.height = '56px' // Reset to minimum
+        
+        // Then calculate new height based on content
+        const scrollHeight = textareaRef.current.scrollHeight
+        const newHeight = Math.min(scrollHeight, 128)
         textareaRef.current.style.height = newHeight + 'px'
         
         // Show scrollbar only when content exceeds max height
-        if (textareaRef.current.scrollHeight > 128) {
+        if (scrollHeight > 128) {
           textareaRef.current.style.overflowY = 'auto'
         } else {
           textareaRef.current.style.overflowY = 'hidden'
         }
       }
-    }, 0)
+    }, 10)
   }
 
   const handleRecordingStateChange = (

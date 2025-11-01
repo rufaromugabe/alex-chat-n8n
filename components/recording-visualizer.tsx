@@ -22,6 +22,8 @@ export default function RecordingVisualizer({
   const animationRef = useRef<number>()
   const analyzerRef = useRef<AnalyserNode>()
   const dataArrayRef = useRef<Uint8Array>()
+  const waveformDataRef = useRef<number[]>([])
+  const timeOffsetRef = useRef(0)
 
   useEffect(() => {
     if (!isRecording || !audioStream) {
@@ -35,6 +37,9 @@ export default function RecordingVisualizer({
           ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
         }
       }
+      // Reset waveform data
+      waveformDataRef.current = []
+      timeOffsetRef.current = 0
       return
     }
 
@@ -52,7 +57,7 @@ export default function RecordingVisualizer({
     dataArrayRef.current = new Uint8Array(bufferLength)
 
     const animate = () => {
-      if (!isRecording || !canvasRef.current || !analyzerRef.current || !dataArrayRef.current) {
+      if (!isRecording || !canvasRef.current || !analyzerRef.current) {
         return
       }
 
@@ -64,35 +69,70 @@ export default function RecordingVisualizer({
       const dataArray = new Uint8Array(analyzerRef.current.frequencyBinCount)
       analyzerRef.current.getByteFrequencyData(dataArray)
       
+      // Calculate average amplitude for this frame with enhanced sensitivity
+      let sum = 0
+      for (let i = 0; i < dataArray.length; i++) {
+        sum += dataArray[i]
+      }
+      const rawAmplitude = sum / dataArray.length / 255
+      
+      // Amplify the signal for better visibility (square root for more responsive scaling)
+      const amplifiedAmplitude = Math.sqrt(rawAmplitude) * 1.5
+      
+      // Add current amplitude to waveform data with baseline animation
+      const baselineNoise = 0.15 + Math.sin(Date.now() * 0.003) * 0.05 // More prominent baseline
+      const finalAmplitude = Math.max(baselineNoise, amplifiedAmplitude)
+      waveformDataRef.current.push(finalAmplitude)
+      
+      // Keep only recent data (sliding window)
+      const maxDataPoints = Math.floor(canvas.width / 4) // One data point every 4 pixels
+      if (waveformDataRef.current.length > maxDataPoints) {
+        waveformDataRef.current.shift()
+      }
+      
+      // Update time offset for smooth scrolling effect
+      timeOffsetRef.current += 3 // Slightly faster scrolling
+      
       // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       
-      // Calculate bar dimensions
-      const barCount = 80
-      const barSpacing = 2
-      const barWidth = Math.max(1.5, (canvas.width - (barCount - 1) * barSpacing) / barCount)
-      const maxBarHeight = canvas.height * 0.5
+      const waveformData = waveformDataRef.current
+      const dataPointSpacing = 4
+      const maxBarHeight = canvas.height * 0.85 // Increased from 0.6 to 0.85
       
-      // Draw bars
-      for (let i = 0; i < barCount; i++) {
-        // Sample frequency data
-        const dataIndex = Math.floor(i * (dataArray.length / barCount))
-        const amplitude = dataArray[dataIndex] / 255
+      // Draw waveform bars from right to left (timeline effect)
+      for (let i = 0; i < waveformData.length; i++) {
+        const amplitude = waveformData[waveformData.length - 1 - i]
+        const height = Math.max(4, amplitude * maxBarHeight) // Minimum height of 4px
         
-        // Add some baseline activity for visual appeal
-        const minHeight = 0.1
-        const normalizedHeight = Math.max(minHeight, amplitude)
-        const height = normalizedHeight * maxBarHeight
+        // Position from right edge, moving left
+        const x = canvas.width - (i * dataPointSpacing) - (timeOffsetRef.current % dataPointSpacing)
         
-        const x = i * (barWidth + barSpacing)
+        if (x < -dataPointSpacing) continue // Don't draw off-screen bars
+        
         const y = (canvas.height - height) / 2
+        const barWidth = 3 // Increased from 2 to 3
         
-        // Use a subtle blue-gray color that works in both themes
-        const opacity = 0.4 + (normalizedHeight * 0.4) // Dynamic opacity based on amplitude
-        ctx.fillStyle = `rgba(99, 102, 241, ${opacity})` // Indigo with dynamic opacity
+        // Create gradient effect based on recency (newer = more opaque)
+        const recencyFactor = i / Math.max(1, waveformData.length - 1)
+        const baseOpacity = 0.6 + (amplitude * 0.4) // Increased base opacity
+        const opacity = baseOpacity * (1 - recencyFactor * 0.5) // Less aggressive fading
+        
+        // Use dynamic color based on amplitude with more vibrant colors
+        const hue = 200 + (amplitude * 60) // Wider blue to purple range
+        const saturation = 75 + (amplitude * 20) // Dynamic saturation
+        ctx.fillStyle = `hsla(${hue}, ${saturation}%, 65%, ${opacity})`
         
         ctx.fillRect(x, y, barWidth, height)
       }
+      
+      // Add a subtle current recording indicator line
+      ctx.strokeStyle = 'rgba(99, 102, 241, 0.8)'
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      ctx.moveTo(canvas.width - 1, canvas.height * 0.2)
+      ctx.lineTo(canvas.width - 1, canvas.height * 0.8)
+      ctx.stroke()
       
       animationRef.current = requestAnimationFrame(animate)
     }
