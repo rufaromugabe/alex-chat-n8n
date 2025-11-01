@@ -288,7 +288,7 @@ export default function ChatInput({ onSendMessage, isLoading }: ChatInputProps) 
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type a message,  or use voice... (Shift+Enter for new line)"
+            placeholder="Type a message,  or use voice.."
             className="w-full bg-bg-input text-foreground rounded-2xl pl-14 md:pl-16 pr-24 md:pr-28 py-4 md:py-4.5 focus:outline-none focus:ring-1 focus:ring-border-focus border border-border-primary shadow-glow-sm focus:shadow-glow-md resize-none min-h-[56px] max-h-32 overflow-y-hidden"
             disabled={isLoading}
             rows={1}
